@@ -1,4 +1,4 @@
-intraneto
+hermes
 =========
 
 1. Server
@@ -6,3 +6,5 @@ intraneto
     - Chrome Plugin
     - Excutable Node-Webkit
     - Adroid App
+3. Features
+    - Auto-login

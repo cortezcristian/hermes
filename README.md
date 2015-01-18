@@ -8,3 +8,5 @@ hermes
     - Adroid App
 3. Features
     - Auto-login
+    - Office space
+    - Memos

@@ -1,0 +1,51 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width')
+    title= title
+    script.
+      document.write('<base href="' + document.location + '" />');
+    - if(settings.envflag !== "production") {
+    //-<!-- build:css(public) styles/panel-styles.min.css -->
+    //bower:css
+    link(rel='stylesheet', href='/components/bootstrap/dist/css/bootstrap.css')
+    link(rel='stylesheet', href='/components/metisMenu/dist/metisMenu.css')
+    link(rel='stylesheet', href='/components/fontawesome/css/font-awesome.css')
+    link(rel='stylesheet', href='/components/angular-toggle-switch/angular-toggle-switch.css')
+    //endbower
+    //-<!-- endbuild -->
+    - } else {
+    link(rel='stylesheet', href='/dist/styles/panel-styles.min.css')
+    link(rel='stylesheet', href='/components/fontawesome/css/font-awesome.css')
+    - }
+    block css
+      link(rel='stylesheet', href='/css/style.css')
+    block js
+      script(src='http://localhost:35729/livereload.js')
+  body
+    include ./partials/admin-menu
+    block content
+    - if(settings.envflag !== "production") {
+    //-<!-- build:js(public) scripts/panel-vendors.min.js -->
+    //bower:js
+    script(src='/components/jquery/dist/jquery.js')
+    script(src='/components/angular/angular.js')
+    script(src='/components/angular-bootstrap/ui-bootstrap-tpls.js')
+    script(src='/components/bootstrap/dist/js/bootstrap.js')
+    script(src='/components/metisMenu/dist/metisMenu.js')
+    script(src='/components/lodash/dist/lodash.compat.js')
+    script(src='/components/restangular/dist/restangular.js')
+    script(src='/components/angular-resource/angular-resource.js')
+    script(src='/components/angular-cookies/angular-cookies.js')
+    script(src='/components/angular-sanitize/angular-sanitize.js')
+    script(src='/components/angular-animate/angular-animate.js')
+    script(src='/components/angular-touch/angular-touch.js')
+    script(src='/components/angular-route/angular-route.js')
+    script(src='/components/angular-toggle-switch/angular-toggle-switch.js')
+    //endbower
+    //-<!-- endbuild -->
+    - } else {
+    script(src='/dist/scripts/panel-vendors.min.js')
+    - }
+    block scripts

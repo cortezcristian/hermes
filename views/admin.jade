@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  .jumbotron
+    form#loginForm(name="loginForm",method="post",action="")
+      p !{form}
+      input.btn.btn-primary(type="submit",value="Login")
+    p
+    .well.well-sm Hint: admin@anyandgo.com / 123456

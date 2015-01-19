@@ -1,0 +1,55 @@
+nav.navbar.navbar-default.navbar-fixed-top(role='navigation')
+  .container-fluid
+    .navbar-header
+      button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      a.navbar-brand.hammerfont(href='/')
+        i.fa.fa-cloud.fa-3(style="padding:0 3px;")
+        | Any·and·go
+    #bs-example-navbar-collapse-1.collapse.navbar-collapse
+      ul.nav.navbar-nav
+        li
+          a(href='/') Home
+        // public:page:menu:start
+        li
+          a(href='/contact') Contact
+        li
+          a(href='/admin') Admin
+        // public:page:menu:end
+      ul.nav.navbar-nav.navbar-right
+        li.dropdown
+          a.dropdown-toggle(href='#', data-toggle='dropdown')
+            i.fa.fa-flag(style='padding-right:10px') 
+          ul.dropdown-menu.dropdown-menu-bubble-right.mond-lang-change(role='menu')
+            //public:translation:menu:start
+            li
+              a(href='#', langsupport="en-us") en-us
+            li
+              a(href='#', langsupport="es-ar") es-ar
+            //public:translation:menu:end
+        li.dropdown
+          a.dropdown-toggle(href='#', data-toggle='dropdown')
+            span
+              i.fa.fa-users(style='padding-right:10px') 
+              | Login with...
+            span.caret
+          ul.dropdown-menu.dropdown-menu-bubble-right(role='menu')
+            li
+              a(href='#') 
+                i.fa.fa-github-alt(style='padding-right:10px') 
+                | Github
+            li
+              a(href='#') 
+                i.fa.fa-google-plus(style='padding-right:10px') 
+                | Google
+            li
+              a(href='#') 
+                i.fa.fa-linkedin-square(style='padding-right:10px') 
+                | Linkedin
+            li
+              a(href='#') 
+                i.fa.fa-facebook-square(style='padding-right:10px') 
+                | Facebook

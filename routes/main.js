@@ -63,7 +63,7 @@ var app = module.parent.exports.app,
 
 // ### Home Page
 app.get('/', function (req, res) {
-    res.render('index', { title: 'Anyandgo', section: 'Home' });
+    res.render('index', { title: 'Hermes', section: 'Home' });
 });
 
 /* page:public:start */
@@ -85,7 +85,7 @@ app.post('/contact', function (req, res, next) {
             next();
         } else {
             // Mail is not enabled, you shall not pass
-            res.end('Anyandgo: Mail is not enabled, please contact the site administrator.');
+            res.end('Hermes: Mail is not enabled, please contact the site administrator.');
         }
      }, function (req, res, next) {
         if ( config.captcha && config.captcha.enabled ) {
@@ -140,7 +140,7 @@ app.post('/contact', function (req, res, next) {
         }, {
             from: config.mail.auth.user, 
             to: config.mail.contact,
-            subject: 'Anyandgo',
+            subject: 'Hermes',
             text: msg+' Sent from anyandgo'
         }, function(error, response){
            if ( error ) {
@@ -173,12 +173,12 @@ app.get('/panel', function (req, res) {
 // --------------------------------------
 // ### Login
 app.get('/admin', function (req, res) {
-    res.render('admin-index', { title: 'Anyandgo', section: 'Admin Login' });
+    res.render('admin-index', { title: 'Hermes', section: 'Admin Login' });
 });
 
 // ### Panel
 app.get('/admin/config', function (req, res) {
-    res.render('admin-config', { title: 'Anyandgo', section: 'Admin Panel' });
+    res.render('admin-config', { title: 'Hermes', section: 'Admin Panel' });
 });
 
 // ### Panel
@@ -187,7 +187,7 @@ app.get('/admin/panel',
     adminAuth.autorizer,
     /* route:autorizers:end */
     function (req, res) {
-    res.render('admin-panel', { title: 'Anyandgo', section: 'Admin Panel' });
+    res.render('admin-panel', { title: 'Hermes', section: 'Admin Panel' });
 });
 
 // ## 3. Public Rest
@@ -401,7 +401,7 @@ app.get('/forms/:modelname/create', function (req, res) {
     var formHTMl = Handlebars.helpers.renderForm(form);
     
     console.log(formHTMl);
-    res.render('forms', { title: 'Anyandgo', section: 'Form', form: formHTMl, mname: req.params.modelname });
+    res.render('forms', { title: 'Hermes', section: 'Form', form: formHTMl, mname: req.params.modelname });
 });
 
 app.get('/forms/sample/edit', function (req, res) {
@@ -412,7 +412,7 @@ app.get('/forms/sample/edit', function (req, res) {
         var formHTMl = Handlebars.helpers.renderForm(form);
     
         console.log(formHTMl);
-        res.render('forms', { title: 'Anyandgo', section: 'Form', form: formHTMl });
+        res.render('forms', { title: 'Hermes', section: 'Form', form: formHTMl });
     });
 });
 

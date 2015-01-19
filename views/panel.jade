@@ -4,8 +4,9 @@ block content
   .row#user-panel
     #side.column.col-sm-2.col-xs-1
     #content.column.col-sm-10.col-xs-11
-      h1=__("pick Hermes")
-      p Route: /panel
-      p Page: Panel
-      p
-        a.btn.btn-primary.btn-lg(role='button',href="https://github.com/cortezcristian/anyandgo") Read the Docs
+      #chat
+        .chat-msg-container
+          .chat-message
+            img.img-rounded.msg-avatar(src="/img/photo400x400.png")
+        form.chat-form
+          textarea.message-input

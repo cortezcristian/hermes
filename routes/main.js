@@ -162,6 +162,11 @@ app.get('/admin', function (req, res) {
     var formHTML = Handlebars.helpers.renderForm(form);
     res.render('admin', { title: 'Admin', section: 'Admin', form: formHTML });
 });
+
+// ### Panel Page
+app.get('/panel', function (req, res) {
+    res.render('panel', { title: 'Panel', section: 'Panel' });
+});
 /* page:public:end */
 
 // ## 2. Admin Routes

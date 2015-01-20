@@ -5,10 +5,13 @@
 //  - Mongoose (http://mongoosejs.com/docs/guide.html)
 //  
 var mongoose = require('mongoose'), 
+    crypto = require('crypto'),
     Schema = mongoose.Schema;
 
 var userSchema = new Schema({
     name          : String, 
+    email         : String,
+    password      : String,
 	created       : Date         
 });
 
@@ -17,13 +20,15 @@ var userSchema = new Schema({
 userSchema.pre("save", function(next) {
     if(!this.created)
         this.created = new Date();
+    if(this.isModified('password'))
+        this.password = crypto.createHash('md5').update(this.password).digest("hex");
     next();
 });
 
 // ### Method:
-userSchema.method("instanceMethod", function(param, cb) {
+userSchema.method('authenticate', function(password) {
     var user = this;
-    this.save(cb);
+    return crypto.createHash('md5').update(password).digest("hex") === user.password;
 });
 
 // ### Static:

@@ -24,6 +24,16 @@ body
     background: url('../img/background.png') no-repeat 50% 0
     .mean-logo
       height:30px;
+  .label-danger
+    float: right;
+    border-radius: 12px;
+  .label-close
+    float: right;
+    border-radius: 20px;
+    background: #585858;
+    padding: 3px 4px;
+    color: #C8C8C8;
+    border: 1px solid #565656;
 
 #user-panel
   #side
@@ -44,8 +54,16 @@ body
       background-color: #4a4a4a
       padding: 0;
       #side-chat-menu
-        a
-          border-bottom: 1px solid #5B5B5B;
+        li
+          a.chat-selector
+            padding: 0 15px 0 0;
+            border-bottom: 1px solid #5B5B5B;
+            img.msg-avatar
+              width: 40px;
+              height: 40px;
+              border-radius: 0;
+            .label-close
+              margin: 10px 0;
       #side-menu, #side-chat-menu
         a
           color:#fff

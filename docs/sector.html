@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>sample.js</title>
+  <title>sector.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -166,7 +166,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>sample.js</h1>
+                  <h1>sector.js</h1>
               </div>
           </li>
         
@@ -178,7 +178,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <h2 id="sample-model">Sample Model</h2>
+              <h2 id="sector-model">Sector Model</h2>
 
             </div>
             
@@ -213,10 +213,8 @@
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> mongoose = <span class="hljs-built_in">require</span>(<span class="hljs-string">'mongoose'</span>), 
     Schema = mongoose.Schema;
 
-<span class="hljs-keyword">var</span> sampleSchema = <span class="hljs-keyword">new</span> Schema({
+<span class="hljs-keyword">var</span> sectorSchema = <span class="hljs-keyword">new</span> Schema({
     name          : <span class="hljs-built_in">String</span>, 
-    template      : { type: <span class="hljs-built_in">String</span>, ngoform: { control: <span class="hljs-string">'Textarea'</span> } },
-    live          : { type: <span class="hljs-built_in">Boolean</span>, <span class="hljs-keyword">default</span>: <span class="hljs-literal">true</span>, ngoform: { control: <span class="hljs-string">'Toggle'</span> } },
 	created       : <span class="hljs-built_in">Date</span>         
 });</pre></div></div>
             
@@ -234,7 +232,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>sampleSchema.pre(<span class="hljs-string">"save"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(next)</span> </span>{
+            <div class="content"><div class='highlight'><pre>sectorSchema.pre(<span class="hljs-string">"save"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(next)</span> </span>{
     <span class="hljs-keyword">if</span>(!<span class="hljs-keyword">this</span>.created)
         <span class="hljs-keyword">this</span>.created = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();
     next();
@@ -253,8 +251,8 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>sampleSchema.method(<span class="hljs-string">"instanceMethod"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(param, cb)</span> </span>{
-    <span class="hljs-keyword">var</span> sample = <span class="hljs-keyword">this</span>;
+            <div class="content"><div class='highlight'><pre>sectorSchema.method(<span class="hljs-string">"instanceMethod"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(param, cb)</span> </span>{
+    <span class="hljs-keyword">var</span> sector = <span class="hljs-keyword">this</span>;
     <span class="hljs-keyword">this</span>.save(cb);
 });</pre></div></div>
             
@@ -271,10 +269,10 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>sampleSchema.statics.customMethod = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(paramid, cb)</span> </span>{
-  <span class="hljs-keyword">var</span> Sample = <span class="hljs-keyword">this</span>;
-  Sample.findOne({ _id: paramid}, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, sample)</span></span>{
-      cb(err, sample);
+            <div class="content"><div class='highlight'><pre>sectorSchema.statics.customMethod = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(paramid, cb)</span> </span>{
+  <span class="hljs-keyword">var</span> Sector = <span class="hljs-keyword">this</span>;
+  Sector.findOne({ _id: paramid}, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, sector)</span></span>{
+      cb(err, sector);
   });
 }</pre></div></div>
             
@@ -291,7 +289,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">module</span>.exports = mongoose.model(<span class="hljs-string">'Sample'</span>, sampleSchema);</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">module</span>.exports = mongoose.model(<span class="hljs-string">'Sector'</span>, sectorSchema);</pre></div></div>
             
         </li>
         

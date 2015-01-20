@@ -24,6 +24,111 @@ body
     background: url('../img/background.png') no-repeat 50% 0
     .mean-logo
       height:30px;
+  .label-danger
+    float: right;
+    border-radius: 12px;
+  .label-close
+    float: right;
+    border-radius: 20px;
+    background: #585858;
+    padding: 3px 4px;
+    color: #C8C8C8;
+    border: 1px solid #565656;
+
+#user-panel
+  #side
+    border-right: 1px solid #4a4a4a
+    position: absolute
+    top: 0;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    padding: 0;
+    background-color: #4a4a4a;
+    overflow: auto;
+    #site-opts
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    .sidebar-nav
+      background-color: #4a4a4a
+      padding: 0;
+      #side-chat-menu
+        height: 490px;
+        overflow-y: scroll;
+        li
+          a.chat-selector
+            padding: 0 15px 0 0;
+            border-bottom: 1px solid #5B5B5B;
+            img.msg-avatar
+              width: 40px;
+              height: 40px;
+              border-radius: 0;
+            .label-close
+              margin: 10px 0;
+      #side-menu, #side-chat-menu
+        a
+          color:#fff
+          img.msg-avatar
+            width: 20px
+            height: 20px
+            border-radius: 20px
+          span.d-item-title
+            padding-left: 10px
+        a:hover
+          color:#000
+        a.group
+          color:#c1c1c1
+          background: #3D3D3D;
+          border-bottom: 1px solid #5B5B5B;
+  #content
+    position: absolute;
+    top: 0;
+    //left: 196px;
+    bottom: 0;
+    right: 0;
+    padding: 0;
+    height: 100%;
+    overflow: auto;
+    #chat
+      .chat-msg-container
+        width: 100%
+        height: 80%
+        position: absolute
+        overflow-y: scroll
+        overflow-x: hidden
+        .chat-message
+          border-top: 1px solid #e4e4e4
+          padding: 8px
+          & > div
+            display: table-cell;
+          .msg-author
+            width: 20%
+            & > div
+              display: table-cell;
+            .msg-author-avatar 
+              img.msg-avatar
+                width: 40px
+                height: 40px
+                border-radius: 20px
+            .msg-author-name
+              padding: 0 10px; 
+              a
+                text-decoration: underline;
+                color: #3C3A3A;
+          .msg-content
+            width: 80%
+      .chat-form
+        width: 100%
+        height: 13%
+        padding: 5px
+        position:absolute
+        bottom:0
+        background: #f9f9f9
+        border-top: 1px solid #c0c0c0
+        textarea
+          width: 100%
+          height: 50px
 
 // Dashboard
 .board-container

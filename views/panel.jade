@@ -1,0 +1,138 @@
+extends layout
+
+block content
+  .row#user-panel
+    #side.column.col-sm-2.col-xs-1
+      nav.navbar.navbar-default(role='navigation',style="margin-bottom:0")
+        div
+          .collapse.navbar-collapse(style="padding:0")
+            ul.nav.navbar-nav(style="width: 100%;")
+              li.dropdown(style="width: 100%;")
+                a.dropdown-toggle(href='#', data-toggle='dropdown',style="padding-bottom:3px")
+                  img.img-circle(src="/img/photo400x400.png",style="width: 26px;margin: 0 8px 3px 0;")
+                  | Cristian Cortez
+                  |  
+                  span.caret
+                ul.dropdown-menu(role='menu')
+                  li
+                    a(href='/account') Mi Cuenta
+                  li
+                    a(href='#') Cursos
+                  li.divider
+                  li
+                    a(href="/logout") Logout
+      include ./partials/site-sidebar
+    #content.column.col-sm-10.col-xs-11
+      include ./partials/site-menu
+      #chat
+        .chat-msg-container
+          .chat-message
+            .msg-author
+              .msg-author-avatar
+                img.img-rounded.msg-avatar(src="/img/photo400x400.png")
+              .msg-author-name
+                a(href="#")
+                  span Cristian Cortez
+            .msg-content
+              span Sample content :D
+          .chat-message
+            .msg-author
+              .msg-author-avatar
+                img.img-rounded.msg-avatar(src="/img/photo400x400.png")
+              .msg-author-name
+                a(href="#")
+                  span Cristian Cortez
+            .msg-content
+              span Sample content :D
+          .chat-message
+            .msg-author
+              .msg-author-avatar
+                img.img-rounded.msg-avatar(src="/img/photo400x400.png")
+              .msg-author-name
+                a(href="#")
+                  span Cristian Cortez
+            .msg-content
+              span Sample content :D
+          .chat-message
+            .msg-author
+              .msg-author-avatar
+                img.img-rounded.msg-avatar(src="/img/photo400x400.png")
+              .msg-author-name
+                a(href="#")
+                  span Cristian Cortez
+            .msg-content
+              span Sample content :D
+          .chat-message
+            .msg-author
+              .msg-author-avatar
+                img.img-rounded.msg-avatar(src="/img/photo400x400.png")
+              .msg-author-name
+                a(href="#")
+                  span Cristian Cortez
+            .msg-content
+              span Sample content :D
+          .chat-message
+            .msg-author
+              .msg-author-avatar
+                img.img-rounded.msg-avatar(src="/img/photo400x400.png")
+              .msg-author-name
+                a(href="#")
+                  span Cristian Cortez
+            .msg-content
+              span Sample content :D
+          .chat-message
+            .msg-author
+              .msg-author-avatar
+                img.img-rounded.msg-avatar(src="/img/photo400x400.png")
+              .msg-author-name
+                a(href="#")
+                  span Cristian Cortez
+            .msg-content
+              span Sample content :D
+          .chat-message
+            .msg-author
+              .msg-author-avatar
+                img.img-rounded.msg-avatar(src="/img/photo400x400.png")
+              .msg-author-name
+                a(href="#")
+                  span Cristian Cortez
+            .msg-content
+              span Sample content :D
+          .chat-message
+            .msg-author
+              .msg-author-avatar
+                img.img-rounded.msg-avatar(src="/img/photo400x400.png")
+              .msg-author-name
+                a(href="#")
+                  span Cristian Cortez
+            .msg-content
+              span Sample content :D
+          .chat-message
+            .msg-author
+              .msg-author-avatar
+                img.img-rounded.msg-avatar(src="/img/photo400x400.png")
+              .msg-author-name
+                a(href="#")
+                  span Cristian Cortez
+            .msg-content
+              span Sample content :D
+          .chat-message
+            .msg-author
+              .msg-author-avatar
+                img.img-rounded.msg-avatar(src="/img/photo400x400.png")
+              .msg-author-name
+                a(href="#")
+                  span Cristian Cortez
+            .msg-content
+              span Sample content :D
+          .chat-message
+            .msg-author
+              .msg-author-avatar
+                img.img-rounded.msg-avatar(src="/img/photo400x400.png")
+              .msg-author-name
+                a(href="#")
+                  span Cristian Cortez
+            .msg-content
+              span Sample content :D
+        form.chat-form
+          textarea.message-input

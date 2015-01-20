@@ -1,4 +1,4 @@
-nav.navbar.navbar-default.navbar-fixed-top(role='navigation')
+nav.navbar.navbar-default(role='navigation',style="margin-bottom:0")
   .container-fluid
     .navbar-header
       button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
@@ -7,8 +7,8 @@ nav.navbar.navbar-default.navbar-fixed-top(role='navigation')
         span.icon-bar
         span.icon-bar
       a.navbar-brand.hammerfont(href='/')
-        i.fa.fa-cloud.fa-3(style="padding:0 3px;")
-        | Any·and·go
+        i.fa.fa-comments-o.fa-3(style="padding:0 3px;")
+        | Hermes
     #bs-example-navbar-collapse-1.collapse.navbar-collapse
       ul.nav.navbar-nav
         li
@@ -18,8 +18,22 @@ nav.navbar.navbar-default.navbar-fixed-top(role='navigation')
           a(href='/contact') Contact
         li
           a(href='/admin') Admin
+        li
+          a(href='/panel') Panel
         // public:page:menu:end
       ul.nav.navbar-nav.navbar-right
+        li
+          a(href='#')
+            i.fa.fa-comment
+        li
+          a(href='#')
+            i.fa.fa-envelope
+        li
+          a(href='#')
+            i.fa.fa-users
+        li
+          a(href='#')
+            i.fa.fa-paper-plane
         li.dropdown
           a.dropdown-toggle(href='#', data-toggle='dropdown')
             i.fa.fa-flag(style='padding-right:10px') 

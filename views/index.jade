@@ -20,14 +20,14 @@ block content
               .col-md-8
                 input#password.form-control(type="password", name="password", placeholder="Contraseña")
                 span.help-block
-            .form-group
+            .form-group(style="padding-bottom: 20px;")
               .col-md-offset-4.col-md-8
                 button.btn#login-btn(type="submit") Ingresar
-            .form-group
-              .col-md-8.col-md-offset-4.text-right(style="padding-right:10px")
+            .form-group.grp-foot
+              .col-md-6(style="padding:0 10px 0 10px;")
                 label.checkbox-inline(for="rec")
                   input#rec(type="checkbox",name="rec")
                   | Recordarme en este equipo
-              .col-md-8.col-md-offset-4.text-right
-                p(style="padding-top:10px;margin:0")
+              .col-md-6.text-right
+                p(style="margin:0")
                   a.btn.btn-forgot(href="/recovery") Olvidé mi clave

@@ -8,7 +8,8 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var officeSchema = new Schema({
-    name          : String, 
+    name          : String, //Branch name 
+    location      : String, // City
 	created       : Date         
 });
 

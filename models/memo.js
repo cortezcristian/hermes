@@ -9,6 +9,7 @@ var mongoose = require('mongoose'),
 
 var memoSchema = new Schema({
     name          : String, 
+    body          : String,
 	created       : Date         
 });
 

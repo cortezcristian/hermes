@@ -9,6 +9,10 @@ var mongoose = require('mongoose'),
 
 var memorecordSchema = new Schema({
     name          : String, 
+    idFrom        : { type: Schema.Types.ObjectId, ref: 'User' },
+    idTo          : { type: Schema.Types.ObjectId, ref: 'User' },
+    idMemo        : { type: Schema.Types.ObjectId, ref: 'Memo' },
+    readed_status : { type: Boolean, default: false },
 	created       : Date         
 });
 

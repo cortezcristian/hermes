@@ -200,6 +200,7 @@
             
             <div class="content"><div class='highlight'><pre><span class="hljs-comment">/* authorizers:start */</span>
 <span class="hljs-keyword">var</span> adminAuth = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../auth/admin-auth.js'</span>);
+<span class="hljs-keyword">var</span> userAuth = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../auth/user-auth.js'</span>);
 <span class="hljs-comment">/* authorizers:end */</span></pre></div></div>
             
         </li>
@@ -233,7 +234,14 @@
             
             <div class="content"><div class='highlight'><pre>app.post(<span class="hljs-string">'/admin'</span>, 
   passport.authenticate(<span class="hljs-string">'administrators'</span>, { successRedirect: <span class="hljs-string">'/admin/panel'</span>,
-                                    failureRedirect: <span class="hljs-string">'/admin'</span>})
+                                    failureRedirect: <span class="hljs-string">'/admin'</span>,
+                                    failureFlash: <span class="hljs-literal">true</span>})
+);
+
+app.post(<span class="hljs-string">'/login'</span>, 
+  passport.authenticate(<span class="hljs-string">'users'</span>, { successRedirect: <span class="hljs-string">'/panel'</span>,
+                                    failureRedirect: <span class="hljs-string">'/'</span>,
+                                    failureFlash: <span class="hljs-literal">true</span>})
 );</pre></div></div>
             
         </li>

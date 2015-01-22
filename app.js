@@ -45,6 +45,7 @@ var dbConex = exports.dbConex = utils.dbConnection(config.db.domain,config.db.na
 if (config.fixtures && config.fixtures === "enabled") {
 // Load Fixtures
 require('./fixtures');
+require('./fixtures/startup');
 }
 
 // i18n setup

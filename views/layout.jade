@@ -9,9 +9,11 @@ html(lang='en',ng-app="anyandgoApp")
     //-<!-- build:css(public) styles/site-styles.min.css -->
     //bower:css
     link(rel='stylesheet', href='/components/bootstrap/dist/css/bootstrap.css')
-    link(rel='stylesheet', href='/components/fontawesome/css/font-awesome.css')
     link(rel='stylesheet', href='/components/metisMenu/dist/metisMenu.css')
+    link(rel='stylesheet', href='/components/angular-toggle-switch/angular-toggle-switch.css')
+    link(rel='stylesheet', href='/components/perfect-scrollbar/src/perfect-scrollbar.css')
     //endbower
+    link(rel='stylesheet', href='/components/fontawesome/css/font-awesome.css')
     //-<!-- endbuild -->
     - } else {
     link(rel='stylesheet', href='/dist/styles/site-styles.min.css')
@@ -59,6 +61,8 @@ html(lang='en',ng-app="anyandgoApp")
     script(src='/components/angular-animate/angular-animate.js')
     script(src='/components/angular-touch/angular-touch.js')
     script(src='/components/angular-route/angular-route.js')
+    script(src='/components/angular-toggle-switch/angular-toggle-switch.js')
+    script(src='/components/perfect-scrollbar/src/perfect-scrollbar.js')
     //endbower
     //-<!-- endbuild -->
     - } else {
@@ -74,6 +78,7 @@ html(lang='en',ng-app="anyandgoApp")
     script(src='/scripts/site/controllers/sample-new.js')
     script(src='/scripts/site/controllers/sample-edit.js')
     script(src='/scripts/site/directives/langsupport.js')
+    script(src='/scripts/site/directives/chatui.js')
     //site:app:scripts:end
     //-<!-- endbuild -->
     - } else {

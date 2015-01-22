@@ -1,7 +1,7 @@
 body
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif
-  a
-    color: #00B7FF
+  a, label
+    color: #484848
   .hammerfont
     font-family: 'Hammersmith One', sans-serif;
   .neck
@@ -16,7 +16,11 @@ body
       margin-bottom: 15px;
       font-size: 21px;
       font-weight: 200;
-  .logobig, .white
+  .logobig
+    color: #484848
+    text-align: center
+    padding-bottom: 20px
+  .white
     color: #fff !important
   .our-main-content
     border-top: 1px solid #e7e7e7;
@@ -34,6 +38,15 @@ body
     padding: 3px 4px;
     color: #C8C8C8;
     border: 1px solid #565656;
+  .btn-forgot, label
+    font-size: 14px !important;
+  .grp-foot
+    background: #E9E9E9;
+    margin-bottom: -15px;
+    & > div
+      padding-top: 0 !important;
+      *
+        color: #6F6F6F
 
 #user-panel
   #side
@@ -97,13 +110,18 @@ body
         position: absolute
         overflow-y: scroll
         overflow-x: hidden
+        .chat-message-table
+          display: table;
+          width: 100%;
         .chat-message
-          border-top: 1px solid #e4e4e4
           padding: 8px
+          display: table-row
           & > div
             display: table-cell;
+            border-top: 1px solid #e4e4e4
           .msg-author
             width: 20%
+            padding: 10px
             & > div
               display: table-cell;
             .msg-author-avatar 
@@ -117,6 +135,7 @@ body
                 text-decoration: underline;
                 color: #3C3A3A;
           .msg-content
+            padding-bottom: 10px
             width: 80%
       .chat-form
         width: 100%

@@ -15,6 +15,7 @@ var userSchema = new Schema({
     first_name    : String,
     last_name     : String,
     avatar        : String,
+    role          : { type: String, default: 'user' },
     idSector      : { type: Schema.Types.ObjectId, ref: 'Sector' },
     idOffice      : { type: Schema.Types.ObjectId, ref: 'Office' },
     isonline      : { type: Boolean, default: false },

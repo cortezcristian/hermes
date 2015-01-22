@@ -221,6 +221,7 @@
     first_name    : <span class="hljs-built_in">String</span>,
     last_name     : <span class="hljs-built_in">String</span>,
     avatar        : <span class="hljs-built_in">String</span>,
+    role          : { type: <span class="hljs-built_in">String</span>, <span class="hljs-keyword">default</span>: <span class="hljs-string">'user'</span> },
     idSector      : { type: Schema.Types.ObjectId, ref: <span class="hljs-string">'Sector'</span> },
     idOffice      : { type: Schema.Types.ObjectId, ref: <span class="hljs-string">'Office'</span> },
     isonline      : { type: <span class="hljs-built_in">Boolean</span>, <span class="hljs-keyword">default</span>: <span class="hljs-literal">false</span> },

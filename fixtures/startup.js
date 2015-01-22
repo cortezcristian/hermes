@@ -41,8 +41,9 @@ var clearCollections = function ( cb ) {
 
 var loadUsers = function(cb) {
     var users = [ 
-        { email: "user@user.com", password: "123456" } 
-        , { email: "demo@demo.com", password: "123456" } 
+        { email: "user@user.com", password: "123456", avatar: '/photos/user.png' } 
+        , { email: "demo@demo.com", password: "123456", avatar: '/photos/demo.png' } 
+        , { email: "cortez.cristian@gmail.com", password: "12345678", avatar: '/photos/crisboot.png' } 
         ];
 
     async.mapSeries(users, function(op, callback){

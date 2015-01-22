@@ -290,8 +290,30 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>        it(<span class="hljs-string">'add a user'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(done)</span></span>{
-            user = <span class="hljs-keyword">new</span> User({ name: <span class="hljs-string">'user'</span>+<span class="hljs-built_in">Math</span>.floor((<span class="hljs-built_in">Math</span>.random() * <span class="hljs-number">10</span>) + <span class="hljs-number">1</span>)});
+            user = <span class="hljs-keyword">new</span> User({ 
+                name: <span class="hljs-string">'user'</span>+<span class="hljs-built_in">Math</span>.floor((<span class="hljs-built_in">Math</span>.random() * <span class="hljs-number">10</span>) + <span class="hljs-number">1</span>),
+                password: <span class="hljs-string">'123456'</span>
+            });
             user.save(done);
+        });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>It show authenticate an user</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        it(<span class="hljs-string">'authenticate an user'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(done)</span></span>{
+            assert.ok(user.authenticate(<span class="hljs-string">'123456'</span>), <span class="hljs-string">'Password should match'</span>);
+            assert.ok(!user.authenticate(<span class="hljs-string">'incorrect'</span>), <span class="hljs-string">'Password should not match'</span>);
+            done();
         });
 
     });

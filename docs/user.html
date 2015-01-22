@@ -211,10 +211,25 @@
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> mongoose = <span class="hljs-built_in">require</span>(<span class="hljs-string">'mongoose'</span>), 
+    crypto = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>),
     Schema = mongoose.Schema;
 
 <span class="hljs-keyword">var</span> userSchema = <span class="hljs-keyword">new</span> Schema({
     name          : <span class="hljs-built_in">String</span>, 
+    email         : <span class="hljs-built_in">String</span>,
+    password      : <span class="hljs-built_in">String</span>,
+    first_name    : <span class="hljs-built_in">String</span>,
+    last_name     : <span class="hljs-built_in">String</span>,
+    avatar        : <span class="hljs-built_in">String</span>,
+    idSector      : { type: Schema.Types.ObjectId, ref: <span class="hljs-string">'Sector'</span> },
+    idOffice      : { type: Schema.Types.ObjectId, ref: <span class="hljs-string">'Office'</span> },
+    isonline      : { type: <span class="hljs-built_in">Boolean</span>, <span class="hljs-keyword">default</span>: <span class="hljs-literal">false</span> },
+    isactive      : { type: <span class="hljs-built_in">Boolean</span>, <span class="hljs-keyword">default</span>: <span class="hljs-literal">true</span> },
+    last_login    : <span class="hljs-built_in">Date</span>,
+    last_activity : <span class="hljs-built_in">Date</span>,
+    job_desc      : <span class="hljs-built_in">String</span>,
+    phone         : <span class="hljs-built_in">String</span>,
+    chat_windows  : <span class="hljs-built_in">String</span>,
 	created       : <span class="hljs-built_in">Date</span>         
 });</pre></div></div>
             
@@ -235,6 +250,8 @@
             <div class="content"><div class='highlight'><pre>userSchema.pre(<span class="hljs-string">"save"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(next)</span> </span>{
     <span class="hljs-keyword">if</span>(!<span class="hljs-keyword">this</span>.created)
         <span class="hljs-keyword">this</span>.created = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();
+    <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.isModified(<span class="hljs-string">'password'</span>))
+        <span class="hljs-keyword">this</span>.password = crypto.createHash(<span class="hljs-string">'md5'</span>).update(<span class="hljs-keyword">this</span>.password).digest(<span class="hljs-string">"hex"</span>);
     next();
 });</pre></div></div>
             
@@ -251,9 +268,9 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>userSchema.method(<span class="hljs-string">"instanceMethod"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(param, cb)</span> </span>{
+            <div class="content"><div class='highlight'><pre>userSchema.method(<span class="hljs-string">'authenticate'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(password)</span> </span>{
     <span class="hljs-keyword">var</span> user = <span class="hljs-keyword">this</span>;
-    <span class="hljs-keyword">this</span>.save(cb);
+    <span class="hljs-keyword">return</span> crypto.createHash(<span class="hljs-string">'md5'</span>).update(password).digest(<span class="hljs-string">"hex"</span>) === user.password;
 });</pre></div></div>
             
         </li>

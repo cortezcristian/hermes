@@ -8,7 +8,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var sectorSchema = new Schema({
-    name          : String, 
+    name          : String, // i.e. Finance, HR, etc 
 	created       : Date         
 });
 

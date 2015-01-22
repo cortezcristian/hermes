@@ -1,4 +1,4 @@
-hermes
+hermes [![Build Status](https://travis-ci.org/cortezcristian/hermes.svg?branch=master)](https://travis-ci.org/cortezcristian/hermes)
 =========
 
 1. Server

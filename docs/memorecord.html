@@ -215,6 +215,10 @@
 
 <span class="hljs-keyword">var</span> memorecordSchema = <span class="hljs-keyword">new</span> Schema({
     name          : <span class="hljs-built_in">String</span>, 
+    idFrom        : { type: Schema.Types.ObjectId, ref: <span class="hljs-string">'User'</span> },
+    idTo          : { type: Schema.Types.ObjectId, ref: <span class="hljs-string">'User'</span> },
+    idMemo        : { type: Schema.Types.ObjectId, ref: <span class="hljs-string">'Memo'</span> },
+    readed_status : { type: <span class="hljs-built_in">Boolean</span>, <span class="hljs-keyword">default</span>: <span class="hljs-literal">false</span> },
 	created       : <span class="hljs-built_in">Date</span>         
 });</pre></div></div>
             

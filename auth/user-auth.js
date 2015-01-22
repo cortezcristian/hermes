@@ -64,6 +64,6 @@ userAuth.strategy = new LocalStrategy(
 );
 
 // Use Strategy
-passport.use('useristrators', userAuth.strategy);
+passport.use('users', userAuth.strategy);
 
 module.exports = userAuth;

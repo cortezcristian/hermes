@@ -232,6 +232,7 @@
     name          : <span class="hljs-built_in">String</span>,
     idFrom        : { type: Schema.Types.ObjectId, ref: <span class="hljs-string">'User'</span> },
     idTo          : { type: Schema.Types.ObjectId, ref: <span class="hljs-string">'User'</span> },
+    chatroomTo    : { type: Schema.Types.ObjectId, ref: <span class="hljs-string">'ChatRoom'</span> },
     message       : <span class="hljs-built_in">String</span>,
     readed_status : { type: <span class="hljs-built_in">Boolean</span>, <span class="hljs-keyword">default</span>: <span class="hljs-literal">false</span> },
 	created       : <span class="hljs-built_in">Date</span>         

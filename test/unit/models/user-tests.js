@@ -4,18 +4,28 @@
 // Modules Dependencies:
 //  - Assert (http://nodejs.org/api/assert.html)
 var assert = require('assert');
+var fixtures = require('mongoose-fixtures');
 
 // Require basic config files and DB connection
 require('../../../utils/dbconnect');
 
 // Global Variables for the test case
-var User, user;
+var User, user, user1, user2;
 
 // Unit Tests
 describe('Model Test User', function(){
     before(function(){
         // Before all tests
         User = require("../../../models/user.js");
+        // Load fixtures
+        fixtures.load('../../../fixtures/shared/users.js');
+        User.findOne({email:'user@user.com'}, function(err, usr){
+            user1 = usr;    
+        });
+
+        User.findOne({email:'demo@demo.com'}, function(err, usr){
+            user2 = usr;    
+        });
     });
 
     describe('User', function(){
@@ -37,6 +47,17 @@ describe('Model Test User', function(){
         it('open a new private chat room', function(done){
             user.openPrivateChat('other-user-id-here', done);
         });
+        // It should send a new message
+        it('send a new private message', function(done){
+            user1.sendPrivateChat(user2._id, "Hi there!", function(err, chatroom){
+                //console.log("chatroom", chatroom)
+                assert.ok(chatroom.history.length > 0, 'Chatroom history should exist');
+                done(); 
+            });
+        });
+        // TODO:
+        // Cannot send messages to himself
+        // User2 should exist
 
     });
 });

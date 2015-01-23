@@ -11,6 +11,7 @@ var chatrecordSchema = new Schema({
     name          : String,
     idFrom        : { type: Schema.Types.ObjectId, ref: 'User' },
     idTo          : { type: Schema.Types.ObjectId, ref: 'User' },
+    chatroomTo    : { type: Schema.Types.ObjectId, ref: 'ChatRoom' },
     message       : String,
     readed_status : { type: Boolean, default: false },
 	created       : Date         

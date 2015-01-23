@@ -225,7 +225,8 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
+<span class="hljs-keyword">var</span> fixtures = <span class="hljs-built_in">require</span>(<span class="hljs-string">'mongoose-fixtures'</span>);</pre></div></div>
             
         </li>
         
@@ -255,7 +256,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> User, user;</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> User, user, user1, user2;</pre></div></div>
             
         </li>
         
@@ -286,10 +287,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        User = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../../../models/user.js"</span>);
-    });
-
-    describe(<span class="hljs-string">'User'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        User = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../../../models/user.js"</span>);</pre></div></div>
             
         </li>
         
@@ -299,6 +297,31 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Load fixtures</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        fixtures.load(<span class="hljs-string">'../../../fixtures/shared/users.js'</span>);
+        User.findOne({email:<span class="hljs-string">'user@user.com'</span>}, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, usr)</span></span>{
+            user1 = usr;    
+        });
+
+        User.findOne({email:<span class="hljs-string">'demo@demo.com'</span>}, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, usr)</span></span>{
+            user2 = usr;    
+        });
+    });
+
+    describe(<span class="hljs-string">'User'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <p>It should create a new document in the database</p>
 
@@ -315,11 +338,11 @@
         </li>
         
         
-        <li id="section-9">
+        <li id="section-10">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
               <p>It should authenticate an user</p>
 
@@ -334,11 +357,11 @@
         </li>
         
         
-        <li id="section-10">
+        <li id="section-11">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
+                <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
               <p>It should open a new chatroom</p>
 
@@ -346,8 +369,58 @@
             
             <div class="content"><div class='highlight'><pre>        it(<span class="hljs-string">'open a new private chat room'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(done)</span></span>{
             user.openPrivateChat(<span class="hljs-string">'other-user-id-here'</span>, done);
-        });
+        });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>It should send a new message</p>
 
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        it(<span class="hljs-string">'send a new private message'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(done)</span></span>{
+            user1.sendPrivateChat(user2._id, <span class="hljs-string">"Hi there!"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, chatroom)</span></span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>console.log(“chatroom”, chatroom)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                assert.ok(chatroom.history.length &gt; <span class="hljs-number">0</span>, <span class="hljs-string">'Chatroom history should exist'</span>);
+                done(); 
+            });
+        });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>TODO:
+Cannot send messages to himself
+User2 should exist</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
     });
 });</pre></div></div>
             

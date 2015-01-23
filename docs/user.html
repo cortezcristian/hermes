@@ -320,7 +320,35 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
-              <h3 id="method-openprivatechat">Method: openPrivateChat</h3>
+              <h3 id="method-sendprivatechat">Method: sendPrivateChat</h3>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>userSchema.method(<span class="hljs-string">'sendPrivateChat'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(iduserto, msg, cb)</span> </span>{
+    <span class="hljs-keyword">var</span> user = <span class="hljs-keyword">this</span>;
+    ChatRoom.findOrCreate(user._id, iduserto, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, chatroom)</span></span>{
+        <span class="hljs-keyword">var</span> chatmsg = <span class="hljs-keyword">new</span> ChatRecord({
+            idFrom  : user._id,    
+            idTo    : iduserto,
+            message : msg   
+        });
+        chatmsg.save(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, chatrecord)</span></span>{
+            chatroom.history.push(chatrecord);
+            chatroom.save(cb);
+        });
+    });
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <h3 id="method-redchatmsg">Method: redChatMsg</h3>
 
             </div>
             
@@ -332,11 +360,11 @@
         </li>
         
         
-        <li id="section-8">
+        <li id="section-9">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <h3 id="static-">Static:</h3>
 
@@ -352,11 +380,11 @@
         </li>
         
         
-        <li id="section-9">
+        <li id="section-10">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
               <p>Export module</p>
 

@@ -54,7 +54,24 @@ userSchema.method('openPrivateChat', function(userto, cb) {
     ChatRoom.findOrCreate(user._id, userto, cb);
 });
 
-// ### Method: openPrivateChat
+// ### Method: sendPrivateChat
+userSchema.method('sendPrivateChat', function(iduserto, msg, cb) {
+    var user = this;
+    ChatRoom.findOrCreate(user._id, iduserto, function(err, chatroom){
+        var chatmsg = new ChatRecord({
+            idFrom     : user._id,    
+            idTo       : iduserto,
+            chatroomTo : chatroom._id,
+            message    : msg   
+        });
+        chatmsg.save(function(err, chatrecord){
+            chatroom.history.push(chatrecord);
+            chatroom.save(cb);
+        });
+    });
+});
+
+// ### Method: redChatMsg
 userSchema.method('readChatMsg', function(msgid, cb) {
     var user = this;
     ChatRecord.makrAsRead(user._id, msgid, cb);

@@ -687,7 +687,7 @@ multiple msg ids separated by commas in a CSV way: msgid1,msgid2,msgid3</p>
     });
 });
 
-app.get(<span class="hljs-string">'/services/ask/private/chat/history/:period'</span>, 
+app.get(<span class="hljs-string">'/services/ask/private/chat/:roomid/history/:period'</span>, 
     userAuth.autorizer,
     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(req, res)</span> </span>{</pre></div></div>
             
@@ -701,6 +701,7 @@ app.get(<span class="hljs-string">'/services/ask/private/chat/history/:period'</
                 <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <p>Should receive
+req.params.roomid
 req.params.period
 it can be a hash of the msgid
 it can be all, year, month, week, day</p>
@@ -710,7 +711,7 @@ it can be all, year, month, week, day</p>
             <div class="content"><div class='highlight'><pre>    res.json(req.params);
 });
 
-app.get(<span class="hljs-string">'/services/ask/private/chat/updates/:msgid'</span>, 
+app.get(<span class="hljs-string">'/services/ask/private/chat/:roomid/updates/:msgid'</span>, 
     userAuth.autorizer,
     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(req, res)</span> </span>{</pre></div></div>
             
@@ -724,6 +725,7 @@ app.get(<span class="hljs-string">'/services/ask/private/chat/updates/:msgid'</s
                 <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>Should receive
+req.params.roomid
 req.params.msgid
 it can be a hash of the msgid
 from where we start the search to bring only the new ones</p>

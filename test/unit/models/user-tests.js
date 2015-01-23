@@ -79,10 +79,18 @@ describe('Model Test User', function(){
         // It should mark message as read
         it('mark message as read', function(done){
             user2.readChatMsg(chatroom1.history[0], function(err, chatrecord){
-                assert.ok(chatrecord.readed_status, 'Chat Record should be readedd');
+                assert.ok(chatrecord.readed_status, 'Chat Record should be readed');
                 done(); 
             });
         });
+        // It get chat history
+        it('get chat history', function(done){
+            user2.getChatHistory(chatroom1._id, function(err, chatroom){
+                assert.ok(chatroom.history[0].readed_status, 'First Chat Record should be marked as read');
+                done(); 
+            });
+        });
+        // TODO: check if user has access to that history
 
     });
 });

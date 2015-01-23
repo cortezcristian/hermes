@@ -91,6 +91,19 @@ userSchema.method('readMultipleChatMsg', function(msgsCSV, cb) {
     });
 });
 
+// ### Method: getHistory
+userSchema.method('getChatHistory', function(roomid, period, cb) {
+    var user = this;
+    if(typeof period === 'function'){
+        cb = period;
+        period = 'all';    
+    }
+    ChatRoom.findOne({_id:roomid}, function(err, chatroom){
+        //Populate all history
+        ChatRecord.populate(chatroom, { path: 'history' }, cb);
+    });
+});
+
 // ### Static:
 userSchema.statics.customMethod = function (paramid, cb) {
   var User = this;

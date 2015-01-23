@@ -213,20 +213,22 @@ app.post('/services/read/multiple/private/chat',
     });
 });
 
-app.get('/services/ask/private/chat/history/:period', 
+app.get('/services/ask/private/chat/:roomid/history/:period', 
     userAuth.autorizer,
     function (req, res) {
     // Should receive
+    // req.params.roomid
     // req.params.period
     // it can be a hash of the msgid
     // it can be all, year, month, week, day
     res.json(req.params);
 });
 
-app.get('/services/ask/private/chat/updates/:msgid', 
+app.get('/services/ask/private/chat/:roomid/updates/:msgid', 
     userAuth.autorizer,
     function (req, res) {
     // Should receive
+    // req.params.roomid
     // req.params.msgid
     // it can be a hash of the msgid
     // from where we start the search to bring only the new ones

@@ -8,7 +8,11 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var chatrecordSchema = new Schema({
-    name          : String, 
+    name          : String,
+    idFrom        : { type: Schema.Types.ObjectId, ref: 'User' },
+    idTo          : { type: Schema.Types.ObjectId, ref: 'User' },
+    message       : String,
+    readed_status : { type: Boolean, default: false },
 	created       : Date         
 });
 

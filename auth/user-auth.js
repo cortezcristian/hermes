@@ -12,7 +12,7 @@ userAuth.autorizer = function(req, res, next){
         next();
     }else{
         //Not authorized go to the login form
-        res.redirect('/user');
+        res.redirect('/');
     }
 };
 

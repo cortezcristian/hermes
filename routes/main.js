@@ -32,6 +32,7 @@ var app = module.parent.exports.app,
   // according to their roles
   /* authorizers:start */
   adminAuth = require('../auth/admin-auth.js'),
+  userAuth = require('../auth/user-auth.js'),
   /* authorizers:end */
   /* forms:start */
   adminLoginForm = require('../forms/admin-login.js'),
@@ -167,10 +168,198 @@ app.get('/admin', function (req, res) {
 });
 
 // ### Panel Page
-app.get('/panel', function (req, res) {
+app.get('/panel', 
+    userAuth.autorizer,
+    function (req, res) {
     res.render('panel', { title: 'Panel', section: 'Panel' });
 });
+
 /* page:public:end */
+
+// ### Services
+// Mainly for users
+
+// #### Chat Services
+
+app.post('/services/send/private/chat/', 
+    userAuth.autorizer,
+    function (req, res) {
+    // Should receive
+    // req.body.userto
+    // req.body.msg
+    res.json(req.body);
+});
+
+app.get('/services/read/private/chat/:msgid', 
+    userAuth.autorizer,
+    function (req, res) {
+    // Should receive
+    // req.params.msgid
+    res.json(req.params);
+});
+
+app.post('/services/read/multiple/private/chat', 
+    userAuth.autorizer,
+    function (req, res) {
+    // Should receive
+    // req.body.msgs
+    // multiple msg ids separated by commas in a CSV way: msgid1,msgid2,msgid3
+    res.json(req.body);
+});
+
+app.get('/services/ask/private/chat/history/:period', 
+    userAuth.autorizer,
+    function (req, res) {
+    // Should receive
+    // req.params.period
+    // it can be a hash of the msgid
+    // it can be all, year, month, week, day
+    res.json(req.params);
+});
+
+app.get('/services/ask/private/chat/updates/:msgid', 
+    userAuth.autorizer,
+    function (req, res) {
+    // Should receive
+    // req.params.msgid
+    // it can be a hash of the msgid
+    // from where we start the search to bring only the new ones
+    res.json(req.params);
+});
+
+app.get('/services/count/unread/private/chat/:usrid', 
+    userAuth.autorizer,
+    function (req, res) {
+    // Should receive
+    // req.params.usrid
+    // counts pending to read chats for a particular user
+    res.json(req.params);
+});
+
+app.get('/services/count/all/unread/private/chat', 
+    userAuth.autorizer,
+    function (req, res) {
+    // Should receive
+    // counts all pending to read chats for current user
+    res.json(req.params);
+});
+
+app.get('/services/open/private/chat/:usrid', 
+    userAuth.autorizer,
+    function (req, res) {
+    // Should receive
+    // req.params.usrid
+    // should bring last 48hs of a private chat
+    // if the chat doesn't exist it should create it 
+    res.json(req.params);
+});
+
+// #### Search Personal
+
+app.post('/services/search/people', 
+    userAuth.autorizer,
+    function (req, res) {
+    // Should receive
+    // req.body.keyword
+    // req.body.office
+    // req.body.sector
+    // Returns data of matched personal
+    res.json(req.body);
+});
+
+// #### Memo
+
+app.get('/services/read/memo/:memoid', 
+    userAuth.autorizer,
+    function (req, res) {
+    // Should receive
+    // req.params.memoid
+    // Mark memo as read
+    res.json(req.params);
+});
+
+
+app.get('/services/get/memo/:memoid', 
+    userAuth.autorizer,
+    function (req, res) {
+    // Should receive
+    // req.params.memoid
+    // Gets a particular memo
+    res.json(req.params);
+});
+
+app.get('/services/get/memos/inbox', 
+    userAuth.autorizer,
+    function (req, res) {
+    // Should receive
+    // req.params.memoid
+    // Gets the list of all memos received
+    res.json(req.params);
+});
+
+app.get('/services/get/memos/outbox', 
+    userAuth.autorizer,
+    function (req, res) {
+    // Should receive
+    // req.params.memoid
+    // Gets the list of all memos sent
+    res.json(req.params);
+});
+
+app.get('/services/count/unread/memos', 
+    userAuth.autorizer,
+    function (req, res) {
+    // Should receive
+    // counts all pending to read memos for current user
+    res.json(req.params);
+});
+
+
+app.post('/services/send/memo', 
+    userAuth.autorizer,
+    function (req, res) {
+    // Should receive
+    // req.body.memobody
+    // req.body.usersto
+    // Creates a new mememo
+    // specify the usersto by giving us
+    // their ids separated by commas in a CSV way: usrid1,usrid2,usrid3
+    res.json(req.body);
+});
+
+// #### Session
+
+// TODO: set last activity can be an interceptor for services
+// TODO: resolve how to disconnect inactive people
+
+app.post('/services/save/chat/window', 
+    userAuth.autorizer,
+    function (req, res) {
+    // Should receive
+    // req.body.chatroomname
+    // Saves minimized window UI
+    // everytime you open a chatroom UI
+    res.json(req.body);
+});
+
+app.post('/services/remove/chat/window', 
+    userAuth.autorizer,
+    function (req, res) {
+    // Should receive
+    // req.body.chatroomname
+    // Removes minimized window UI
+    // everytime you close a chatroom UI
+    res.json(req.body);
+});
+
+app.get('/services/count/unread/memos', 
+    userAuth.autorizer,
+    function (req, res) {
+    // Returns the list of chatrooms open in the last session
+    res.json(req.params);
+});
+
+
 
 // ## 2. Admin Routes
 // --------------------------------------
@@ -439,6 +628,7 @@ app.get('/forms/sample/edit', function (req, res) {
 
 // ## 5. Super Admin Tasks
 // --------------------------------------
+/*
 app.get('/tasks/test', function (req, res) {
     shell.exec('./node_modules/mocha/bin/mocha --reporter doc', function(code, output) {
         console.log('Exit code:', code);
@@ -446,7 +636,6 @@ app.get('/tasks/test', function (req, res) {
         res.end(output);
     });
 });
-/*
 // TODO: prevent auto-reboot when running with grunt, securitize mname parameter
 app.get('/tasks/create/model/:mname', function (req, res) {
     shell.exec('grunt create:model:'+req.params.mname, function(code, output) {

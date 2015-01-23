@@ -17,4 +17,7 @@
 #grunt create:rest:Office
 #grunt create:crud:Office
 #
-bower install --save noty
+#bower install --save noty
+grunt create:model:ChatRoom
+grunt create:rest:ChatRoom
+grunt create:crud:ChatRoom

@@ -24,6 +24,7 @@ var app = module.parent.exports.app,
   MemoRecord  = require('../models/memorecord.js'),
   Sector  = require('../models/sector.js'),
   Office  = require('../models/office.js'),
+  ChatRoom  = require('../models/chatroom.js'),
   /* models:end */
   // ### Authorizers
   // Mantain certains part from the application secure
@@ -50,7 +51,9 @@ var app = module.parent.exports.app,
   anyandgo.models['memorecord']  = MemoRecord;
   anyandgo.models['sector']  = Sector;
   anyandgo.models['office']  = Office;
+  anyandgo.models['chatroom']  = ChatRoom;
   /* models:registration:end */
+
 
 
 
@@ -325,7 +328,25 @@ restify.serve(app, Office, {
     console.log("post process");
   }
 });
+
+// GET /api/v1/chatrooms
+restify.serve(app, ChatRoom, {
+  lowercase: true,
+  lean: false,
+  prereq: function(req) {
+    console.log("pre req");
+    return true;
+  },
+  contextFilter: function(model, req, cb) {
+    console.log("context filter");
+    cb(model);
+  },
+  postProcess: function(req, res){
+    console.log("post process");
+  }
+});
 /* rest:public:end */
+
 
 
 

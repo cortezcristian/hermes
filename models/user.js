@@ -71,10 +71,16 @@ userSchema.method('sendPrivateChat', function(iduserto, msg, cb) {
     });
 });
 
-// ### Method: redChatMsg
+// ### Method: readChatMsg
 userSchema.method('readChatMsg', function(msgid, cb) {
     var user = this;
-    ChatRecord.makrAsRead(user._id, msgid, cb);
+    ChatRecord.markAsRead(user._id, msgid, cb);
+});
+
+// ### Method: readMultipleChatMsg
+userSchema.method('readMultipleChatMsg', function(msgid, cb) {
+    var user = this;
+    //ChatRecord.makrAsRead(user._id, msgid, cb);
 });
 
 // ### Static:

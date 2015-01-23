@@ -187,7 +187,9 @@ app.post('/services/send/private/chat/',
     // Should receive
     // req.body.userto
     // req.body.msg
-    res.json(req.body);
+    req.user.sendPrivateChat(req.body.userto, req.body.msg, function(err, chatroom){
+        res.json(req.body);
+    });
 });
 
 app.get('/services/read/private/chat/:msgid', 

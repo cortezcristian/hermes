@@ -635,7 +635,9 @@ req.body.msg</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    res.json(req.body);
+            <div class="content"><div class='highlight'><pre>    req.user.sendPrivateChat(req.body.userto, req.body.msg, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, chatroom)</span></span>{
+        res.json(req.body);
+    });
 });
 
 app.get(<span class="hljs-string">'/services/read/private/chat/:msgid'</span>, 

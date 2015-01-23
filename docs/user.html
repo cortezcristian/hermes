@@ -328,9 +328,10 @@
     <span class="hljs-keyword">var</span> user = <span class="hljs-keyword">this</span>;
     ChatRoom.findOrCreate(user._id, iduserto, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, chatroom)</span></span>{
         <span class="hljs-keyword">var</span> chatmsg = <span class="hljs-keyword">new</span> ChatRecord({
-            idFrom  : user._id,    
-            idTo    : iduserto,
-            message : msg   
+            idFrom     : user._id,    
+            idTo       : iduserto,
+            chatroomTo : chatroom._id,
+            message    : msg   
         });
         chatmsg.save(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, chatrecord)</span></span>{
             chatroom.history.push(chatrecord);

@@ -154,7 +154,25 @@ angular
           }
         }
       })
+      .when('/crud/chatroom', {
+        templateUrl: '/scripts/admin/views/chatroom.html',
+        controller: 'ChatRoomCtrl'
+      })
+      .when('/crud/chatroom-new', {
+        templateUrl: '/forms/chatroom/create',
+        controller: 'ChatRoomNewCtrl'
+      })
+      .when('/crud/chatroom-edit/:id', {
+        templateUrl: '/forms/chatroom/create',
+        controller: 'ChatRoomEditCtrl',
+        resolve: {
+          chatroom: function(Restangular, $route){
+            return Restangular.one('chatrooms', $route.current.params.id).get();
+          }
+        }
+      })
       .otherwise({
+
 
 
 

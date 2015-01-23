@@ -300,7 +300,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
-              <p>It show create a new document in the database</p>
+              <p>It should create a new document in the database</p>
 
             </div>
             
@@ -321,7 +321,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
-              <p>It show authenticate an user</p>
+              <p>It should authenticate an user</p>
 
             </div>
             
@@ -329,6 +329,23 @@
             assert.ok(user.authenticate(<span class="hljs-string">'123456'</span>), <span class="hljs-string">'Password should match'</span>);
             assert.ok(!user.authenticate(<span class="hljs-string">'incorrect'</span>), <span class="hljs-string">'Password should not match'</span>);
             done();
+        });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>It should open a new chatroom</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        it(<span class="hljs-string">'open a new private chat room'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(done)</span></span>{
+            user.openPrivateChat(<span class="hljs-string">'other-user-id-here'</span>, done);
         });
 
     });

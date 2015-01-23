@@ -195,7 +195,9 @@ app.get('/services/read/private/chat/:msgid',
     function (req, res) {
     // Should receive
     // req.params.msgid
-    res.json(req.params);
+    req.user.markAsRead(req.params.msgid, function(err, chatrecord){
+        res.json(chatrecord);
+    });
 });
 
 app.post('/services/read/multiple/private/chat', 

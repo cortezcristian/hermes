@@ -9,6 +9,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var ChatRoom = require('./chatroom.js');
+var ChatRecord = require('./chatrecord.js');
 
 
 var userSchema = new Schema({
@@ -51,6 +52,12 @@ userSchema.method('authenticate', function(password) {
 userSchema.method('openPrivateChat', function(userto, cb) {
     var user = this;
     ChatRoom.findOrCreate(user._id, userto, cb);
+});
+
+// ### Method: openPrivateChat
+userSchema.method('readChatMsg', function(msgid, cb) {
+    var user = this;
+    ChatRecord.makrAsRead(user._id, msgid, cb);
 });
 
 // ### Static:

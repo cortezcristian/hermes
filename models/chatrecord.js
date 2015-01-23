@@ -30,11 +30,20 @@ chatrecordSchema.method("instanceMethod", function(param, cb) {
     this.save(cb);
 });
 
-// ### Static:
-chatrecordSchema.statics.customMethod = function (paramid, cb) {
+// ### Static:MarkAsRead
+chatrecordSchema.statics.markAsRead = function (userid, msgid, cb) {
   var ChatRecord = this;
-  ChatRecord.findOne({ _id: paramid}, function(err, chatrecord){
-      cb(err, chatrecord);
+  ChatRecord.findOne({ idTo: userid, _id: msgid}, function(err, chatrecord){
+      if(err) {
+          cb(err, null);
+      } else {
+          if(chatrecord) {
+              chatrecord.readed_status = true;
+              chatrecord.save(cb);
+          } else {
+              cb(new Error('No record found with the specified parameters'), null);
+          }
+      }
   });
 }
 

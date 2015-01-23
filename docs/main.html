@@ -656,7 +656,9 @@ req.params.msgid</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    res.json(req.params);
+            <div class="content"><div class='highlight'><pre>    req.user.markAsRead(req.params.msgid, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, chatrecord)</span></span>{
+        res.json(chatrecord);
+    });
 });
 
 app.post(<span class="hljs-string">'/services/read/multiple/private/chat'</span>, 

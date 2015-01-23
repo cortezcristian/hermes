@@ -7,8 +7,13 @@
 var mongoose = require('mongoose'), 
     Schema = mongoose.Schema;
 
+var enumModes = ['private', 'group'];
+
 var chatroomSchema = new Schema({
-    name          : String, 
+    name          : String,
+    allowedUsers  : [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    history       : [{ type: Schema.Types.ObjectId, ref: 'ChatRecord' }],
+    mode          : { type: String, enum: enumModes, default: 'private' },
 	created       : Date         
 });
 

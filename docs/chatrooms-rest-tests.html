@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>user-tests.js</title>
+  <title>chatrooms-rest-tests.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -181,7 +181,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>user-tests.js</h1>
+                  <h1>chatrooms-rest-tests.js</h1>
               </div>
           </li>
         
@@ -193,7 +193,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <h2 id="user-test-cases">User Test Cases</h2>
+              <h2 id="chatrooms-rest-api">ChatRooms REST API</h2>
 
             </div>
             
@@ -221,11 +221,14 @@
               <p>Modules Dependencies:</p>
 <ul>
 <li>Assert (<a href="http://nodejs.org/api/assert.html">http://nodejs.org/api/assert.html</a>)</li>
+<li>SuperAgent (<a href="http://visionmedia.github.io/superagent/">http://visionmedia.github.io/superagent/</a>)</li>
 </ul>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>),
+    config = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../../../config'</span>),
+    superagent = <span class="hljs-built_in">require</span>(<span class="hljs-string">'superagent'</span>);</pre></div></div>
             
         </li>
         
@@ -255,7 +258,8 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> User, user;</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> ChatRoom, chatroom, agent, chatroomId, d;
+d = <span class="hljs-string">'http://'</span>+config.app.domain+<span class="hljs-string">":"</span>+config.app.port;</pre></div></div>
             
         </li>
         
@@ -270,8 +274,8 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>describe(<span class="hljs-string">'Model Test User'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-    before(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>describe(<span class="hljs-string">'REST API ChatRoom '</span>+d+<span class="hljs-string">"/api/v1/chatrooms"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    before(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(done)</span></span>{</pre></div></div>
             
         </li>
         
@@ -286,10 +290,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        User = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../../../models/user.js"</span>);
-    });
-
-    describe(<span class="hljs-string">'User'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        ChatRoom = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../../../models/chatroom.js"</span>);</pre></div></div>
             
         </li>
         
@@ -304,12 +305,9 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        it(<span class="hljs-string">'add a user'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(done)</span></span>{
-            user = <span class="hljs-keyword">new</span> User({ 
-                name: <span class="hljs-string">'user'</span>+<span class="hljs-built_in">Math</span>.floor((<span class="hljs-built_in">Math</span>.random() * <span class="hljs-number">10</span>) + <span class="hljs-number">1</span>),
-                password: <span class="hljs-string">'123456'</span>
-            });
-            user.save(done);
+            <div class="content"><div class='highlight'><pre>        chatroom = <span class="hljs-keyword">new</span> ChatRoom({ name: <span class="hljs-string">'chatroom'</span>+<span class="hljs-built_in">Math</span>.floor((<span class="hljs-built_in">Math</span>.random() * <span class="hljs-number">10</span>) + <span class="hljs-number">1</span>)});
+        chatroom.save(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, doc)</span></span>{
+            chatroomId = doc._id;    
         });</pre></div></div>
             
         </li>
@@ -321,14 +319,105 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
-              <p>It show authenticate an user</p>
+              <p>Get domain</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        it(<span class="hljs-string">'authenticate an user'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(done)</span></span>{
-            assert.ok(user.authenticate(<span class="hljs-string">'123456'</span>), <span class="hljs-string">'Password should match'</span>);
-            assert.ok(!user.authenticate(<span class="hljs-string">'incorrect'</span>), <span class="hljs-string">'Password should not match'</span>);
-            done();
+            <div class="content"><div class='highlight'><pre>        d = config.app.domain+<span class="hljs-string">":"</span>+config.app.port;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Start agent</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        agent = superagent.agent();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Login if necesary</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        agent
+          .post(d+<span class="hljs-string">'/admin'</span>)
+          .send({ email: <span class="hljs-string">"admin@anyandgo.com"</span>, password: <span class="hljs-string">"123456"</span> })
+          .end(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(res)</span> </span>{
+              assert.ok(res.ok);
+              done();
+          });
+    });
+
+    describe(<span class="hljs-string">'ChatRooms REST'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+        it(<span class="hljs-string">'GET /api/v1/chatrooms'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(done)</span></span>{
+            agent
+              .get(d+<span class="hljs-string">'/api/v1/chatrooms'</span>)
+              .end(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(res)</span> </span>{
+                  assert.ok(res.ok);
+                  assert.ok(res.body.length&gt;<span class="hljs-number">0</span>);
+                  done();
+              });
+        });
+        it(<span class="hljs-string">'GET /api/v1/chatrooms/count'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(done)</span></span>{
+            agent
+              .get(d+<span class="hljs-string">'/api/v1/chatrooms/count'</span>)
+              .end(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(res)</span> </span>{
+                  assert.ok(res.ok);
+                  assert.ok(res.body.count &gt; <span class="hljs-number">0</span>);
+                  done();
+              });
+        });
+        it(<span class="hljs-string">'POST /api/v1/chatrooms'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(done)</span></span>{
+            agent
+              .post(d+<span class="hljs-string">'/api/v1/chatrooms'</span>)
+              .send({ name: <span class="hljs-string">'Test Creation ChatRoom'</span> })
+              .end(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(res)</span> </span>{
+                  assert.ok(res.ok);
+                  assert.ok(res.body.name === <span class="hljs-string">'Test Creation ChatRoom'</span>);
+                  done();
+              });
+        });
+        it(<span class="hljs-string">'PUT /api/v1/chatrooms/:chatroomId'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(done)</span></span>{
+            agent
+              .put(d+<span class="hljs-string">'/api/v1/chatrooms/'</span>+chatroomId)
+              .send({ name: <span class="hljs-string">'Test Change ChatRoom'</span> })
+              .end(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(res)</span> </span>{
+                  assert.ok(res.ok);
+                  assert.ok(res.body.name === <span class="hljs-string">'Test Change ChatRoom'</span>);
+                  done();
+              });
+        });
+        it(<span class="hljs-string">'DELETE /api/v1/chatrooms/:chatroomId'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(done)</span></span>{
+            agent
+              .del(d+<span class="hljs-string">'/api/v1/chatrooms/'</span>+chatroomId)
+              .end(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(res)</span> </span>{
+                  assert.ok(res.ok);
+                  assert.ok(<span class="hljs-built_in">JSON</span>.stringify(res.body) === <span class="hljs-string">'{}'</span>);
+                  done();
+              });
+        });
+        it(<span class="hljs-string">'DELETE /api/v1/chatrooms'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(done)</span></span>{
+            agent
+              .del(d+<span class="hljs-string">'/api/v1/chatrooms/'</span>)
+              .end(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(res)</span> </span>{
+                  assert.ok(res.ok);
+                  assert.ok(<span class="hljs-built_in">JSON</span>.stringify(res.body) === <span class="hljs-string">'{}'</span>);
+                  done();
+              });
         });
 
     });

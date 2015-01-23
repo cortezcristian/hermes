@@ -78,10 +78,8 @@ describe('Model Test User', function(){
 
         // It should mark message as read
         it('send a new private message', function(done){
-            user2.sendPrivateChat(user2._id, "Hi there!", function(err, chatroom){
-                //console.log("chatroom", chatroom)
-                chatroom1 = chatroom;
-                assert.ok(chatroom.history.length > 0, 'Chatroom history should exist');
+            user2.readChatMsg(chatroom1.history[0], function(err, chatrecord){
+                assert.ok(chatrecord.readed_status, 'Chat Record should be readedd');
                 done(); 
             });
         });

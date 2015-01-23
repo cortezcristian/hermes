@@ -187,7 +187,9 @@ app.post('/services/send/private/chat/',
     // Should receive
     // req.body.userto
     // req.body.msg
-    res.json(req.body);
+    req.user.sendPrivateChat(req.body.userto, req.body.msg, function(err, chatroom){
+        res.json(req.body);
+    });
 });
 
 app.get('/services/read/private/chat/:msgid', 
@@ -195,7 +197,9 @@ app.get('/services/read/private/chat/:msgid',
     function (req, res) {
     // Should receive
     // req.params.msgid
-    res.json(req.params);
+    req.user.markAsRead(req.params.msgid, function(err, chatrecord){
+        res.json(chatrecord);
+    });
 });
 
 app.post('/services/read/multiple/private/chat', 
@@ -204,23 +208,27 @@ app.post('/services/read/multiple/private/chat',
     // Should receive
     // req.body.msgs
     // multiple msg ids separated by commas in a CSV way: msgid1,msgid2,msgid3
-    res.json(req.body);
+    req.user.readMultipleChatMsg(req.body.msgs, function(err, results){
+        res.json(req.body);
+    });
 });
 
-app.get('/services/ask/private/chat/history/:period', 
+app.get('/services/ask/private/chat/:roomid/history/:period', 
     userAuth.autorizer,
     function (req, res) {
     // Should receive
+    // req.params.roomid
     // req.params.period
     // it can be a hash of the msgid
     // it can be all, year, month, week, day
     res.json(req.params);
 });
 
-app.get('/services/ask/private/chat/updates/:msgid', 
+app.get('/services/ask/private/chat/:roomid/updates/:msgid', 
     userAuth.autorizer,
     function (req, res) {
     // Should receive
+    // req.params.roomid
     // req.params.msgid
     // it can be a hash of the msgid
     // from where we start the search to bring only the new ones
@@ -244,14 +252,17 @@ app.get('/services/count/all/unread/private/chat',
     res.json(req.params);
 });
 
-app.get('/services/open/private/chat/:usrid', 
+app.get('/services/open/private/chat/:usrto', 
     userAuth.autorizer,
     function (req, res) {
     // Should receive
-    // req.params.usrid
+    // req.params.usrto
     // should bring last 48hs of a private chat
     // if the chat doesn't exist it should create it 
-    res.json(req.params);
+    console.log(req.user, typeof req.user.openPrivateChat);
+    req.user.openPrivateChat(req.params.usrto, function(err, croom){
+        res.json(croom);
+    });
 });
 
 // #### Search Personal

@@ -11,6 +11,7 @@ var chatrecordSchema = new Schema({
     name          : String,
     idFrom        : { type: Schema.Types.ObjectId, ref: 'User' },
     idTo          : { type: Schema.Types.ObjectId, ref: 'User' },
+    chatroomTo    : { type: Schema.Types.ObjectId, ref: 'ChatRoom' },
     message       : String,
     readed_status : { type: Boolean, default: false },
 	created       : Date         
@@ -30,11 +31,20 @@ chatrecordSchema.method("instanceMethod", function(param, cb) {
     this.save(cb);
 });
 
-// ### Static:
-chatrecordSchema.statics.customMethod = function (paramid, cb) {
+// ### Static:MarkAsRead
+chatrecordSchema.statics.markAsRead = function (userid, msgid, cb) {
   var ChatRecord = this;
-  ChatRecord.findOne({ _id: paramid}, function(err, chatrecord){
-      cb(err, chatrecord);
+  ChatRecord.findOne({ idTo: userid, _id: msgid}, function(err, chatrecord){
+      if(err) {
+          cb(err, null);
+      } else {
+          if(chatrecord) {
+              chatrecord.readed_status = true;
+              chatrecord.save(cb);
+          } else {
+              cb(new Error('No record found with the specified parameters'), null);
+          }
+      }
   });
 }
 

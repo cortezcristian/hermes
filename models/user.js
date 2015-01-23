@@ -8,6 +8,10 @@ var mongoose = require('mongoose'),
     crypto = require('crypto'),
     Schema = mongoose.Schema;
 
+var ChatRoom = require('./chatroom.js');
+var ChatRecord = require('./chatrecord.js');
+
+
 var userSchema = new Schema({
     name          : String, 
     email         : String,
@@ -38,10 +42,66 @@ userSchema.pre("save", function(next) {
     next();
 });
 
-// ### Method:
+// ### Method: authenticate
 userSchema.method('authenticate', function(password) {
     var user = this;
     return crypto.createHash('md5').update(password).digest("hex") === user.password;
+});
+
+// ### Method: openPrivateChat
+userSchema.method('openPrivateChat', function(userto, cb) {
+    var user = this;
+    ChatRoom.findOrCreate(user._id, userto, cb);
+});
+
+// ### Method: sendPrivateChat
+userSchema.method('sendPrivateChat', function(iduserto, msg, cb) {
+    var user = this;
+    ChatRoom.findOrCreate(user._id, iduserto, function(err, chatroom){
+        var chatmsg = new ChatRecord({
+            idFrom     : user._id,    
+            idTo       : iduserto,
+            chatroomTo : chatroom._id,
+            message    : msg   
+        });
+        chatmsg.save(function(err, chatrecord){
+            chatroom.history.push(chatrecord);
+            chatroom.save(cb);
+        });
+    });
+});
+
+// ### Method: readChatMsg
+userSchema.method('readChatMsg', function(msgid, cb) {
+    var user = this;
+    ChatRecord.markAsRead(user._id, msgid, cb);
+});
+
+// ### Method: readMultipleChatMsg
+userSchema.method('readMultipleChatMsg', function(msgsCSV, cb) {
+    var user = this;
+    async.map(msgsCSV.split(","), function(msgid, callback){
+        //console.log("removing...", op);
+        ChatRecord.makrAsRead(user._id, msgid, function(err, doc){
+            callback(err, doc);
+        });
+    }, function(err, res){
+        // console.log(">>>", err, res);    
+        cb(err, res)
+    });
+});
+
+// ### Method: getHistory
+userSchema.method('getChatHistory', function(roomid, period, cb) {
+    var user = this;
+    if(typeof period === 'function'){
+        cb = period;
+        period = 'all';    
+    }
+    ChatRoom.findOne({_id:roomid}, function(err, chatroom){
+        //Populate all history
+        ChatRecord.populate(chatroom, { path: 'history' }, cb);
+    });
 });
 
 // ### Static:

@@ -16,6 +16,7 @@ var utils = require('./utils');
 var config = exports.config = require('./config');
 var mail = exports.mail = require('./utils/mailer.js');
 var anyandgo = exports.anyandgo = {};
+var User = require('./models/user.js');
 
 // Anyandgo
 anyandgo.models = [];
@@ -121,7 +122,13 @@ passport.serializeUser(function(user, done) {
 
 // used to deserialize the user
 passport.deserializeUser(function(user, done) {
-    done(null, user);
+    if(user.role === 'user') {
+        User.findOne({ _id : user._id }, function(err, usr){
+            done(err, usr);
+        });
+    } else {
+        done(null, user);
+    }
 });
 
 // Interceptors

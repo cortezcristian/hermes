@@ -38,6 +38,28 @@ chatroomSchema.statics.customMethod = function (paramid, cb) {
       cb(err, chatroom);
   });
 }
+// ### Static: findOrCreate
+chatroomSchema.statics.findOrCreate = function (userfrom, userto, cb) {
+  var ChatRoom = this;
+  var regpattern1 = userfrom+userto;
+  var regpattern2 = userto+userfrom;
+  var search =  { $or:[ {'name': regpattern1 }, {'name': regpattern2 } ]}
+  ChatRoom.findOne(search, function(err, chatroom){
+      if(err){
+        cb(err, null);
+      }else{
+          if(chatroom) {
+            cb(null, chatroom)    
+          } else {
+            var c = new ChatRoom({
+                name: regpattern1    
+            });
+            // TODO: add allowedUsers
+            c.save(cb);
+          }
+      }
+  });
+}
 
 // Export module
 module.exports = mongoose.model('ChatRoom', chatroomSchema);

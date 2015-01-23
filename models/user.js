@@ -8,6 +8,9 @@ var mongoose = require('mongoose'),
     crypto = require('crypto'),
     Schema = mongoose.Schema;
 
+var ChatRoom = require('./chatroom.js');
+
+
 var userSchema = new Schema({
     name          : String, 
     email         : String,
@@ -38,10 +41,16 @@ userSchema.pre("save", function(next) {
     next();
 });
 
-// ### Method:
+// ### Method: authenticate
 userSchema.method('authenticate', function(password) {
     var user = this;
     return crypto.createHash('md5').update(password).digest("hex") === user.password;
+});
+
+// ### Method: openPrivateChat
+userSchema.method('openPrivateChat', function(userto, cb) {
+    var user = this;
+    ChatRoom.findOrCreate(user._id, userto, cb);
 });
 
 // ### Static:

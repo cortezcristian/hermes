@@ -229,6 +229,9 @@
     crypto = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>),
     Schema = mongoose.Schema;
 
+<span class="hljs-keyword">var</span> ChatRoom = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./chatroom.js'</span>);
+
+
 <span class="hljs-keyword">var</span> userSchema = <span class="hljs-keyword">new</span> Schema({
     name          : <span class="hljs-built_in">String</span>, 
     email         : <span class="hljs-built_in">String</span>,
@@ -280,7 +283,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <h3 id="method-">Method:</h3>
+              <h3 id="method-authenticate">Method: authenticate</h3>
 
             </div>
             
@@ -298,6 +301,24 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
+              <h3 id="method-openprivatechat">Method: openPrivateChat</h3>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>userSchema.method(<span class="hljs-string">'openPrivateChat'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(userto, cb)</span> </span>{
+    <span class="hljs-keyword">var</span> user = <span class="hljs-keyword">this</span>;
+    ChatRoom.findOrCreate(user._id, userto, cb);
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
               <h3 id="static-">Static:</h3>
 
             </div>
@@ -312,11 +333,11 @@
         </li>
         
         
-        <li id="section-7">
+        <li id="section-8">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <p>Export module</p>
 

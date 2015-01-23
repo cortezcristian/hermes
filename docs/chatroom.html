@@ -305,6 +305,54 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
+              <h3 id="static-findorcreate">Static: findOrCreate</h3>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>chatroomSchema.statics.findOrCreate = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(userfrom, userto, cb)</span> </span>{
+  <span class="hljs-keyword">var</span> ChatRoom = <span class="hljs-keyword">this</span>;
+  <span class="hljs-keyword">var</span> regpattern1 = userfrom+userto;
+  <span class="hljs-keyword">var</span> regpattern2 = userto+userfrom;
+  <span class="hljs-keyword">var</span> search =  { $or:[ {<span class="hljs-string">'name'</span>: regpattern1 }, {<span class="hljs-string">'name'</span>: regpattern2 } ]}
+  ChatRoom.findOne(search, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, chatroom)</span></span>{
+      <span class="hljs-keyword">if</span>(err){
+        cb(err, <span class="hljs-literal">null</span>);
+      }<span class="hljs-keyword">else</span>{
+          <span class="hljs-keyword">if</span>(chatroom) {
+            cb(<span class="hljs-literal">null</span>, chatroom)    
+          } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">var</span> c = <span class="hljs-keyword">new</span> ChatRoom({
+                name: regpattern1    
+            });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>TODO: add allowedUsers</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            c.save(cb);
+          }
+      }
+  });
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
               <p>Export module</p>
 
             </div>

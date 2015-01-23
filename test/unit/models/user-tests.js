@@ -19,7 +19,7 @@ describe('Model Test User', function(){
     });
 
     describe('User', function(){
-        // It show create a new document in the database
+        // It should create a new document in the database
         it('add a user', function(done){
             user = new User({ 
                 name: 'user'+Math.floor((Math.random() * 10) + 1),
@@ -27,11 +27,15 @@ describe('Model Test User', function(){
             });
             user.save(done);
         });
-        // It show authenticate an user
+        // It should authenticate an user
         it('authenticate an user', function(done){
             assert.ok(user.authenticate('123456'), 'Password should match');
             assert.ok(!user.authenticate('incorrect'), 'Password should not match');
             done();
+        });
+        // It should open a new chatroom
+        it('open a new private chat room', function(done){
+            user.openPrivateChat('other-user-id-here', done);
         });
 
     });

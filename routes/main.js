@@ -244,14 +244,17 @@ app.get('/services/count/all/unread/private/chat',
     res.json(req.params);
 });
 
-app.get('/services/open/private/chat/:usrid', 
+app.get('/services/open/private/chat/:usrto', 
     userAuth.autorizer,
     function (req, res) {
     // Should receive
-    // req.params.usrid
+    // req.params.usrto
     // should bring last 48hs of a private chat
     // if the chat doesn't exist it should create it 
-    res.json(req.params);
+    console.log(req.user, typeof req.user.openPrivateChat);
+    req.user.openPrivateChat(req.params.usrto, function(err, croom){
+        res.json(croom);
+    });
 });
 
 // #### Search Personal

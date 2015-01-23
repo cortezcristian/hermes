@@ -682,7 +682,9 @@ multiple msg ids separated by commas in a CSV way: msgid1,msgid2,msgid3</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    res.json(req.body);
+            <div class="content"><div class='highlight'><pre>    req.user.readMultipleChatMsg(req.body.msgs, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, results)</span></span>{
+        res.json(req.body);
+    });
 });
 
 app.get(<span class="hljs-string">'/services/ask/private/chat/history/:period'</span>, 

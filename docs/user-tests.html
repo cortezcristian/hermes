@@ -226,7 +226,8 @@
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
-<span class="hljs-keyword">var</span> fixtures = <span class="hljs-built_in">require</span>(<span class="hljs-string">'mongoose-fixtures'</span>);</pre></div></div>
+<span class="hljs-keyword">var</span> fixtures = <span class="hljs-built_in">require</span>(<span class="hljs-string">'mongoose-fixtures'</span>);
+<span class="hljs-keyword">var</span> async = <span class="hljs-built_in">require</span>(<span class="hljs-string">'async'</span>)</pre></div></div>
             
         </li>
         
@@ -256,7 +257,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> User, user, user1, user2;</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> User, user, user1, user2, chatroom1;</pre></div></div>
             
         </li>
         
@@ -272,7 +273,7 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>describe(<span class="hljs-string">'Model Test User'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-    before(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{</pre></div></div>
+    before(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(done)</span></span>{</pre></div></div>
             
         </li>
         
@@ -287,7 +288,9 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        User = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../../../models/user.js"</span>);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        User = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../../../models/user.js"</span>);
+
+        async.series([<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(callback)</span></span>{</pre></div></div>
             
         </li>
         
@@ -302,14 +305,27 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        fixtures.load(<span class="hljs-string">'../../../fixtures/shared/users.js'</span>);
-        User.findOne({email:<span class="hljs-string">'user@user.com'</span>}, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, usr)</span></span>{
-            user1 = usr;    
+            <div class="content"><div class='highlight'><pre>                fixtures.load(<span class="hljs-string">'../../../fixtures/shared/users.js'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+                    callback();
+                });
+
+            },<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(callback)</span></span>{
+                User.findOne({email:<span class="hljs-string">'user@user.com'</span>}, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, usr)</span></span>{
+                    user1 = usr;    
+                    callback();
+                });
+
+            },<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(callback)</span></span>{
+                User.findOne({email:<span class="hljs-string">'demo@demo.com'</span>}, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, usr)</span></span>{
+                    user2 = usr;    
+                    callback();
+                });
+            
+            }],
+        <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, results)</span></span>{
+            done();
         });
 
-        User.findOne({email:<span class="hljs-string">'demo@demo.com'</span>}, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, usr)</span></span>{
-            user2 = usr;    
-        });
     });
 
     describe(<span class="hljs-string">'User'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{</pre></div></div>
@@ -400,7 +416,8 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                assert.ok(chatroom.history.length &gt; <span class="hljs-number">0</span>, <span class="hljs-string">'Chatroom history should exist'</span>);
+            <div class="content"><div class='highlight'><pre>                chatroom1 = chatroom;
+                assert.ok(chatroom.history.length &gt; <span class="hljs-number">0</span>, <span class="hljs-string">'Chatroom history should exist'</span>);
                 done(); 
             });
         });</pre></div></div>
@@ -420,7 +437,26 @@ User2 should exist</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>It should mark message as read</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        it(<span class="hljs-string">'mark message as read'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(done)</span></span>{
+            user2.readChatMsg(chatroom1.history[<span class="hljs-number">0</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, chatrecord)</span></span>{
+                assert.ok(chatrecord.readed_status, <span class="hljs-string">'Chat Record should be readedd'</span>);
+                done(); 
+            });
+        });
+
     });
 });</pre></div></div>
             

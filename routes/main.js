@@ -208,7 +208,9 @@ app.post('/services/read/multiple/private/chat',
     // Should receive
     // req.body.msgs
     // multiple msg ids separated by commas in a CSV way: msgid1,msgid2,msgid3
-    res.json(req.body);
+    req.user.readMultipleChatMsg(req.body.msgs, function(err, results){
+        res.json(req.body);
+    });
 });
 
 app.get('/services/ask/private/chat/history/:period', 

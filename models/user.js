@@ -78,9 +78,17 @@ userSchema.method('readChatMsg', function(msgid, cb) {
 });
 
 // ### Method: readMultipleChatMsg
-userSchema.method('readMultipleChatMsg', function(msgid, cb) {
+userSchema.method('readMultipleChatMsg', function(msgsCSV, cb) {
     var user = this;
-    //ChatRecord.makrAsRead(user._id, msgid, cb);
+    async.map(msgsCSV.split(","), function(msgid, callback){
+        //console.log("removing...", op);
+        ChatRecord.makrAsRead(user._id, msgid, function(err, doc){
+            callback(err, doc);
+        });
+    }, function(err, res){
+        // console.log(">>>", err, res);    
+        cb(err, res)
+    });
 });
 
 // ### Static:

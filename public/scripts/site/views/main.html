@@ -20,6 +20,6 @@
       </div>
     </div>
     <form class="chat-form">
-      <textarea class="message-input"></textarea>
+      <textarea class="message-input" ng-model="chatmsg" ng-keyup="$event.keyCode==13?sendPrivateChat():null"></textarea>
     </form>
 </div>

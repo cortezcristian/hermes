@@ -8,7 +8,7 @@
  * Controller of the anyandgoApp
  */
 angular.module('anyandgoApp')
-  .controller('MainCtrl', function ($scope, $routeParams, ChatService) {
+  .controller('MainCtrl', function ($scope, $routeParams, ChatService, $interval) {
     $scope.messages = [];
     $scope.lastmsghash = '';
     $scope.chatmsg = '';
@@ -39,7 +39,8 @@ angular.module('anyandgoApp')
     };
 
     var updateMessages = function(r){
-        return ChatService.updateChatHistory($scope.userto, $scope.lastmsghash);
+        return ChatService.updateChatHistory($scope.userto, $scope.lastmsghash)
+                .then(showUpdateMessages);
     };
 
     var showUpdateMessages = function(r){
@@ -55,8 +56,8 @@ angular.module('anyandgoApp')
         if($scope.userto !== "") {
             ChatService.sendChat($scope.userto, $scope.chatmsg)
                 .then(clearTextarea)
-                .then(updateMessages)
-                .then(showUpdateMessages);
+                .then(updateMessages);
+                //.then(showUpdateMessages);
         }
     };
 
@@ -64,5 +65,7 @@ angular.module('anyandgoApp')
         ChatService.getChatHistory($scope.userto, 'day')
             .then(reloadMessages);
     }
+
+    $interval(updateMessages, 3000);
 
   });

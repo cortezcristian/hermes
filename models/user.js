@@ -117,6 +117,21 @@ userSchema.method('getPrivateChatHistory', function(iduserto, period, cb) {
     });
 });
 
+// ### Method: getHistory
+userSchema.method('updatePrivateChatHistory', function(iduserto, msghash, cb) {
+    var user = this;
+    ChatRoom.findOrCreate(user._id, iduserto, function(err, chatroom){
+        //Populate all history
+        // TODO: Performance: find index of requested msghash, get (msghash, lastmsg]
+        // and populate only those
+        ChatRecord.populate(chatroom, { path: 'history' }, function(err, chatroom1){
+            console.log("chatroom1", chatroom1);
+            cb(err, chatroom1);
+        });
+    });
+});
+
+
 // ### Static:
 userSchema.statics.customMethod = function (paramid, cb) {
   var User = this;

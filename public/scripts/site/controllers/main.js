@@ -10,6 +10,7 @@
 angular.module('anyandgoApp')
   .controller('MainCtrl', function ($scope, $routeParams, ChatService) {
     $scope.messages = [];
+    $scope.lastmsghash = '';
     $scope.chatmsg = '';
     $scope.anyandgoversion = 'v0.1';
 
@@ -31,6 +32,20 @@ angular.module('anyandgoApp')
 
     var reloadMessages = function(r){
         $scope.messages = r.data.history;
+        if(r.data.history.length > 0){
+            $scope.lastmsghash = r.data.history[r.data.history.length-1]._id;
+        }
+        return r;
+    };
+
+    var updateMessages = function(r){
+        return ChatService.updateChatHistory($scope.userto, $scope.lastmsghash);
+    };
+
+    var showUpdateMessages = function(r){
+        if($scope.userto !== "" && $scope.lastmsghash !== "") {
+            $scope.messages = $scope.messages.concat(r.data.history);
+        }
         return r;
     };
 
@@ -38,7 +53,9 @@ angular.module('anyandgoApp')
         //console.log($scope.chatmsg);    
         if($scope.userto !== "") {
             ChatService.sendChat($scope.userto, $scope.chatmsg)
-                .then(clearTextarea);
+                .then(clearTextarea)
+                .then(updateMessages)
+                .then(showUpdateMessages);
         }
     };
 
@@ -46,4 +63,5 @@ angular.module('anyandgoApp')
         ChatService.getChatHistory($scope.userto, 'day')
             .then(reloadMessages);
     }
+
   });

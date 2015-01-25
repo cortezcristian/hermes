@@ -32,6 +32,9 @@ angular.module('anyandgoApp')
          delete: function(path, data){
              return req('DELETE', path, data);
          },
+         updateChatHistory: function(iduserto, hashfrom){
+             return req('GET', '/services/ask/private/chat/'+iduserto+'/updates/'+hashfrom);
+         },
          getChatHistory: function(iduserto, period){
              var p = period || 'day';
              return req('GET', '/services/ask/private/chat/'+iduserto+'/history/'+p);

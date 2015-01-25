@@ -247,7 +247,9 @@ app.get('/services/ask/private/chat/:userid/updates/:msgid',
     // req.params.msgid
     // it can be a hash of the msgid
     // from where we start the search to bring only the new ones
-    res.json(req.params);
+    req.user.updatePrivateChatHistory(req.params.userid, req.params.msgid, function(err, chatroom){
+        res.json(chatroom);
+    });
 });
 
 app.get('/services/ask/private/chatroom/:roomid/updates/:msgid', 

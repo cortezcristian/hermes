@@ -171,7 +171,9 @@ app.get('/admin', function (req, res) {
 app.get('/panel', 
     userAuth.autorizer,
     function (req, res) {
-    res.render('panel', { title: 'Panel', section: 'Panel' });
+    User.find({}, function(err, users){
+    res.render('panel', { title: 'Panel', section: 'Panel', users: users });
+    });
 });
 
 /* page:public:end */
@@ -188,7 +190,7 @@ app.post('/services/send/private/chat/',
     // req.body.userto
     // req.body.msg
     req.user.sendPrivateChat(req.body.userto, req.body.msg, function(err, chatroom){
-        res.json(req.body);
+        res.json(chatroom);
     });
 });
 
@@ -213,7 +215,20 @@ app.post('/services/read/multiple/private/chat',
     });
 });
 
-app.get('/services/ask/private/chat/:roomid/history/:period', 
+app.get('/services/ask/private/chat/:iduserto/history/:period', 
+    userAuth.autorizer,
+    function (req, res) {
+    // Should receive
+    // req.params.iduserto
+    // req.params.period
+    // it can be a hash of the msgid
+    // it can be all, year, month, week, day
+    req.user.getPrivateChatHistory(req.params.iduserto, 'day', function(err, chatroom){
+        res.json(chatroom);
+    });
+});
+
+app.get('/services/ask/private/chatroom/:roomid/history/:period', 
     userAuth.autorizer,
     function (req, res) {
     // Should receive
@@ -224,7 +239,20 @@ app.get('/services/ask/private/chat/:roomid/history/:period',
     res.json(req.params);
 });
 
-app.get('/services/ask/private/chat/:roomid/updates/:msgid', 
+app.get('/services/ask/private/chat/:userid/updates/:msgid', 
+    userAuth.autorizer,
+    function (req, res) {
+    // Should receive
+    // req.params.userid
+    // req.params.msgid
+    // it can be a hash of the msgid
+    // from where we start the search to bring only the new ones
+    req.user.updatePrivateChatHistory(req.params.userid, req.params.msgid, function(err, chatroom){
+        res.json(chatroom);
+    });
+});
+
+app.get('/services/ask/private/chatroom/:roomid/updates/:msgid', 
     userAuth.autorizer,
     function (req, res) {
     // Should receive

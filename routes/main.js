@@ -171,7 +171,9 @@ app.get('/admin', function (req, res) {
 app.get('/panel', 
     userAuth.autorizer,
     function (req, res) {
-    res.render('panel', { title: 'Panel', section: 'Panel' });
+    User.find({}, function(err, users){
+    res.render('panel', { title: 'Panel', section: 'Panel', users: users });
+    });
 });
 
 /* page:public:end */

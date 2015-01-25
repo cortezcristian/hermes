@@ -33,6 +33,10 @@ angular
         templateUrl: '/scripts/site/views/main.html',
         controller: 'MainCtrl'
       })
+      .when('/chatuser/:userto', {
+        templateUrl: '/scripts/site/views/main.html',
+        controller: 'MainCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

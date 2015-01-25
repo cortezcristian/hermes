@@ -45,6 +45,7 @@ angular.module('anyandgoApp')
     var showUpdateMessages = function(r){
         if($scope.userto !== "" && $scope.lastmsghash !== "") {
             $scope.messages = $scope.messages.concat(r.data.history);
+            $scope.lastmsghash = r.data.history[r.data.history.length-1]._id;
         }
         return r;
     };

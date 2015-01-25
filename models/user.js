@@ -121,9 +121,15 @@ userSchema.method('getPrivateChatHistory', function(iduserto, period, cb) {
 userSchema.method('updatePrivateChatHistory', function(iduserto, msghash, cb) {
     var user = this;
     ChatRoom.findOrCreate(user._id, iduserto, function(err, chatroom){
-        //Populate all history
-        // TODO: Performance: find index of requested msghash, get (msghash, lastmsg]
+        // Performance: find index of requested msghash, get (msghash, lastmsg]
         // and populate only those
+        var indexHash = chatroom.history.indexOf(msghash);
+        if(indexHash !== -1) {
+            console.log("Slicing...", chatroom.history);
+            chatroom.history = chatroom.history.slice(indexHash+1, chatroom.history.length);
+            console.log("Sliced...", chatroom.history);
+        }
+        // Populate all history
         ChatRecord.populate(chatroom, { path: 'history' }, function(err, chatroom1){
             console.log("chatroom1", chatroom1);
             cb(err, chatroom1);

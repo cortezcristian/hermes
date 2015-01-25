@@ -14,8 +14,8 @@ angular.module('anyandgoApp')
             method: method,
             url: '.'+path,
             data: data
-        }).then(function(res){
-            return res.data;
+//        }).then(function(res){
+//            return res.data;
         });
      }
      
@@ -31,6 +31,10 @@ angular.module('anyandgoApp')
          },
          delete: function(path, data){
              return req('DELETE', path, data);
+         },
+         getChatHistory: function(iduserto, period){
+             var p = period || 'day';
+             return req('GET', '/services/ask/private/chat/'+iduserto+'/history/'+p);
          },
          sendChat: function(userto, msg){
              return req('POST', '/services/send/private/chat/', {

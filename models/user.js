@@ -104,6 +104,19 @@ userSchema.method('getChatHistory', function(roomid, period, cb) {
     });
 });
 
+// ### Method: getHistory
+userSchema.method('getPrivateChatHistory', function(iduserto, period, cb) {
+    var user = this;
+    if(typeof period === 'function'){
+        cb = period;
+        period = 'all';    
+    }
+    ChatRoom.findOrCreate(user._id, iduserto, function(err, chatroom){
+        //Populate all history
+        ChatRecord.populate(chatroom, { path: 'history' }, cb);
+    });
+});
+
 // ### Static:
 userSchema.statics.customMethod = function (paramid, cb) {
   var User = this;

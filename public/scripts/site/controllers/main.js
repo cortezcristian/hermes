@@ -1,4 +1,6 @@
 'use strict';
+var chatInterval;
+
 
 /**
  * @ngdoc function
@@ -40,7 +42,7 @@ angular.module('anyandgoApp')
 
     var updateMessages = function(r){
         return ChatService.updateChatHistory($scope.userto, $scope.lastmsghash)
-                .then(showUpdateMessages);
+            .then(showUpdateMessages);
     };
 
     var showUpdateMessages = function(r){
@@ -61,11 +63,27 @@ angular.module('anyandgoApp')
         }
     };
 
+    /*
     if($scope.userto !== "") {
         ChatService.getChatHistory($scope.userto, 'day')
             .then(reloadMessages);
     }
+    */
 
-    $interval(updateMessages, 3000);
+    if(typeof chatInterval !== 'undefined') {
+        //Cancel it
+        $interval.cancel(chatInterval);
+    }
+    // Start a new one
+    chatInterval = $interval(function(){
+        if($scope.lastmsghash !== "") {
+            updateMessages();
+        } else if($scope.userto !== "") {
+            ChatService.getChatHistory($scope.userto, 'day')
+                .then(reloadMessages);
+        }
+
+    }, 3000);
+
 
   });

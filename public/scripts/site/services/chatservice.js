@@ -33,6 +33,7 @@ angular.module('anyandgoApp')
              return req('DELETE', path, data);
          },
          updateChatHistory: function(iduserto, hashfrom){
+             hashfrom = (hashfrom !== '') ? hashfrom : 'none';
              return req('GET', '/services/ask/private/chat/'+iduserto+'/updates/'+hashfrom);
          },
          getChatHistory: function(iduserto, period){

@@ -46,7 +46,7 @@ angular.module('anyandgoApp')
     };
 
     var showUpdateMessages = function(r){
-        if($scope.userto !== "" && $scope.lastmsghash !== "") {
+        if(r.data.history.length > 0 && $scope.userto !== "" && $scope.lastmsghash !== "") {
             $scope.messages = $scope.messages.concat(r.data.history);
             $scope.lastmsghash = r.data.history[r.data.history.length-1]._id;
         }
@@ -83,7 +83,7 @@ angular.module('anyandgoApp')
                 .then(reloadMessages);
         }
 
-    }, 3000);
+    }, 1000);
 
 
   });

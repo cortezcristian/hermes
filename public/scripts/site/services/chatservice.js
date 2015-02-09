@@ -32,6 +32,10 @@ angular.module('anyandgoApp')
          delete: function(path, data){
              return req('DELETE', path, data);
          },
+         getUserInfo: function(iduser){
+             iduser = (iduser !== '') ? iduser : 'me';
+             return req('GET', '/services/ask/user/info/'+iduser);
+         },
          updateChatHistory: function(iduserto, hashfrom){
              hashfrom = (hashfrom !== '') ? hashfrom : 'none';
              return req('GET', '/services/ask/private/chat/'+iduserto+'/updates/'+hashfrom);

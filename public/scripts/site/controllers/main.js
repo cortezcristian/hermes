@@ -17,6 +17,7 @@ angular.module('anyandgoApp')
     $scope.anyandgoversion = 'v0.1';
 
     $scope.userto = $routeParams.userto || '';
+    $scope.users = {};
 
     $scope.setChatRoomUser = function($event){
         $event.preventDefault();
@@ -37,6 +38,11 @@ angular.module('anyandgoApp')
         if(r.data.history.length > 0){
             $scope.lastmsghash = r.data.history[r.data.history.length-1]._id;
         }
+        return r;
+    };
+
+    var reloadUserTo = function(r){
+        $scope.users[r.data._id] = r.data;
         return r;
     };
 
@@ -74,13 +80,18 @@ angular.module('anyandgoApp')
         //Cancel it
         $interval.cancel(chatInterval);
     }
+    //Get current user data
+    ChatService.getUserInfo('me').then(reloadUserTo);    
+
     // Start a new one
     chatInterval = $interval(function(){
         if($scope.lastmsghash !== "") {
             updateMessages();
         } else if($scope.userto !== "") {
             ChatService.getChatHistory($scope.userto, 'day')
-                .then(reloadMessages);
+                .then(reloadMessages).then(function(r){
+                    ChatService.getUserInfo($scope.userto).then(reloadUserTo);    
+                });
         }
 
     }, 1000);

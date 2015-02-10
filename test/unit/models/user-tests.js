@@ -21,7 +21,7 @@ describe('Model Test User', function(){
 
         async.series([function(callback){
                 // Load fixtures
-                fixtures.load('../../../fixtures/shared/users.js', function(){
+                fixtures.load('../../../fixtures/test/users.js', function(){
                     callback();
                 });
 

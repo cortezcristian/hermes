@@ -293,6 +293,19 @@ app.get('/services/open/private/chat/:usrto',
     });
 });
 
+app.get('/services/ask/user/info/:iduser', 
+    userAuth.autorizer,
+    function (req, res) {
+    // Should receive
+    // req.params.msgid
+    var iduser = (req.params.iduser === 'me') ? req.user._id : req.params.iduser;
+    User.findOne({ _id: iduser}, function(err, user){
+        user = user.toObject();
+        delete user.password;
+        res.json(user);
+    });
+});
+
 // #### Search Personal
 
 app.post('/services/search/people', 

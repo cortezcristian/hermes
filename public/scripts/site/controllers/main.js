@@ -19,6 +19,14 @@ angular.module('anyandgoApp')
     $scope.userto = $routeParams.userto || '';
     $scope.users = {};
 
+    // Start perfect-scrollbar
+    $('.chat-msg-container').perfectScrollbar();
+
+    var scrollChatBottom = function(){
+        $(".chat-msg-container").scrollTop($('.chat-msg-container').prop( "scrollHeight" ));
+        $('.chat-msg-container').perfectScrollbar('update');
+    }
+
     $scope.setChatRoomUser = function($event){
         $event.preventDefault();
         console.log($event);
@@ -47,7 +55,7 @@ angular.module('anyandgoApp')
 
     var updateMessages = function(r){
         return ChatService.updateChatHistory($scope.userto, $scope.lastmsghash)
-            .then(showUpdateMessages);
+            .then(showUpdateMessages).then(scrollChatBottom);
     };
 
     var showUpdateMessages = function(r){

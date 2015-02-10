@@ -37,6 +37,10 @@ angular
         templateUrl: '/scripts/site/views/main.html',
         controller: 'MainCtrl'
       })
+      .when('/people', {
+        templateUrl: '/scripts/site/views/people.html',
+        controller: 'PeopleCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

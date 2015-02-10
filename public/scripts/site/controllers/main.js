@@ -10,7 +10,7 @@ var chatInterval;
  * Controller of the anyandgoApp
  */
 angular.module('anyandgoApp')
-  .controller('MainCtrl', function ($scope, $routeParams, ChatService, $interval) {
+  .controller('MainCtrl', function ($scope, $routeParams, ChatService, $interval, $timeout) {
     $scope.messages = [];
     $scope.lastmsghash = '';
     $scope.chatmsg = '';
@@ -22,9 +22,15 @@ angular.module('anyandgoApp')
     // Start perfect-scrollbar
     $('.chat-msg-container').perfectScrollbar();
 
-    var scrollChatBottom = function(){
-        $(".chat-msg-container").scrollTop($('.chat-msg-container').prop( "scrollHeight" ));
-        $('.chat-msg-container').perfectScrollbar('update');
+    var scrollChatBottom = function(r){
+        if(typeof r.data.history !== 'undefined' && r.data.history.length > 0) {
+            $timeout(function(){
+                $(".chat-msg-container").scrollTop($('.chat-msg-container').prop( "scrollHeight" ));
+                $('.chat-msg-container').perfectScrollbar('update');
+            }, 1);
+        }
+
+        return r;
     }
 
     $scope.setChatRoomUser = function($event){
@@ -55,7 +61,8 @@ angular.module('anyandgoApp')
 
     var updateMessages = function(r){
         return ChatService.updateChatHistory($scope.userto, $scope.lastmsghash)
-            .then(showUpdateMessages).then(scrollChatBottom);
+            .then(showUpdateMessages)
+            .then(scrollChatBottom);
     };
 
     var showUpdateMessages = function(r){
@@ -96,7 +103,7 @@ angular.module('anyandgoApp')
             updateMessages();
         } else if($scope.userto !== "") {
             ChatService.getChatHistory($scope.userto, 'day')
-                .then(reloadMessages).then(function(r){
+                .then(reloadMessages).then(scrollChatBottom).then(function(r){
                     ChatService.getUserInfo($scope.userto).then(reloadUserTo);    
                 });
         }

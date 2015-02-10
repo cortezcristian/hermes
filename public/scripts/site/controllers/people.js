@@ -15,13 +15,19 @@ angular.module('anyandgoApp')
       $scope.people = [];
 
       $scope.searchPeople = function(text){
-          PeopleService.searchPeople(text).then(function(r){
-              $scope.people = r.data;
-              //$scope.searchvalue = "";    
+          if( text !== '' ){
+              PeopleService.searchPeople(text).then(function(r){
+                  $scope.people = r.data;
+                  //$scope.searchvalue = "";    
 
-              return r; 
-          });
-      }
+                  return r; 
+              });
+          } 
+      } 
+
+      $scope.$watch('searchvalue', function(){
+         $scope.searchPeople($scope.searchvalue);
+      });
 
 
   });

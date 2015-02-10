@@ -308,7 +308,7 @@ app.get('/services/ask/user/info/:iduser',
 
 // #### Search Personal
 
-app.post('/services/search/people', 
+app.get('/services/search/people/:keyword', 
     userAuth.autorizer,
     function (req, res) {
     // Should receive
@@ -316,7 +316,11 @@ app.post('/services/search/people',
     // req.body.office
     // req.body.sector
     // Returns data of matched personal
-    res.json(req.body);
+    User.find({ email : new RegExp('.*'+req.params.keyword+'.*','i') })
+        .select('-password')
+        .exec(function(err, users){
+        res.json(users);
+    });
 });
 
 // #### Memo

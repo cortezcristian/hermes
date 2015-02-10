@@ -28,7 +28,6 @@ angular.module('anyandgoApp')
 
     //https://github.com/lifeentity/chat-app/blob/master/public/app/scripts/controllers/chat-room.js
     var clearTextarea = function(r){
-        console.log("aaaa");
         $scope.chatmsg = "";
         return r;
     };
@@ -52,7 +51,7 @@ angular.module('anyandgoApp')
     };
 
     var showUpdateMessages = function(r){
-        if(r.data.history.length > 0 && $scope.userto !== "" && $scope.lastmsghash !== "") {
+        if(typeof r.data.history !== 'undefined' && r.data.history.length > 0 && $scope.userto !== "" && $scope.lastmsghash !== "") {
             $scope.messages = $scope.messages.concat(r.data.history);
             $scope.lastmsghash = r.data.history[r.data.history.length-1]._id;
         }

@@ -41,9 +41,16 @@ var clearCollections = function ( cb ) {
 
 var loadUsers = function(cb) {
     var users = [ 
-        { email: "user@user.com", password: "123456", avatar: '/photos/user.png' } 
-        , { email: "demo@demo.com", password: "123456", avatar: '/photos/demo.png' } 
-        , { email: "cortez.cristian@gmail.com", password: "12345678", avatar: '/photos/crisboot.png' } 
+        { email: "user@user.com", name: "User Demo", password: "123456", avatar: '/photos/user.png' } 
+        , { email: "demo@demo.com", name: "Demo Demo", password: "123456", avatar: '/photos/demo.png' } 
+        , { email: "demo1@demo.com", name: "Demo Demo", password: "123456", avatar: '/photos/demo.png' } 
+        , { email: "demo2@demo.com", name: "Demo Demo", password: "123456", avatar: '/photos/demo.png' } 
+        , { email: "demo3@demo.com", name: "Demo Demo", password: "123456", avatar: '/photos/demo.png' } 
+        , { email: "demo4@demo.com", name: "Demo Demo", password: "123456", avatar: '/photos/demo.png' } 
+        , { email: "demo5@demo.com", name: "Demo Demo", password: "123456", avatar: '/photos/demo.png' } 
+        , { email: "demo6@demo.com", name: "Demo Demo", password: "123456", avatar: '/photos/demo.png' } 
+        , { email: "demo7@demo.com", name: "Demo Demo", password: "123456", avatar: '/photos/demo.png' } 
+        , { email: "cortez.cristian@gmail.com", name: "Cristian Cortéz", password: "12345678", avatar: '/photos/crisboot.png' } 
         ];
 
     async.mapSeries(users, function(op, callback){

@@ -5,7 +5,8 @@
         li
           a.chat-selector(href='#/chatuser/'+u._id,data-idusr=u._id, ng-click="setChatRoomUser($event)")
             img.img-rounded.msg-avatar(src=u.avatar)
-            span.d-item-title #{u.email.substr(0, 21)}
+            //span.d-item-title #{u.email.substr(0, 21)}
+            span.d-item-title.hidden-xs #{u.name.substr(0, 21)}
               span.label.label-close
                 i.fa.fa-times
 .navbar-default.sidebar#site-opts(role='navigation')
@@ -14,17 +15,17 @@
       li
         a.group(href='#')
           i.fa.fa-inbox.fa-fw
-          span.d-item-title Options
+          span.d-item-title.hidden-xs Options
       li
         a(href='#/people')
           i.fa.fa-users.fa-fw
-          span.d-item-title Usuarios
+          span.d-item-title.hidden-xs Usuarios
       li
         a.active(href='#')
           i.fa.fa-envelope.fa-fw
-          span.d-item-title Memos
+          span.d-item-title.hidden-xs Memos
             span.label.label-danger 15
       li
         a.active(href='#')
           i.fa.fa-paper-plane.fa-fw
-          span.d-item-title Enviar Memo
+          span.d-item-title.hidden-xs Enviar Memo

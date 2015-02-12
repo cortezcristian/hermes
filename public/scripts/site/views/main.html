@@ -1,15 +1,15 @@
 <div id="chat">
+    <div class="panel chat-header-container">
+        <img ng-src="{{users[userto].avatar}}" class="img-rounded msg-avatar" style="height:50px" />
+        <span>{{users[userto].name}}</span>
+    </div>
     <div class="chat-msg-container">
       <div class="chat-message-table">
-        <!--
-        <div class="chat-message">
-          <div class="msg-author">
-            <div class="msg-author-avatar"><img src="/img/photo400x400.png" class="img-rounded msg-avatar"/></div>
-            <div class="msg-author-name"><a href="#"><span>Cristian Cortez</span></a></div>
-          </div>
-          <div class="msg-content"><span>Sample content :D</span></div>
+        
+        <!-- spinner -->
+        <div class="big-preloader" ng-hide="!layout.loading">
+            <i class="fa fa-6 fa-refresh fa-spin"></i>
         </div>
-        -->
         
         
         <div class="chat-message" ng-repeat='m in messages'>

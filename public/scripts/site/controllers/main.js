@@ -10,7 +10,8 @@ var chatInterval;
  * Controller of the anyandgoApp
  */
 angular.module('anyandgoApp')
-  .controller('MainCtrl', function ($scope, $routeParams, ChatService, $interval, $timeout) {
+  .controller('MainCtrl', function ($scope, $routeParams, ChatService, 
+                                     $interval, $timeout, $rootScope) {
     $scope.messages = [];
     $scope.lastmsghash = '';
     $scope.chatmsg = '';
@@ -18,6 +19,16 @@ angular.module('anyandgoApp')
 
     $scope.userto = $routeParams.userto || '';
     $scope.users = {};
+      
+    $scope.isViewLoading = false;
+    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){ 
+        debugger;
+      $scope.isViewLoading = true;
+    });
+    $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
+        debugger;
+      $scope.isViewLoading = false;
+    });
 
     // Start perfect-scrollbar
     $('.chat-msg-container').perfectScrollbar();

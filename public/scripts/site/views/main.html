@@ -15,7 +15,7 @@
         <div class="chat-message" ng-repeat='m in messages'>
           <div class="msg-author">
             <div class="msg-author-avatar"><img ng-src="{{users[m.idFrom].avatar}}" class="img-rounded msg-avatar"/></div>
-            <div class="msg-author-name"><a href="#"><span>{{users[m.idFrom].email}}</span></a></div>
+            <div class="msg-author-name"><a href="#"><span>{{users[m.idFrom].name}}</span></a></div>
           </div>
           <div class="msg-content"><span>{{m.message}}</span></div>
         </div>

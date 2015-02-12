@@ -22,11 +22,9 @@ angular.module('anyandgoApp')
       
     $scope.isViewLoading = false;
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){ 
-        debugger;
       $scope.isViewLoading = true;
     });
     $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
-        debugger;
       $scope.isViewLoading = false;
     });
 
@@ -88,8 +86,8 @@ angular.module('anyandgoApp')
         //console.log($scope.chatmsg);    
         if($scope.userto !== "") {
             ChatService.sendChat($scope.userto, $scope.chatmsg)
-                .then(clearTextarea)
-                .then(updateMessages);
+                .then(clearTextarea);
+                //.then(updateMessages);
                 //.then(showUpdateMessages);
         }
     };

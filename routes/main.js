@@ -308,7 +308,7 @@ app.get('/services/ask/user/info/:iduser',
 
 // #### Search Personal
 
-app.get('/services/search/people/:keyword', 
+app.get('/services/search/people/:keyword/office/:office/sector/:sector', 
     userAuth.autorizer,
     function (req, res) {
     // Should receive
@@ -316,8 +316,17 @@ app.get('/services/search/people/:keyword',
     // req.body.office
     // req.body.sector
     // Returns data of matched personal
-    User.find({ email : new RegExp('.*'+req.params.keyword+'.*','i') })
-        .select('-password')
+    var query = User.find().or([{ email : new RegExp('.*'+req.params.keyword+'.*','i') }, { name : new RegExp('.*'+req.params.keyword+'.*','i') }]);
+
+    if(req.params.office !== 'all'){
+        query.where('idOffice').equals(req.params.office);    
+    }
+
+    if(req.params.sector !== 'all'){
+        query.where('idSector').equals(req.params.sector);    
+    }
+
+    query.select('-password')
         .exec(function(err, users){
         res.json(users);
     });

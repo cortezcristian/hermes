@@ -323,6 +323,46 @@ app.get('/services/search/people/:keyword',
     });
 });
 
+// #### Offices
+
+app.get('/services/offices/:hash', 
+    userAuth.autorizer,
+    function (req, res) {
+    // Should receive
+    //req.params.hash
+    if(req.params.hash === 'all'){
+        Office.find({ }, function(err, offices){
+            res.json(offices);
+        });
+    } else {
+        // Returns data of matched office
+        Office.findOne({ _id : req.params.hash }, function(err, offices){
+            res.json(offices);
+        });
+        
+    }
+});
+
+// #### Sectors
+
+app.get('/services/sectors/:hash', 
+    userAuth.autorizer,
+    function (req, res) {
+    // Should receive
+    //req.params.hash
+    if(req.params.hash === 'all'){
+        Sector.find({ }, function(err, sectors){
+            res.json(sectors);
+        });
+    } else {
+        // Returns data of matched sector
+        Sector.findOne({ _id : req.params.hash }, function(err, sectors){
+            res.json(sectors);
+        });
+        
+    }
+});
+
 // #### Memo
 
 app.get('/services/read/memo/:memoid', 

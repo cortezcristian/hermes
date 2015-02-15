@@ -34,6 +34,12 @@ angular.module('anyandgoApp')
              val = (typeof val === 'undefined' || val === '' ) ? ' ' : val;
              return req('GET', '/services/search/people/'+val);
          },
+         getOffices: function(val){
+             return req('GET', '/services/offices/'+val);
+         },
+         getSectors: function(val){
+             return req('GET', '/services/sectors/'+val);
+         },
          getAllPeople: function(){
              return req('POST', '/services/people/all', {
                  userto: userto,

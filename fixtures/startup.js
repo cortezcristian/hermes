@@ -23,7 +23,7 @@ var async = require("async"),
 ## Clean Collections
 */
 var clearCollections = function ( cb ) {
-    var clearToCollections = "users,sectors"; 
+    var clearToCollections = "users,sectors,offices"; 
 
     async.map(clearToCollections.split(","), function(op, callback){
         console.log("removing...", op);

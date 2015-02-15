@@ -30,9 +30,17 @@ angular.module('anyandgoApp')
          delete: function(path, data){
              return req('DELETE', path, data);
          },
-         searchPeople: function(val){
+         searchPeople: function(val, office, sector){
              val = (typeof val === 'undefined' || val === '' ) ? ' ' : val;
-             return req('GET', '/services/search/people/'+val);
+             office = (typeof office === 'undefined' || office === '' ) ? 'all' : office;
+             sector = (typeof sector === 'undefined' || sector === '' ) ? 'all' : sector;
+             return req('GET', '/services/search/people/'+val+'/office/'+office+'/sector/'+sector);
+         },
+         getOffices: function(val){
+             return req('GET', '/services/offices/'+val);
+         },
+         getSectors: function(val){
+             return req('GET', '/services/sectors/'+val);
          },
          getAllPeople: function(){
              return req('POST', '/services/people/all', {

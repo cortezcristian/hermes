@@ -5,7 +5,8 @@
     <div class="col-md-8 col-md-offset-2">
         <form class="navbar-form" role="search">
             <div class="input-group">
-                <input type="text" class="form-control" ng-model="searchvalue" placeholder="Buscar" name="q" autocomplete="off">
+                <input type="text" class="form-control" ng-model="searchvalue" placeholder="Buscar" name="q" autocomplete="off" style="border: 2px solid #ccc;
+border-right: 1px solid #ccc;">
                 <!--
                 <div class="input-group-btn">
                     <button ng-click="searchPeople(searchvalue)" class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
@@ -13,6 +14,20 @@
                 </div>
                 -->
                 <a class="input-group-addon" ng-click="searchPeople(searchvalue)"><i class="fa fa-search fa-fw"></i></a>
+            </div>
+            <div class="form-group">
+                <label for="sector" class="col-sm-4 control-label" style="line-height: 28px;">Sector:</label>
+                <div class="col-sm-8">
+                  <select class="form-control" id="sector" ng-init="selectedSector = selectedSector || sectors[0]" ng-model="selectedSector" ng-options="s as s.name for s in sectors track by s._id" ng-change="searchPeople(searchvalue)">
+                  </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="office" class="col-sm-4 control-label" style="line-height: 28px;">Oficina:</label>
+                <div class="col-sm-8">
+                  <select class="form-control" id="office" ng-init="selectedOffice = selectedOffice || offices[0]" ng-model="selectedOffice" ng-options="o as o.name for o in offices track by o._id" ng-change="searchPeople(searchvalue)">
+                  </select>
+                </div>
             </div>
         </form>
     </div>

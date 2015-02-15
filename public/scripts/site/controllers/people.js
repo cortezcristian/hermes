@@ -12,6 +12,8 @@ var chatInterval;
 angular.module('anyandgoApp')
   .controller('PeopleCtrl', function ($scope, $routeParams, PeopleService) {
       $scope.searchvalue = "";    
+      $scope.selectedSector = {_id: "all"};    
+      $scope.selectedOffice = {_id: "all"};    
       $scope.people = [];
       $scope.sectors = [{name: "Todos", _id:"all"}];
       $scope.offices = [{name: "Todas", _id:"all"}];
@@ -29,7 +31,7 @@ angular.module('anyandgoApp')
 
       $scope.searchPeople = function(text){
           if( text !== '' ){
-              PeopleService.searchPeople(text).then(function(r){
+              PeopleService.searchPeople(text, $scope.selectedOffice._id, $scope.selectedSector._id).then(function(r){
                   $scope.people = r.data;
                   //$scope.searchvalue = "";    
 

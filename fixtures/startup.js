@@ -82,23 +82,30 @@ var loadOffices = function(cb) {
 
 var loadUsers = function(cb) {
     var users = [ 
-        { email: "user@user.com", name: "User Demo", password: "123456", avatar: '/photos/user.png' } 
-        , { email: "demo@demo.com", name: "Demo Demo", password: "123456", avatar: '/photos/demo.png' } 
-        , { email: "demo1@demo.com", name: "Demo Demo", password: "123456", avatar: '/photos/demo.png' } 
-        , { email: "demo2@demo.com", name: "Demo Demo", password: "123456", avatar: '/photos/demo.png' } 
-        , { email: "demo3@demo.com", name: "Demo Demo", password: "123456", avatar: '/photos/demo.png' } 
-        , { email: "demo4@demo.com", name: "Demo Demo", password: "123456", avatar: '/photos/demo.png' } 
-        , { email: "demo5@demo.com", name: "Demo Demo", password: "123456", avatar: '/photos/demo.png' } 
-        , { email: "demo6@demo.com", name: "Demo Demo", password: "123456", avatar: '/photos/demo.png' } 
-        , { email: "demo7@demo.com", name: "Demo Demo", password: "123456", avatar: '/photos/demo.png' } 
-        , { email: "cortez.cristian@gmail.com", name: "Cristian Cortéz", password: "12345678", avatar: '/photos/crisboot.png' } 
+        { sector: 'Proyectos', office: 'Rosario', obj: { email: "user@user.com", name: "User Demo", password: "123456", avatar: '/photos/user.png' }} 
+        , { sector: 'Proyectos', office: 'Lima', obj: { email: "demo@demo.com", name: "Demo Demo", password: "123456", avatar: '/photos/demo.png' }} 
+        , { sector: 'Proyectos', office: 'Lima', obj: { email: "demo1@demo.com", name: "Demo Demo", password: "123456", avatar: '/photos/demo.png' }} 
+        , { sector: 'Proyectos', office: 'Rosario', obj: { email: "demo2@demo.com", name: "Demo Demo", password: "123456", avatar: '/photos/demo.png' }}
+        , { sector: 'Proyectos', office: 'Rosario', obj: { email: "demo3@demo.com", name: "Demo Demo", password: "123456", avatar: '/photos/demo.png' }} 
+        , { sector: 'Proyectos', office: 'Rosario', obj: { email: "demo4@demo.com", name: "Demo Demo", password: "123456", avatar: '/photos/demo.png' }} 
+        , { sector: 'Proyectos', office: 'Rosario', obj: { email: "demo5@demo.com", name: "Demo Demo", password: "123456", avatar: '/photos/demo.png' }} 
+        , { sector: 'Proyectos', office: 'Rosario', obj: { email: "demo6@demo.com", name: "Demo Demo", password: "123456", avatar: '/photos/demo.png' }} 
+        , { sector: 'Sistemas', office: 'Rosario', obj: { email: "demo7@demo.com", name: "Demo Demo", password: "123456", avatar: '/photos/demo.png' }} 
+        , { sector: 'Sistemas', office: 'Rosario', obj: { email: "cortez.cristian@gmail.com", name: "Cristian Cortéz", password: "12345678", avatar: '/photos/crisboot.png' }} 
         ];
 
     async.mapSeries(users, function(op, callback){
-        var u1 = new User(op);
-        u1.save(function(err, doc){
-            console.log("User added...", doc.name, err);
-            callback(err, op);
+        Office.findOne({name: op.office}, function(err, of){
+            Sector.findOne({name: op.sector}, function(err, se){
+                op.obj.idOffice = of._id;
+                op.obj.idSector = se._id;
+
+                var u1 = new User(op.obj);
+                u1.save(function(err, doc){
+                    console.log("User added...", doc.name, err);
+                    callback(err, op);
+                });
+            });
         });
     }, function(err, res){
         //console.log(">>>", err, res);    

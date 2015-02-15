@@ -13,6 +13,8 @@
 
 var async = require("async"),
   User  = require('../models/user.js'),
+  Sector  = require('../models/sector.js'),
+  Office  = require('../models/office.js'),
   dbConex = module.parent.exports.dbConex;
 
 
@@ -21,7 +23,7 @@ var async = require("async"),
 ## Clean Collections
 */
 var clearCollections = function ( cb ) {
-    var clearToCollections = "users,admins"; 
+    var clearToCollections = "users,sectors"; 
 
     async.map(clearToCollections.split(","), function(op, callback){
         console.log("removing...", op);
@@ -38,6 +40,45 @@ var clearCollections = function ( cb ) {
         cb(null, 'Collections Cleared')
     });
 };
+
+var loadSectors = function(cb) {
+    var sectors = [ 
+        { name: 'Sistemas' } 
+        , { name: 'Proyectos' } 
+        ];
+
+    async.mapSeries(sectors, function(op, callback){
+        var u1 = new Sector(op);
+        u1.save(function(err, doc){
+            console.log("Sector added...", doc.name, err);
+            callback(err, op);
+        });
+    }, function(err, res){
+        //console.log(">>>", err, res);    
+        cb(null, 'Sectors Loaded')
+    });
+        
+};
+
+var loadOffices = function(cb) {
+    var offices = [ 
+        { name: 'Rosario' } 
+        , { name: 'Lima' } 
+        ];
+
+    async.mapSeries(offices, function(op, callback){
+        var o1 = new Office(op);
+        o1.save(function(err, doc){
+            console.log("Office added...", doc.name, err);
+            callback(err, op);
+        });
+    }, function(err, res){
+        //console.log(">>>", err, res);    
+        cb(null, 'Offices Loaded')
+    });
+        
+};
+
 
 var loadUsers = function(cb) {
     var users = [ 
@@ -69,6 +110,8 @@ var loadUsers = function(cb) {
 // Run tasks
 async.series([
     clearCollections, 
+    loadSectors, 
+    loadOffices,
     loadUsers], function(err, res){
     console.log("Finished Tasks >>>", res, "Observations: ", err || "None");    
 });

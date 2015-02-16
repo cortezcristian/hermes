@@ -2,12 +2,18 @@
 
 $(document).ready(function(){
 
-    /*
     $('#exampleModal').on('show.bs.modal', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
+        //e.preventDefault();
+        //e.stopPropagation();
+        var button = $(event.target).parent();
+        var recipient = button.data('id');
+
+        var modal = $(this);
+        modal.find('.modal-title').text('New message to ' + recipient)
+        modal.find('.modal-body input').val(recipient)
     });
 
+    /*
     $(document).on('click', '.btn-prevented', function(e){
         //debugger;
         e.preventDefault();

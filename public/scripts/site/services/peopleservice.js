@@ -42,6 +42,9 @@ angular.module('anyandgoApp')
          getSectors: function(val){
              return req('GET', '/services/sectors/'+val);
          },
+         getProfile: function(val){
+             return req('GET', '/services/profile/'+val);
+         },
          getAllPeople: function(){
              return req('POST', '/services/people/all', {
                  userto: userto,

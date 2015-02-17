@@ -372,6 +372,22 @@ app.get('/services/sectors/:hash',
     }
 });
 
+// #### Profile search
+
+app.get('/services/profile/:hash', 
+    userAuth.autorizer,
+    function (req, res) {
+    // Should receive
+    //req.params.hash
+    User.findOne({ _id : req.params.hash })
+        .select('-password')
+        .populate('idSector idOffice')
+        .exec( function(err, user){
+        res.json(user);
+    });
+});
+
+
 // #### Memo
 
 app.get('/services/read/memo/:memoid', 

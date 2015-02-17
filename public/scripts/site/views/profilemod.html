@@ -1,0 +1,27 @@
+<div id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">&times;</span></button>        
+        <h4 class="modal-title">Perfil</h4>
+      </div>      
+      <div class="modal-body">
+        <p class="center"><img ng-src="{{iProfile.avatar}}" style="height: 200px;width: 200px;" /></p>
+        <h1 class="center">{{iProfile.name}}</h1>
+        <p class="center"><strong>Cargo:</strong> {{iProfile.job_desc}}</p> 
+        <p class="center"><strong>Tel/Interno:</strong> {{iProfile.phone}}</p> 
+        <p class="center"><strong>E-mail:</strong> {{iProfile.email}}</p> 
+        <p class="center"><strong>Oficina:</strong> {{iProfile.idOffice.name}}</p> 
+        <p class="center"><strong>Sector:</strong> {{iProfile.idSector.name}}</p> 
+        <!-- <p class="center">{{iProfile | json}}</p> -->
+      </div>      
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-default">Cerrar</button>        
+        <button class="btn btn-primary" ng-click="startChat(iProfile._id)">
+            <i class="fa fa-comment fa-fw"></i>
+            Chat
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

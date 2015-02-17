@@ -1,0 +1,15 @@
+
+<ul id="side-chat-menu" class="nav">
+    <li ng-repeat="tab in opentabs">
+    <a href="#/chatuser/{{tab._id}}" class="chat-selector">
+        <img ng-src="{{tab.avatar}}" class="img-rounded msg-avatar">
+        <!--span.d-item-title #{u.email.substr(0, 21)}-->
+        <span class="d-item-title hidden-xs">{{tab.name}}
+            <span class="label label-close" ng-click="removeOpentab(tab._id)">
+                <i class="fa fa-times">
+                </i>
+            </span>
+        </span>
+    </a>
+    </li>
+</ul>

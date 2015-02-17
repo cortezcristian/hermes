@@ -28,7 +28,7 @@ var userSchema = new Schema({
     last_activity : Date,
     job_desc      : { type: String, default: '-' },
     phone         : { type: String, default: '-' },
-    chat_windows  : String,
+    open_chats    : [{ type: Schema.Types.ObjectId, ref: 'User' }],
 	created       : Date         
 });
 
@@ -135,6 +135,37 @@ userSchema.method('updatePrivateChatHistory', function(iduserto, msghash, cb) {
             cb(err, chatroom1);
         });
     });
+});
+
+// ### Method: saveChatTab
+userSchema.method('saveChatTab', function(userid, cb) {
+    var user = this;
+
+    if(user.open_chats.indexOf(userid) === -1) {
+        user.open_chats.push(userid);
+        user.save(cb);
+    } else {
+        if(typeof cb === 'function'){
+            cb(new Error('Chat already open for that userid'),null);    
+        }
+    }
+
+});
+
+// ### Method: removeChatTab
+userSchema.method('removeChatTab', function(userid, cb) {
+    var user = this;
+    var index = user.open_chats.indexOf(userid);
+
+    if(index > -1) {
+        user.open_chats.splice(index, 1);
+        user.save(cb);
+    } else {
+        if(typeof cb === 'function'){
+            cb(new Error('Chat already removed for that userid'),null);    
+        }
+    }
+
 });
 
 

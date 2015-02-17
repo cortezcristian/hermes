@@ -2,6 +2,10 @@
     <div class="panel chat-header-container">
         <img ng-src="{{users[userto].avatar}}" class="img-rounded msg-avatar" style="height:50px" />
         <span>{{users[userto].name}}</span>
+
+        <a class="label label-close label-header" ng-click="removeOpentab(users[userto]._id)">
+            <i class="fa fa-times"></i>
+        </a>
     </div>
     <div class="chat-msg-container">
       <div class="chat-message-table">

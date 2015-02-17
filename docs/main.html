@@ -760,7 +760,9 @@ from where we start the search to bring only the new ones</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    res.json(req.params);
+            <div class="content"><div class='highlight'><pre>    req.user.updatePrivateChatHistory(req.params.userid, req.params.msgid, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, chatroom)</span></span>{
+        res.json(chatroom);
+    });
 });
 
 app.get(<span class="hljs-string">'/services/ask/private/chatroom/:roomid/updates/:msgid'</span>, 
@@ -854,7 +856,11 @@ if the chat doesn’t exist it should create it </p>
     req.user.openPrivateChat(req.params.usrto, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, croom)</span></span>{
         res.json(croom);
     });
-});</pre></div></div>
+});
+
+app.get(<span class="hljs-string">'/services/ask/user/info/:iduser'</span>, 
+    userAuth.autorizer,
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(req, res)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -865,14 +871,18 @@ if the chat doesn’t exist it should create it </p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
-              <h4 id="search-personal">Search Personal</h4>
+              <p>Should receive
+req.params.msgid</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>
-app.post(<span class="hljs-string">'/services/search/people'</span>, 
-    userAuth.autorizer,
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(req, res)</span> </span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> iduser = (req.params.iduser === <span class="hljs-string">'me'</span>) ? req.user._id : req.params.iduser;
+    User.findOne({ _id: iduser}, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, user)</span></span>{
+        user = user.toObject();
+        <span class="hljs-keyword">delete</span> user.password;
+        res.json(user);
+    });
+});</pre></div></div>
             
         </li>
         
@@ -883,16 +893,14 @@ app.post(<span class="hljs-string">'/services/search/people'</span>,
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
-              <p>Should receive
-req.body.keyword
-req.body.office
-req.body.sector
-Returns data of matched personal</p>
+              <h4 id="search-personal">Search Personal</h4>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    res.json(req.body);
-});</pre></div></div>
+            <div class="content"><div class='highlight'><pre>
+app.get(<span class="hljs-string">'/services/search/people/:keyword/office/:office/sector/:sector'</span>, 
+    userAuth.autorizer,
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(req, res)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -902,6 +910,195 @@ Returns data of matched personal</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-34">&#182;</a>
+              </div>
+              <p>Should receive
+req.body.keyword
+req.body.office
+req.body.sector
+Returns data of matched personal</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> query = User.find().or([{ email : <span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(<span class="hljs-string">'.*'</span>+req.params.keyword+<span class="hljs-string">'.*'</span>,<span class="hljs-string">'i'</span>) }, { name : <span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(<span class="hljs-string">'.*'</span>+req.params.keyword+<span class="hljs-string">'.*'</span>,<span class="hljs-string">'i'</span>) }]);
+
+    <span class="hljs-keyword">if</span>(req.params.office !== <span class="hljs-string">'all'</span>){
+        query.where(<span class="hljs-string">'idOffice'</span>).equals(req.params.office);    
+    }
+
+    <span class="hljs-keyword">if</span>(req.params.sector !== <span class="hljs-string">'all'</span>){
+        query.where(<span class="hljs-string">'idSector'</span>).equals(req.params.sector);    
+    }
+
+    query.select(<span class="hljs-string">'-password'</span>)
+        .exec(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, users)</span></span>{
+        res.json(users);
+    });
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-35">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-35">&#182;</a>
+              </div>
+              <h4 id="offices">Offices</h4>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+app.get(<span class="hljs-string">'/services/offices/:hash'</span>, 
+    userAuth.autorizer,
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(req, res)</span> </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-36">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-36">&#182;</a>
+              </div>
+              <p>Should receive
+req.params.hash</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span>(req.params.hash === <span class="hljs-string">'all'</span>){
+        Office.find({ }, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, offices)</span></span>{
+            res.json(offices);
+        });
+    } <span class="hljs-keyword">else</span> {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-37">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-37">&#182;</a>
+              </div>
+              <p>Returns data of matched office</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        Office.findOne({ _id : req.params.hash }, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, offices)</span></span>{
+            res.json(offices);
+        });
+        
+    }
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-38">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-38">&#182;</a>
+              </div>
+              <h4 id="sectors">Sectors</h4>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+app.get(<span class="hljs-string">'/services/sectors/:hash'</span>, 
+    userAuth.autorizer,
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(req, res)</span> </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-39">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-39">&#182;</a>
+              </div>
+              <p>Should receive
+req.params.hash</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span>(req.params.hash === <span class="hljs-string">'all'</span>){
+        Sector.find({ }, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, sectors)</span></span>{
+            res.json(sectors);
+        });
+    } <span class="hljs-keyword">else</span> {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-40">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-40">&#182;</a>
+              </div>
+              <p>Returns data of matched sector</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        Sector.findOne({ _id : req.params.hash }, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, sectors)</span></span>{
+            res.json(sectors);
+        });
+        
+    }
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-41">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-41">&#182;</a>
+              </div>
+              <h4 id="profile-search">Profile search</h4>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+app.get(<span class="hljs-string">'/services/profile/:hash'</span>, 
+    userAuth.autorizer,
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(req, res)</span> </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-42">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-42">&#182;</a>
+              </div>
+              <p>Should receive
+req.params.hash</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    User.findOne({ _id : req.params.hash })
+        .select(<span class="hljs-string">'-password'</span>)
+        .populate(<span class="hljs-string">'idSector idOffice'</span>)
+        .exec( <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, user)</span></span>{
+        res.json(user);
+    });
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-43">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-43">&#182;</a>
               </div>
               <h4 id="memo">Memo</h4>
 
@@ -915,11 +1112,11 @@ app.get(<span class="hljs-string">'/services/read/memo/:memoid'</span>,
         </li>
         
         
-        <li id="section-35">
+        <li id="section-44">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-35">&#182;</a>
+                <a class="pilcrow" href="#section-44">&#182;</a>
               </div>
               <p>Should receive
 req.params.memoid
@@ -938,11 +1135,11 @@ app.get(<span class="hljs-string">'/services/get/memo/:memoid'</span>,
         </li>
         
         
-        <li id="section-36">
+        <li id="section-45">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-36">&#182;</a>
+                <a class="pilcrow" href="#section-45">&#182;</a>
               </div>
               <p>Should receive
 req.params.memoid
@@ -960,11 +1157,11 @@ app.get(<span class="hljs-string">'/services/get/memos/inbox'</span>,
         </li>
         
         
-        <li id="section-37">
+        <li id="section-46">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-37">&#182;</a>
+                <a class="pilcrow" href="#section-46">&#182;</a>
               </div>
               <p>Should receive
 req.params.memoid
@@ -982,11 +1179,11 @@ app.get(<span class="hljs-string">'/services/get/memos/outbox'</span>,
         </li>
         
         
-        <li id="section-38">
+        <li id="section-47">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-38">&#182;</a>
+                <a class="pilcrow" href="#section-47">&#182;</a>
               </div>
               <p>Should receive
 req.params.memoid
@@ -1004,11 +1201,11 @@ app.get(<span class="hljs-string">'/services/count/unread/memos'</span>,
         </li>
         
         
-        <li id="section-39">
+        <li id="section-48">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-39">&#182;</a>
+                <a class="pilcrow" href="#section-48">&#182;</a>
               </div>
               <p>Should receive
 counts all pending to read memos for current user</p>
@@ -1026,11 +1223,11 @@ app.post(<span class="hljs-string">'/services/send/memo'</span>,
         </li>
         
         
-        <li id="section-40">
+        <li id="section-49">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-40">&#182;</a>
+                <a class="pilcrow" href="#section-49">&#182;</a>
               </div>
               <p>Should receive
 req.body.memobody
@@ -1047,11 +1244,11 @@ their ids separated by commas in a CSV way: usrid1,usrid2,usrid3</p>
         </li>
         
         
-        <li id="section-41">
+        <li id="section-50">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-41">&#182;</a>
+                <a class="pilcrow" href="#section-50">&#182;</a>
               </div>
               <h4 id="session">Session</h4>
 
@@ -1060,11 +1257,11 @@ their ids separated by commas in a CSV way: usrid1,usrid2,usrid3</p>
         </li>
         
         
-        <li id="section-42">
+        <li id="section-51">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-42">&#182;</a>
+                <a class="pilcrow" href="#section-51">&#182;</a>
               </div>
               <p>TODO: set last activity can be an interceptor for services
 TODO: resolve how to disconnect inactive people</p>
@@ -1072,6 +1269,30 @@ TODO: resolve how to disconnect inactive people</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
+app.post(<span class="hljs-string">'/services/open/tabs'</span>, 
+    userAuth.autorizer,
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(req, res)</span> </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-52">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-52">&#182;</a>
+              </div>
+              <p>Should receive
+req.body.chatroomname
+Saves minimized window UI
+everytime you open a chatroom UI</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    res.json(req.body);
+});
+
+
 app.post(<span class="hljs-string">'/services/save/chat/window'</span>, 
     userAuth.autorizer,
     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(req, res)</span> </span>{</pre></div></div>
@@ -1079,11 +1300,11 @@ app.post(<span class="hljs-string">'/services/save/chat/window'</span>,
         </li>
         
         
-        <li id="section-43">
+        <li id="section-53">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-43">&#182;</a>
+                <a class="pilcrow" href="#section-53">&#182;</a>
               </div>
               <p>Should receive
 req.body.chatroomname
@@ -1102,11 +1323,11 @@ app.post(<span class="hljs-string">'/services/remove/chat/window'</span>,
         </li>
         
         
-        <li id="section-44">
+        <li id="section-54">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-44">&#182;</a>
+                <a class="pilcrow" href="#section-54">&#182;</a>
               </div>
               <p>Should receive
 req.body.chatroomname
@@ -1125,11 +1346,11 @@ app.get(<span class="hljs-string">'/services/count/unread/memos'</span>,
         </li>
         
         
-        <li id="section-45">
+        <li id="section-55">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-45">&#182;</a>
+                <a class="pilcrow" href="#section-55">&#182;</a>
               </div>
               <p>Returns the list of chatrooms open in the last session</p>
 
@@ -1141,11 +1362,11 @@ app.get(<span class="hljs-string">'/services/count/unread/memos'</span>,
         </li>
         
         
-        <li id="section-46">
+        <li id="section-56">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-46">&#182;</a>
+                <a class="pilcrow" href="#section-56">&#182;</a>
               </div>
               <h2 id="2-admin-routes">2. Admin Routes</h2>
 <hr>
@@ -1155,11 +1376,11 @@ app.get(<span class="hljs-string">'/services/count/unread/memos'</span>,
         </li>
         
         
-        <li id="section-47">
+        <li id="section-57">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-47">&#182;</a>
+                <a class="pilcrow" href="#section-57">&#182;</a>
               </div>
               <h3 id="login">Login</h3>
 
@@ -1172,11 +1393,11 @@ app.get(<span class="hljs-string">'/services/count/unread/memos'</span>,
         </li>
         
         
-        <li id="section-48">
+        <li id="section-58">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-48">&#182;</a>
+                <a class="pilcrow" href="#section-58">&#182;</a>
               </div>
               <h3 id="panel">Panel</h3>
 
@@ -1189,11 +1410,11 @@ app.get(<span class="hljs-string">'/services/count/unread/memos'</span>,
         </li>
         
         
-        <li id="section-49">
+        <li id="section-59">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-49">&#182;</a>
+                <a class="pilcrow" href="#section-59">&#182;</a>
               </div>
               <h3 id="panel">Panel</h3>
 
@@ -1210,11 +1431,11 @@ app.get(<span class="hljs-string">'/services/count/unread/memos'</span>,
         </li>
         
         
-        <li id="section-50">
+        <li id="section-60">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-50">&#182;</a>
+                <a class="pilcrow" href="#section-60">&#182;</a>
               </div>
               <h2 id="3-public-rest">3. Public Rest</h2>
 <hr>
@@ -1224,11 +1445,11 @@ app.get(<span class="hljs-string">'/services/count/unread/memos'</span>,
         </li>
         
         
-        <li id="section-51">
+        <li id="section-61">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-51">&#182;</a>
+                <a class="pilcrow" href="#section-61">&#182;</a>
               </div>
               <p><a href="https://github.com/florianholzapfel/express-restify-mongoose">https://github.com/florianholzapfel/express-restify-mongoose</a></p>
 
@@ -1237,11 +1458,11 @@ app.get(<span class="hljs-string">'/services/count/unread/memos'</span>,
         </li>
         
         
-        <li id="section-52">
+        <li id="section-62">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-52">&#182;</a>
+                <a class="pilcrow" href="#section-62">&#182;</a>
               </div>
               <p>CORS Interceptors</p>
 
@@ -1265,11 +1486,11 @@ app.get(<span class="hljs-string">'/services/count/unread/memos'</span>,
         </li>
         
         
-        <li id="section-53">
+        <li id="section-63">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-53">&#182;</a>
+                <a class="pilcrow" href="#section-63">&#182;</a>
               </div>
               <p>GET /api/v1/samples</p>
 
@@ -1291,11 +1512,11 @@ app.get(<span class="hljs-string">'/services/count/unread/memos'</span>,
         </li>
         
         
-        <li id="section-54">
+        <li id="section-64">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-54">&#182;</a>
+                <a class="pilcrow" href="#section-64">&#182;</a>
               </div>
               <p>GET /api/v1/users</p>
 
@@ -1320,11 +1541,11 @@ app.get(<span class="hljs-string">'/services/count/unread/memos'</span>,
         </li>
         
         
-        <li id="section-55">
+        <li id="section-65">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-55">&#182;</a>
+                <a class="pilcrow" href="#section-65">&#182;</a>
               </div>
               <p>GET /api/v1/chatrecords</p>
 
@@ -1349,11 +1570,11 @@ app.get(<span class="hljs-string">'/services/count/unread/memos'</span>,
         </li>
         
         
-        <li id="section-56">
+        <li id="section-66">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-56">&#182;</a>
+                <a class="pilcrow" href="#section-66">&#182;</a>
               </div>
               <p>GET /api/v1/memos</p>
 
@@ -1378,11 +1599,11 @@ app.get(<span class="hljs-string">'/services/count/unread/memos'</span>,
         </li>
         
         
-        <li id="section-57">
+        <li id="section-67">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-57">&#182;</a>
+                <a class="pilcrow" href="#section-67">&#182;</a>
               </div>
               <p>GET /api/v1/memorecords</p>
 
@@ -1407,11 +1628,11 @@ app.get(<span class="hljs-string">'/services/count/unread/memos'</span>,
         </li>
         
         
-        <li id="section-58">
+        <li id="section-68">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-58">&#182;</a>
+                <a class="pilcrow" href="#section-68">&#182;</a>
               </div>
               <p>GET /api/v1/sectors</p>
 
@@ -1436,11 +1657,11 @@ app.get(<span class="hljs-string">'/services/count/unread/memos'</span>,
         </li>
         
         
-        <li id="section-59">
+        <li id="section-69">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-59">&#182;</a>
+                <a class="pilcrow" href="#section-69">&#182;</a>
               </div>
               <p>GET /api/v1/offices</p>
 
@@ -1465,11 +1686,11 @@ app.get(<span class="hljs-string">'/services/count/unread/memos'</span>,
         </li>
         
         
-        <li id="section-60">
+        <li id="section-70">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-60">&#182;</a>
+                <a class="pilcrow" href="#section-70">&#182;</a>
               </div>
               <p>GET /api/v1/chatrooms</p>
 
@@ -1495,11 +1716,11 @@ app.get(<span class="hljs-string">'/services/count/unread/memos'</span>,
         </li>
         
         
-        <li id="section-61">
+        <li id="section-71">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-61">&#182;</a>
+                <a class="pilcrow" href="#section-71">&#182;</a>
               </div>
               <h2 id="4-crud-forms">4. Crud Forms</h2>
 <hr>
@@ -1509,11 +1730,11 @@ app.get(<span class="hljs-string">'/services/count/unread/memos'</span>,
         </li>
         
         
-        <li id="section-62">
+        <li id="section-72">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-62">&#182;</a>
+                <a class="pilcrow" href="#section-72">&#182;</a>
               </div>
               <p><a href="https://github.com/oJshua/mongoose-forms">https://github.com/oJshua/mongoose-forms</a></p>
 
@@ -1524,11 +1745,11 @@ app.get(<span class="hljs-string">'/services/count/unread/memos'</span>,
         </li>
         
         
-        <li id="section-63">
+        <li id="section-73">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-63">&#182;</a>
+                <a class="pilcrow" href="#section-73">&#182;</a>
               </div>
               <p>mongooseForms.bindHelpers(Handlebars, ‘bootstrap’);</p>
 
@@ -1549,11 +1770,11 @@ app.get(<span class="hljs-string">'/services/count/unread/memos'</span>,
         </li>
         
         
-        <li id="section-64">
+        <li id="section-74">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-64">&#182;</a>
+                <a class="pilcrow" href="#section-74">&#182;</a>
               </div>
               <p>delete SampleForm.options.fields[“<strong>v”];
 SampleForm.options.maps[“</strong>v”] = false;</p>
@@ -1581,11 +1802,11 @@ SampleForm.options.maps[“</strong>v”] = false;</p>
         </li>
         
         
-        <li id="section-65">
+        <li id="section-75">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-65">&#182;</a>
+                <a class="pilcrow" href="#section-75">&#182;</a>
               </div>
               <p>Override type with ngoform setting</p>
 
@@ -1603,11 +1824,11 @@ SampleForm.options.maps[“</strong>v”] = false;</p>
         </li>
         
         
-        <li id="section-66">
+        <li id="section-76">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-66">&#182;</a>
+                <a class="pilcrow" href="#section-76">&#182;</a>
               </div>
               <p>form.options.fields[“name”].template = ‘Lala’;</p>
 
@@ -1635,11 +1856,11 @@ SampleForm.options.maps[“</strong>v”] = false;</p>
         </li>
         
         
-        <li id="section-67">
+        <li id="section-77">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-67">&#182;</a>
+                <a class="pilcrow" href="#section-77">&#182;</a>
               </div>
               <p>var form = mongooseForms.Bridge(new Sample(), SampleForm).getForm();</p>
 
@@ -1666,11 +1887,11 @@ app.get(<span class="hljs-string">'/forms/sample/edit'</span>, <span class="hljs
         </li>
         
         
-        <li id="section-68">
+        <li id="section-78">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-68">&#182;</a>
+                <a class="pilcrow" href="#section-78">&#182;</a>
               </div>
               <h2 id="5-super-admin-tasks">5. Super Admin Tasks</h2>
 <hr>
@@ -1680,11 +1901,11 @@ app.get(<span class="hljs-string">'/forms/sample/edit'</span>, <span class="hljs
         </li>
         
         
-        <li id="section-69">
+        <li id="section-79">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-69">&#182;</a>
+                <a class="pilcrow" href="#section-79">&#182;</a>
               </div>
               
             </div>
@@ -1702,11 +1923,11 @@ app.get('/tasks/test', function (req, res) {
         </li>
         
         
-        <li id="section-70">
+        <li id="section-80">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-70">&#182;</a>
+                <a class="pilcrow" href="#section-80">&#182;</a>
               </div>
               <p>TODO: prevent auto-reboot when running with grunt, securitize mname parameter</p>
 

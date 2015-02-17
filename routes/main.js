@@ -228,6 +228,7 @@ app.get('/services/ask/private/chat/:iduserto/history/:period',
     });
 });
 
+// TODO;
 app.get('/services/ask/private/chatroom/:roomid/history/:period', 
     userAuth.autorizer,
     function (req, res) {
@@ -252,6 +253,7 @@ app.get('/services/ask/private/chat/:userid/updates/:msgid',
     });
 });
 
+// TODO;
 app.get('/services/ask/private/chatroom/:roomid/updates/:msgid', 
     userAuth.autorizer,
     function (req, res) {
@@ -263,6 +265,46 @@ app.get('/services/ask/private/chatroom/:roomid/updates/:msgid',
     res.json(req.params);
 });
 
+// ##### Get All Notifications
+app.get('/services/unread/notifiactions/:type', 
+    userAuth.autorizer,
+    function (req, res) {
+    // Should receive
+    // gives a resume of all notifications
+
+    var result = {
+        chats: [],
+        memos: []
+    };
+
+    if(req.params.type === 'all'){
+        ChatRecord.aggregate([ { $match: {idTo: req.user._id, readed_status: false} }, 
+            { $group: { _id: '$idFrom', count : { $sum : 1 } } } ])
+            .exec(function(err, cr){
+                console.log(err, cr);
+                if(cr){
+                    User.populate(cr, {path: '_id'}, function(err, list){
+                        result.chats = list;    
+                        res.json(result);
+                    });
+                }else{
+                    res.json(result);
+                }
+            });
+        /*
+        ChatRecord.find({idTo: req.user._id, readed_status: false})
+            .populate('idFrom')
+            .exec(function(err, cr){
+                result.chats = cr;    
+                res.json(result);
+            });
+        */
+    } else {
+        res.json(result);
+    }
+});
+
+// TODO;
 app.get('/services/count/unread/private/chat/:usrid', 
     userAuth.autorizer,
     function (req, res) {
@@ -272,6 +314,7 @@ app.get('/services/count/unread/private/chat/:usrid',
     res.json(req.params);
 });
 
+// TODO;
 app.get('/services/count/all/unread/private/chat', 
     userAuth.autorizer,
     function (req, res) {
@@ -287,11 +330,13 @@ app.get('/services/open/private/chat/:usrto',
     // req.params.usrto
     // should bring last 48hs of a private chat
     // if the chat doesn't exist it should create it 
-    console.log(req.user, typeof req.user.openPrivateChat);
+    //console.log(req.user, typeof req.user.openPrivateChat);
     req.user.openPrivateChat(req.params.usrto, function(err, croom){
         res.json(croom);
     });
 });
+
+// #### Get Personal Information
 
 app.get('/services/ask/user/info/:iduser', 
     userAuth.autorizer,
@@ -299,9 +344,9 @@ app.get('/services/ask/user/info/:iduser',
     // Should receive
     // req.params.msgid
     var iduser = (req.params.iduser === 'me') ? req.user._id : req.params.iduser;
-    User.findOne({ _id: iduser}, function(err, user){
-        user = user.toObject();
-        delete user.password;
+    User.findOne({ _id: iduser})
+        .select("-password")
+        .exec( function(err, user){
         res.json(user);
     });
 });
@@ -453,6 +498,8 @@ app.post('/services/send/memo',
 // TODO: set last activity can be an interceptor for services
 // TODO: resolve how to disconnect inactive people
 
+// ##### Get Open Tabs
+
 app.get('/services/open/tabs', 
     userAuth.autorizer,
     function (req, res) {
@@ -461,12 +508,14 @@ app.get('/services/open/tabs',
     // Saves minimized window UI
     // everytime you open a chatroom UI
     User.findOne({ _id: req.user._id })
-        .populate("open_chats")
+        .populate('open_chats', '-password')
         .exec(function(err, user){
         res.json(user.open_chats);
     });
 });
 
+
+// ##### Save Open Tab
 
 app.post('/services/save/chat/tab', 
     userAuth.autorizer,
@@ -479,6 +528,8 @@ app.post('/services/save/chat/tab',
         res.json({status: 'ok'});
     });
 });
+
+// ##### Remove Open Tab
 
 app.post('/services/remove/chat/tab', 
     userAuth.autorizer,

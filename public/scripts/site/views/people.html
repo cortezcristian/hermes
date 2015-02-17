@@ -39,7 +39,9 @@ border-right: 1px solid #ccc;">
       <div class="panel panel-default">
         <div class="panel-body" style="padding: 15px 0;">
               <div class="col-md-2">
-                <img ng-src="{{p.avatar}}" alt="{{p.name}}" style="width:55px;height:55px;" class="responsive-image"  />
+                <button class="con-avatar" data-id="{{p._id}}" data-toggle="modal" data-target="#exampleModal" ng-click="inspectProfile(p._id)">
+                    <img ng-src="{{p.avatar}}" alt="{{p.name}}" style="width:55px;height:55px;" class="responsive-image"  />
+                </button>
               </div>
               <div class="col-md-8">
                   <p style="padding:5px 0 0 10px">

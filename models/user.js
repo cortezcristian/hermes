@@ -26,8 +26,8 @@ var userSchema = new Schema({
     isactive      : { type: Boolean, default: true },
     last_login    : Date,
     last_activity : Date,
-    job_desc      : String,
-    phone         : String,
+    job_desc      : { type: String, default: '-' },
+    phone         : { type: String, default: '-' },
     chat_windows  : String,
 	created       : Date         
 });

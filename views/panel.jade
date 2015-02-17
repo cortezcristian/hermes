@@ -9,8 +9,8 @@ block content
             ul.nav.navbar-nav(style="width: 100%;")
               li.dropdown(style="width: 100%;")
                 a.dropdown-toggle(href='#', data-toggle='dropdown',style="padding-bottom:3px")
-                  img.img-circle(src="/img/photo400x400.png",style="width: 26px;margin: 0 8px 3px 0;")
-                  | Cristian Cortez
+                  img.img-circle(src=user.avatar,style="width: 26px;margin: 0 8px 3px 0;")
+                  | #{user.name}
                   |  
                   span.caret
                 ul.dropdown-menu(role='menu')

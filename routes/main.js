@@ -453,24 +453,43 @@ app.post('/services/send/memo',
 // TODO: set last activity can be an interceptor for services
 // TODO: resolve how to disconnect inactive people
 
-app.post('/services/save/chat/window', 
+app.get('/services/open/tabs', 
     userAuth.autorizer,
     function (req, res) {
     // Should receive
     // req.body.chatroomname
     // Saves minimized window UI
     // everytime you open a chatroom UI
-    res.json(req.body);
+    User.findOne({ _id: req.user._id })
+        .populate("open_chats")
+        .exec(function(err, user){
+        res.json(user.open_chats);
+    });
 });
 
-app.post('/services/remove/chat/window', 
+
+app.post('/services/save/chat/tab', 
     userAuth.autorizer,
     function (req, res) {
     // Should receive
-    // req.body.chatroomname
+    // req.body.userto
+    // Saves minimized window UI
+    // everytime you open a chatroom UI
+    req.user.saveChatTab(req.body.userto, function(err, user){
+        res.json({status: 'ok'});
+    });
+});
+
+app.post('/services/remove/chat/tab', 
+    userAuth.autorizer,
+    function (req, res) {
+    // Should receive
+    // req.body.userto
     // Removes minimized window UI
     // everytime you close a chatroom UI
-    res.json(req.body);
+    req.user.removeChatTab(req.body.userto, function(err, user){
+        res.json({status: 'ok'});
+    });
 });
 
 app.get('/services/count/unread/memos', 

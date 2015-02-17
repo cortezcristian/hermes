@@ -45,6 +45,19 @@ angular.module('anyandgoApp')
          getProfile: function(val){
              return req('GET', '/services/profile/'+val);
          },
+         getOpenTabs: function(val){
+             return req('GET', '/services/open/tabs/');
+         },
+         saveOpenTab: function(){
+             return req('POST', '/services/save/chat/tab', {
+                 userto: userto
+             });
+         },
+         removeOpenTab: function(){
+             return req('POST', '/services/remove/chat/tab', {
+                 userto: userto
+             });
+         },
          getAllPeople: function(){
              return req('POST', '/services/people/all', {
                  userto: userto,

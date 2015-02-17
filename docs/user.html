@@ -247,9 +247,9 @@
     isactive      : { type: <span class="hljs-built_in">Boolean</span>, <span class="hljs-keyword">default</span>: <span class="hljs-literal">true</span> },
     last_login    : <span class="hljs-built_in">Date</span>,
     last_activity : <span class="hljs-built_in">Date</span>,
-    job_desc      : <span class="hljs-built_in">String</span>,
-    phone         : <span class="hljs-built_in">String</span>,
-    chat_windows  : <span class="hljs-built_in">String</span>,
+    job_desc      : { type: <span class="hljs-built_in">String</span>, <span class="hljs-keyword">default</span>: <span class="hljs-string">'-'</span> },
+    phone         : { type: <span class="hljs-built_in">String</span>, <span class="hljs-keyword">default</span>: <span class="hljs-string">'-'</span> },
+    chat_windows  : { type: Schema.Types.ObjectId, ref: <span class="hljs-string">'User'</span> },
 	created       : <span class="hljs-built_in">Date</span>         
 });</pre></div></div>
             
@@ -495,6 +495,64 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
+              <h3 id="method-gethistory">Method: getHistory</h3>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>userSchema.method(<span class="hljs-string">'updatePrivateChatHistory'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(iduserto, msghash, cb)</span> </span>{
+    <span class="hljs-keyword">var</span> user = <span class="hljs-keyword">this</span>;
+    ChatRoom.findOrCreate(user._id, iduserto, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, chatroom)</span></span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>Performance: find index of requested msghash, get (msghash, lastmsg]
+and populate only those</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> indexHash = chatroom.history.indexOf(msghash);
+        <span class="hljs-keyword">if</span>(indexHash !== -<span class="hljs-number">1</span>) {
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Slicing..."</span>, chatroom.history);
+            chatroom.history = chatroom.history.slice(indexHash+<span class="hljs-number">1</span>, chatroom.history.length);
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Sliced..."</span>, chatroom.history);
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>Populate all history</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        ChatRecord.populate(chatroom, { path: <span class="hljs-string">'history'</span> }, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, chatroom1)</span></span>{
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"chatroom1"</span>, chatroom1);
+            cb(err, chatroom1);
+        });
+    });
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
               <h3 id="static-">Static:</h3>
 
             </div>
@@ -509,11 +567,11 @@
         </li>
         
         
-        <li id="section-17">
+        <li id="section-20">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
               <p>Export module</p>
 

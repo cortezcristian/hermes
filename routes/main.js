@@ -299,9 +299,9 @@ app.get('/services/ask/user/info/:iduser',
     // Should receive
     // req.params.msgid
     var iduser = (req.params.iduser === 'me') ? req.user._id : req.params.iduser;
-    User.findOne({ _id: iduser}, function(err, user){
-        user = user.toObject();
-        delete user.password;
+    User.findOne({ _id: iduser})
+        .select("-password")
+        .exec( function(err, user){
         res.json(user);
     });
 });
@@ -461,7 +461,7 @@ app.get('/services/open/tabs',
     // Saves minimized window UI
     // everytime you open a chatroom UI
     User.findOne({ _id: req.user._id })
-        .populate("open_chats")
+        .populate('open_chats', '-password')
         .exec(function(err, user){
         res.json(user.open_chats);
     });

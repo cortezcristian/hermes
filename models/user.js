@@ -140,10 +140,9 @@ userSchema.method('updatePrivateChatHistory', function(iduserto, msghash, cb) {
 // ### Method: saveChatTab
 userSchema.method('saveChatTab', function(userid, cb) {
     var user = this;
-    var index = user.open_chats.indexOf(userid);
 
-    if(index > -1) {
-        user.open_chats.splice(index, 1);
+    if(user.open_chats.indexOf(userid) === -1) {
+        user.open_chats.push(userid);
         user.save(cb);
     } else {
         if(typeof cb === 'function'){
@@ -153,12 +152,13 @@ userSchema.method('saveChatTab', function(userid, cb) {
 
 });
 
-// ### Method: saveChatTab
+// ### Method: removeChatTab
 userSchema.method('removeChatTab', function(userid, cb) {
     var user = this;
+    var index = user.open_chats.indexOf(userid);
 
-    if(user.open_chats.indexOf(userid) === -1) {
-        user.open_chats.push(userid);
+    if(index > -1) {
+        user.open_chats.splice(index, 1);
         user.save(cb);
     } else {
         if(typeof cb === 'function'){

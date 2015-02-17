@@ -23,6 +23,18 @@ angular.module('anyandgoApp')
            });
         }
 
+        $scope.saveOpentab = function (id){
+           PeopleService.saveOpenTab(id).then(function(r){
+                $scope.refreshOpentabs();
+           });
+        }
+
+        $scope.removeOpentab = function (id){
+           PeopleService.removeOpenTab(id).then(function(r){
+                $scope.refreshOpentabs();
+           });
+        }
+
         $scope.refreshOpentabs();
 
       },

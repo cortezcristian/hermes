@@ -42,12 +42,19 @@ angular.module('anyandgoApp')
         return r;
     }
 
+
+    if($scope.userto !== ""){
+        $scope.saveOpentab($scope.userto);
+    }
+
+    /*
     $scope.setChatRoomUser = function($event){
         $event.preventDefault();
         console.log($event);
         // $scope.userto = 
         // message
     };
+    */
 
     //https://github.com/lifeentity/chat-app/blob/master/public/app/scripts/controllers/chat-room.js
     var clearTextarea = function(r){

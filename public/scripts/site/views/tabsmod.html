@@ -1,11 +1,11 @@
 
 <ul id="side-chat-menu" class="nav">
-    <li>
-    <a href="#/chatuser/54e2ba54280c8a2910b44d7e" data-idusr='"54e2ba54280c8a2910b44d7e"' ng-click="setChatRoomUser($event)" class="chat-selector">
-        <img src="/photos/user.png" class="img-rounded msg-avatar">
+    <li ng-repeat="tab in opentabs">
+    <a href="#/chatuser/{{tab._id}}" class="chat-selector">
+        <img ng-src="{{tab.avatar}}" class="img-rounded msg-avatar">
         <!--span.d-item-title #{u.email.substr(0, 21)}-->
-        <span class="d-item-title hidden-xs">User Demo
-            <span class="label label-close">
+        <span class="d-item-title hidden-xs">{{tab.name}}
+            <span class="label label-close" ng-click="removeOpentab(tab._id)">
                 <i class="fa fa-times">
                 </i>
             </span>

@@ -48,12 +48,12 @@ angular.module('anyandgoApp')
          getOpenTabs: function(val){
              return req('GET', '/services/open/tabs/');
          },
-         saveOpenTab: function(){
+         saveOpenTab: function(userto){
              return req('POST', '/services/save/chat/tab', {
                  userto: userto
              });
          },
-         removeOpenTab: function(){
+         removeOpenTab: function(userto){
              return req('POST', '/services/remove/chat/tab', {
                  userto: userto
              });

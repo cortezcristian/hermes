@@ -10,7 +10,7 @@ nav.navbar.navbar-default(role='navigation',style="margin-bottom:0")
         i.fa.fa-comments-o.fa-3(style="padding:0 3px;")
         | Hermes
     #bs-example-navbar-collapse-1.collapse.navbar-collapse
-      ul.nav.navbar-nav
+      ul.nav.navbar-nav.hide
         li
           a(href='/') Home
         // public:page:menu:start
@@ -22,18 +22,6 @@ nav.navbar.navbar-default(role='navigation',style="margin-bottom:0")
           a(href='/panel') Panel
         // public:page:menu:end
       ul.nav.navbar-nav.navbar-right
-        li
-          a(href='#')
-            i.fa.fa-comment
-        li
-          a(href='#')
-            i.fa.fa-envelope
-        li
-          a(href='#')
-            i.fa.fa-users
-        li
-          a(href='#')
-            i.fa.fa-paper-plane
         li.dropdown
           a.dropdown-toggle(href='#', data-toggle='dropdown')
             i.fa.fa-flag(style='padding-right:10px') 
@@ -44,7 +32,8 @@ nav.navbar.navbar-default(role='navigation',style="margin-bottom:0")
             li
               a(href='#', langsupport="es-ar") es-ar
             //public:translation:menu:end
-        li.dropdown
+      ul.nav.navbar-nav.navbar-right(notificationsmod)
+        //li.dropdown
           a.dropdown-toggle(href='#', data-toggle='dropdown')
             span
               i.fa.fa-users(style='padding-right:10px') 

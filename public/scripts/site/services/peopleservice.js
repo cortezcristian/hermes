@@ -36,6 +36,10 @@ angular.module('anyandgoApp')
              sector = (typeof sector === 'undefined' || sector === '' ) ? 'all' : sector;
              return req('GET', '/services/search/people/'+val+'/office/'+office+'/sector/'+sector);
          },
+         getNotifications: function(val){
+             val = (typeof val === 'undefined' || val === '' ) ? 'all' : val;
+             return req('GET', '/services/unread/notifiactions/'+val);
+         },
          getOffices: function(val){
              return req('GET', '/services/offices/'+val);
          },

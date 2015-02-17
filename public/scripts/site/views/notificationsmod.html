@@ -1,0 +1,25 @@
+<li class="dropdown">
+    <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+        <i style="padding-right:10px" class="fa fa-comment"></i>
+        <span class="badge alert-danger">{{notifications.chats.length}}</span>
+    </a>
+    <ul ng-show="notifications.chats.length > 0" role="menu" class="dropdown-menu dropdown-menu-bubble-right mond-lang-change">
+        <li ng-repeat="u in notifications.chats" style="color:#fff">
+            <a href="#/chatuser/{{u._id._id}}" style="padding: 5px 10px;line-height: 30px;">
+                <img ng-src="{{u._id.avatar}}" style="width:25px;height:25px;" />
+                <span>{{u._id.name}}</span>
+                <span class="badge alert-danger" style="float:right;margin-top: 4px;">{{u.count}}</span>
+            </a>
+        </li>  
+    </ul>
+</li>
+<li>
+    <a href="">
+        <i class="fa fa-envelope"></i>
+        <span class="badge alert-danger">0</span>
+    </a>
+</li>
+<!--
+<li style="color:#fff"> {{ notifications | json }} </li>
+-->
+

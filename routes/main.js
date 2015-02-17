@@ -278,13 +278,20 @@ app.get('/services/unread/notifiactions/:type',
     };
 
     if(req.params.type === 'all'){
+        ChatRecord.aggregate([ { $match: {idTo: req.user._id, readed_status: false} }, 
+            { $group: { _id: '$idFrom', count : { $sum : 1 } } } ])
+            .exec(function(err, cr){
+                console.log(err, cr);
+                result.chats = cr;    
+                res.json(result);
+            });
+        /*
         ChatRecord.find({idTo: req.user._id, readed_status: false})
             .populate('idFrom')
             .exec(function(err, cr){
                 result.chats = cr;    
                 res.json(result);
             });
-        /*
         */
     } else {
         res.json(result);

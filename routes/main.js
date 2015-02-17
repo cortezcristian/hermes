@@ -282,8 +282,14 @@ app.get('/services/unread/notifiactions/:type',
             { $group: { _id: '$idFrom', count : { $sum : 1 } } } ])
             .exec(function(err, cr){
                 console.log(err, cr);
-                result.chats = cr;    
-                res.json(result);
+                if(cr){
+                    User.populate(cr, {path: '_id'}, function(err, list){
+                        result.chats = list;    
+                        res.json(result);
+                    });
+                }else{
+                    res.json(result);
+                }
             });
         /*
         ChatRecord.find({idTo: req.user._id, readed_status: false})

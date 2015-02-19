@@ -41,6 +41,10 @@ angular
         templateUrl: '/scripts/site/views/people.html',
         controller: 'PeopleCtrl'
       })
+      .when('/memos', {
+        templateUrl: '/scripts/site/views/memos.html',
+        controller: 'MemosCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

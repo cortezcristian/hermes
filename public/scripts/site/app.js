@@ -45,6 +45,10 @@ angular
         templateUrl: '/scripts/site/views/memos.html',
         controller: 'MemosCtrl'
       })
+      .when('/memos/new', {
+        templateUrl: '/scripts/site/views/memosnew.html',
+        controller: 'MemosNewCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

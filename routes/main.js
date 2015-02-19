@@ -11,6 +11,7 @@
 var app = module.parent.exports.app,
   config = module.parent.exports.config,
   anyandgo = module.parent.exports.anyandgo,
+  async = require("async"),
   mail = module.parent.exports.mail,
   Recaptcha = require('recaptcha').Recaptcha,
   // ## Models
@@ -224,11 +225,45 @@ app.get('/services/ask/private/chat/:iduserto/history/:period',
     // it can be a hash of the msgid
     // it can be all, year, month, week, day
     req.user.getPrivateChatHistory(req.params.iduserto, 'day', function(err, chatroom){
-        res.json(chatroom);
+        
+        if(chatroom.history.length > 0) {
+            async.mapSeries(chatroom.history, function(record, cb){
+                //mark as read if the user is the receiver
+                /**
+                record >> { created: Thu Feb 19 2015 12:33:07 GMT-0300 (ART),
+                  idFrom: 54e60157ea61499512966da3,
+                  idTo: 54e60157ea61499512966da3,
+                  chatroomTo: 54e60173ea61499512966dae,
+                  message: 'sss',
+                  _id: 54e60233ea61499512966db0,
+                  __v: 0,
+                  readed_status: false }
+
+                **/
+                
+                if (record.idTo.toString() === req.user.id && !record.readed_status) {
+                    //console.log("record >> NO LEIDOOOOOO");
+                    // Mark them as read when user request them
+                    record.readed_status = true;
+                    record.save(function(err, rec){
+                        cb();
+                    });
+                } else {
+                    cb();
+                }
+                
+            }, function(){
+                res.json(chatroom);
+            });
+        } else {
+            // lenght is zero, let it pass
+            res.json(chatroom);
+        }
     });
 });
 
 // TODO;
+/**
 app.get('/services/ask/private/chatroom/:roomid/history/:period', 
     userAuth.autorizer,
     function (req, res) {
@@ -239,6 +274,7 @@ app.get('/services/ask/private/chatroom/:roomid/history/:period',
     // it can be all, year, month, week, day
     res.json(req.params);
 });
+*/
 
 app.get('/services/ask/private/chat/:userid/updates/:msgid', 
     userAuth.autorizer,
@@ -249,7 +285,29 @@ app.get('/services/ask/private/chat/:userid/updates/:msgid',
     // it can be a hash of the msgid
     // from where we start the search to bring only the new ones
     req.user.updatePrivateChatHistory(req.params.userid, req.params.msgid, function(err, chatroom){
-        res.json(chatroom);
+        //res.json(chatroom);
+        if(chatroom.history.length > 0) {
+            async.mapSeries(chatroom.history, function(record, cb){
+                //mark as read if the user is the receiver
+                
+                if (record.idTo.toString() === req.user.id && !record.readed_status) {
+                    //console.log("record >> NO LEIDOOOOOO");
+                    // Mark them as read when user request them
+                    record.readed_status = true;
+                    record.save(function(err, rec){
+                        cb();
+                    });
+                } else {
+                    cb();
+                }
+                
+            }, function(){
+                res.json(chatroom);
+            });
+        } else {
+            // lenght is zero, let it pass
+            res.json(chatroom);
+        }
     });
 });
 

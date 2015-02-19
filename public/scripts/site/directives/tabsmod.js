@@ -15,7 +15,7 @@ angular.module('anyandgoApp')
     return {
       restrict: 'A',
       templateUrl: '/scripts/site/views/tabsmod.html',
-      controller: function($scope, $location, PeopleService, $window) {
+      controller: function($scope, $location, PeopleService, $window, $timeout) {
         $scope.opentabs = [];
         $scope.refreshOpentabs = function (){
            PeopleService.getOpenTabs().then(function(r){
@@ -32,7 +32,10 @@ angular.module('anyandgoApp')
         $scope.removeOpentab = function (id){
            PeopleService.removeOpenTab(id).then(function(r){
                 $scope.refreshOpentabs();
-                $window.history.back();
+                // add set timeout 100
+                $timeout(function(){
+                    $window.history.back();
+                }, 100);
            });
         }
 

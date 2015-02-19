@@ -1,5 +1,5 @@
 
-<div class="container-fluid" style="background: #F4F4F4;">
+<div class="container-fluid" style="background: #F4F4F4;min-height:380px">
     
 <div class="row panel">
     <div class="col-md-8 col-md-offset-2">
@@ -35,6 +35,22 @@ border-right: 1px solid #ccc;">
 
 
 <div class="row">
+  <div class="col-xs-12 col-md-12" ng-show="people.length === 0 && searchvalue === ''" style="padding-top: 80px;">
+      <p style="font-size: 80px;color: #ccc;text-align: center;">
+        <i class="fa fa-search fa-6"></i>
+      </p>
+      <p style="font-size: 30px;color: #ccc;text-align: center;">
+        Encontrar compañeros...
+      </p>
+  </div>
+  <div class="col-xs-12 col-md-12" ng-show="people.length === 0 && searchvalue !== ''" style="padding-top: 80px;">
+      <p style="font-size: 80px;color: #ccc;text-align: center;">
+        <i class="fa fa-search fa-6"></i>
+      </p>
+      <p style="font-size: 30px;color: #ccc;text-align: center;">
+        Tu búsqueda no arrojó ningún resultado...
+      </p>
+  </div>
   <div class="col-xs-6 col-md-4" ng-repeat="p in people">
       <div class="panel panel-default">
         <div class="panel-body" style="padding: 15px 0;">

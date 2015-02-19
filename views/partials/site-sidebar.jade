@@ -2,7 +2,7 @@
   .sidebar-nav.navbar-collapse(tabsmod)
 .navbar-default.sidebar#site-opts(role='navigation')
   .sidebar-nav.navbar-collapse
-    ul#side-menu.nav
+    ul#side-menu.nav(sidemenu)
       li
         a.group(href='#')
           i.fa.fa-inbox.fa-fw
@@ -15,7 +15,7 @@
         a.active(href='#')
           i.fa.fa-envelope.fa-fw
           span.d-item-title.hidden-xs Memos
-            span.label.label-danger 15
+            //span.badge(style="float:right;", ng-class="{alert-danger :notifications.chats.length}") {{notifications.chats.length}}
       li
         a.active(href='#')
           i.fa.fa-paper-plane.fa-fw

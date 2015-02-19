@@ -1,6 +1,4 @@
 'use strict';
-var chatInterval;
-
 
 /**
  * @ngdoc function
@@ -10,7 +8,13 @@ var chatInterval;
  * Controller of the anyandgoApp
  */
 angular.module('anyandgoApp')
-  .controller('PeopleCtrl', function ($scope, $routeParams, PeopleService) {
+  .controller('PeopleCtrl', function ($scope, $routeParams, PeopleService, $interval) {
+      
+      if(typeof chatInterval !== 'undefined') {
+        //Cancel it
+        $interval.cancel(chatInterval);
+      }
+      
       $scope.searchvalue = "";    
       $scope.selectedSector = {_id: "all"};    
       $scope.selectedOffice = {_id: "all"};    

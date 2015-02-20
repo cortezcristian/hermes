@@ -2,8 +2,11 @@
 <div class="container-fluid" style="background: #F4F4F4;min-height:380px">
     
 <div class="row panel">
-    <div class="col-md-8 col-md-offset-2">
-        <h2>Nuevo</h2>
+    <div class="col-md-8">
+        <h3>
+            <i class="fa fa-paper-plane fa-fw"></i>
+            Enviar Nuevo
+        </h3>
     </div>
 </div>
 
@@ -21,8 +24,8 @@
           </div>
           <div class="form-group">
               <div class="col-md-12">
-                  <label for="message" class="control-label">Mensaje:</label>
                   <!--
+                  <label for="message" class="control-label">Mensaje:</label>
                   <textarea id="message" name="message" style="width:100%"></textarea>
                   -->
                   <div ckeditor="options" ng-model="content" ready="onReady()"></div>

@@ -39,7 +39,8 @@ angular.module('anyandgoApp')
            PeopleService.removeOpenTab(id).then(function(r){
                 $scope.refreshOpentabs();
                 
-                if($location.path().match(/.*chatuser.*/)) {
+                //if($location.path().match(/.*chatuser.*/)) {
+                if($location.path().match(new RegExp(".*chatuser.*"+r.data.tabid+".*","i"))) {
                 // add set timeout 100
                 $timeout(function(){
                     $window.history.back();

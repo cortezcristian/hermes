@@ -625,7 +625,7 @@ app.post('/services/remove/chat/tab',
     // Removes minimized window UI
     // everytime you close a chatroom UI
     req.user.removeChatTab(req.body.userto, function(err, user){
-        res.json({status: 'ok'});
+        res.json({status: 'ok', tabid: req.body.userto });
     });
 });
 

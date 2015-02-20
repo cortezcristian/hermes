@@ -8,7 +8,6 @@ $(document).ready(function(){
     });
 });
 */
-
 /**
  * @ngdoc overview
  * @name anyandgoApp
@@ -25,6 +24,7 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
+    'ckeditor',
     'restangular'
   ])
   .config(function ($routeProvider, $locationProvider, RestangularProvider) {
@@ -40,6 +40,14 @@ angular
       .when('/people', {
         templateUrl: '/scripts/site/views/people.html',
         controller: 'PeopleCtrl'
+      })
+      .when('/memos', {
+        templateUrl: '/scripts/site/views/memos.html',
+        controller: 'MemosCtrl'
+      })
+      .when('/memos/new', {
+        templateUrl: '/scripts/site/views/memosnew.html',
+        controller: 'MemosNewCtrl'
       })
       .otherwise({
         redirectTo: '/'

@@ -249,7 +249,7 @@
     last_activity : <span class="hljs-built_in">Date</span>,
     job_desc      : { type: <span class="hljs-built_in">String</span>, <span class="hljs-keyword">default</span>: <span class="hljs-string">'-'</span> },
     phone         : { type: <span class="hljs-built_in">String</span>, <span class="hljs-keyword">default</span>: <span class="hljs-string">'-'</span> },
-    chat_windows  : { type: Schema.Types.ObjectId, ref: <span class="hljs-string">'User'</span> },
+    open_chats    : [{ type: Schema.Types.ObjectId, ref: <span class="hljs-string">'User'</span> }],
 	created       : <span class="hljs-built_in">Date</span>         
 });</pre></div></div>
             
@@ -553,6 +553,61 @@ and populate only those</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
+              <h3 id="method-savechattab">Method: saveChatTab</h3>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>userSchema.method(<span class="hljs-string">'saveChatTab'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(userid, cb)</span> </span>{
+    <span class="hljs-keyword">var</span> user = <span class="hljs-keyword">this</span>;
+
+    <span class="hljs-keyword">if</span>(user.open_chats.indexOf(userid) === -<span class="hljs-number">1</span>) {
+        user.open_chats.push(userid);
+        user.save(cb);
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> cb === <span class="hljs-string">'function'</span>){
+            cb(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Chat already open for that userid'</span>),<span class="hljs-literal">null</span>);    
+        }
+    }
+
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <h3 id="method-removechattab">Method: removeChatTab</h3>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>userSchema.method(<span class="hljs-string">'removeChatTab'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(userid, cb)</span> </span>{
+    <span class="hljs-keyword">var</span> user = <span class="hljs-keyword">this</span>;
+    <span class="hljs-keyword">var</span> index = user.open_chats.indexOf(userid);
+
+    <span class="hljs-keyword">if</span>(index &gt; -<span class="hljs-number">1</span>) {
+        user.open_chats.splice(index, <span class="hljs-number">1</span>);
+        user.save(cb);
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> cb === <span class="hljs-string">'function'</span>){
+            cb(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Chat already removed for that userid'</span>),<span class="hljs-literal">null</span>);    
+        }
+    }
+
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
               <h3 id="static-">Static:</h3>
 
             </div>
@@ -567,11 +622,11 @@ and populate only those</p>
         </li>
         
         
-        <li id="section-20">
+        <li id="section-22">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               <p>Export module</p>
 

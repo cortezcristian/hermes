@@ -1,0 +1,51 @@
+
+<div class="container-fluid" style="background: #F4F4F4;min-height:380px">
+    
+<div class="row panel">
+    <div class="col-md-8">
+        <h3>
+            <i class="fa fa-paper-plane fa-fw"></i>
+            Enviar Nuevo
+        </h3>
+    </div>
+</div>
+
+
+<div class="row">
+  <div class="col-xs-12 col-md-12">
+      <form id="new-memo-form" action="/services/send/memo" method="post" role="form" class="form-horizontal" style="padding: 10px;">
+          <div class="form-group">
+              <div class="col-md-12">
+                  <label for="usuarios" class="control-label">Destinatarios:</label>
+                  <br />
+                  <input id="usuarios" name="usuarios" type="hidden" placeholder="Escriba el destinatario..." style="width:100%">
+                  <span class="help-block"></span>
+              </div>
+          </div>
+          <div class="form-group">
+              <div class="col-md-12">
+                  <!--
+                  <label for="message" class="control-label">Mensaje:</label>
+                  <textarea id="message" name="message" style="width:100%"></textarea>
+                  -->
+                  <div ckeditor="options" ng-model="content" ready="onReady()"></div>
+                  <span class="help-block"></span>
+              </div>
+          </div>
+          <div class="form-group">
+              <div class="col-md-12">
+                  <button id="send-new-memo" type="submit" class="btn btn-primary">
+                      <i class="fa fa-paper-plane fa-fw"></i>
+                      Enviar Memo
+                  </button>
+              </div>
+          </div>
+          <div class="form-group">
+              <div class="col-md-4"></div>
+              <div class="col-md-8 text-right"></div>
+          </div>
+      </form>
+  </div>
+</div>
+    
+</div>

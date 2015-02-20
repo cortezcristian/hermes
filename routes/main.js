@@ -435,6 +435,34 @@ app.get('/services/search/people/:keyword/office/:office/sector/:sector',
     });
 });
 
+// #### Search Personal From New Memo
+
+app.get('/services/search/people/tags', 
+    userAuth.autorizer,
+    function (req, res) {
+    // Should receive
+    // req.query.keyword
+    // req.query.office
+    // req.query.sector
+        
+    // Returns data of matched personal
+    var query = User.find().or([{ email : new RegExp('.*'+req.query.keyword+'.*','i') }, { name : new RegExp('.*'+req.query.keyword+'.*','i') }]);
+
+    /*
+    if(req.query.office !== 'all'){
+        query.where('idOffice').equals(req.query.office);    
+    }
+
+    if(req.query.sector !== 'all'){
+        query.where('idSector').equals(req.query.sector);    
+    }*/
+
+    query.select('-password')
+        .exec(function(err, users){
+        res.json(users);
+    });
+});
+
 // #### Offices
 
 app.get('/services/offices/:hash', 

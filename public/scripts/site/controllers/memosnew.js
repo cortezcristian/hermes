@@ -57,6 +57,17 @@ angular.module('anyandgoApp')
       });
       
       // https://github.com/lemonde/angular-ckeditor
-      $('#message').wysihtml5();
+      //$('#message').wysihtml5();
+      // Editor options.
+      $scope.options = {
+        language: 'en',
+        allowedContent: true,
+        entities: false
+      };
+
+      // Called when the editor is completely ready.
+      $scope.onReady = function () {
+        // ...
+      };
 
   });

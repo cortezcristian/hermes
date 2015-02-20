@@ -8,7 +8,6 @@ $(document).ready(function(){
     });
 });
 */
-
 /**
  * @ngdoc overview
  * @name anyandgoApp
@@ -25,6 +24,7 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
+    'ckeditor',
     'restangular'
   ])
   .config(function ($routeProvider, $locationProvider, RestangularProvider) {

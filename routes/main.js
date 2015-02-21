@@ -576,7 +576,19 @@ app.post('/services/send/memo',
     // Creates a new mememo
     // specify the usersto by giving us
     // their ids separated by commas in a CSV way: usrid1,usrid2,usrid3
-    res.json(req.body);
+    var m = new Memo({
+        body: req.body.memobody
+    });
+    m.save(function(err, m1){
+        var mr = new MemoRecord({
+            idFrom: req.user._id,
+            idMemo: m1._id,
+            usersTo: req.body.usersto.split(",")     
+        });
+        mr.save(function(err, mr1){
+            res.json(mr1);
+        });
+    });
 });
 
 // #### Session
@@ -625,7 +637,7 @@ app.post('/services/remove/chat/tab',
     // Removes minimized window UI
     // everytime you close a chatroom UI
     req.user.removeChatTab(req.body.userto, function(err, user){
-        res.json({status: 'ok'});
+        res.json({status: 'ok', tabid: req.body.userto });
     });
 });
 

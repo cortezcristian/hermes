@@ -28,14 +28,24 @@ angular.module('anyandgoApp')
                 $scope.refreshOpentabs();
            });
         }
+        
+        $scope.checkTarget = function (e) {
+            if(!e.target.outerHTML.match(/.*d-item-title.*/)){
+                e.preventDefault();
+            }
+        }
 
         $scope.removeOpentab = function (id){
            PeopleService.removeOpenTab(id).then(function(r){
                 $scope.refreshOpentabs();
+                
+                //if($location.path().match(/.*chatuser.*/)) {
+                if($location.path().match(new RegExp(".*chatuser.*"+r.data.tabid+".*","i"))) {
                 // add set timeout 100
                 $timeout(function(){
                     $window.history.back();
                 }, 100);
+                }
            });
         }
 

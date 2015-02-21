@@ -62,6 +62,12 @@ angular.module('anyandgoApp')
                  userto: userto
              });
          },
+         sendMemo: function(users, memocontent){
+             return req('POST', '/services/send/memo', {
+                 usersto: users,
+                 memobody: memocontent
+             });
+         },
          getAllPeople: function(){
              return req('POST', '/services/people/all', {
                  userto: userto,

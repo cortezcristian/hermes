@@ -14,6 +14,16 @@ angular.module('anyandgoApp')
         //Cancel it
         $interval.cancel(chatInterval);
       }
+
+      var CKupdate = function(){
+        var instance;
+        for(instance in CKEDITOR.instances) {
+          CKEDITOR.instances[instance].updateElement();
+        }
+        CKEDITOR.instances[instance].setData('');
+      }
+
+      $scope.usersto = {};
       
       var configS2 = {
             placeholder: "Destinatarios...",
@@ -37,7 +47,7 @@ angular.module('anyandgoApp')
             id: function(data){ return data._id; },
             dropdownCssClass: "bigdrop",
             initSelection: function(element, callback) {
-                console.log(element, callback);
+                //console.log(element, callback);
                 callback(data);
             },
             formatSelection: function(data) {
@@ -53,7 +63,7 @@ angular.module('anyandgoApp')
       var usuario = $('#usuarios');
       usuario.select2(configS2);
       usuario.on('select2-selecting', function(e) {
-          console.log(e);
+          //console.log(e);
       });
       
       // https://github.com/lemonde/angular-ckeditor
@@ -68,6 +78,19 @@ angular.module('anyandgoApp')
       // Called when the editor is completely ready.
       $scope.onReady = function () {
         // ...
+      };
+
+      $scope.sendMemo = function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        // You cannot use double binding with hidden field. 
+        // http://stackoverflow.com/questions/18446359/angularjs-does-not-send-hidden-field-value
+        PeopleService.sendMemo($('#usuarios').val(), $scope.memocontent).then(function(r){
+            // console.log(r.data);
+            // Clear the form
+            CKupdate();
+            $('#usuarios').select2('data',null);
+        });
       };
 
   });

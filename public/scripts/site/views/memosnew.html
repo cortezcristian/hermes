@@ -16,8 +16,11 @@
       <form id="new-memo-form" action="/services/send/memo" method="post" role="form" class="form-horizontal" style="padding: 10px;" novalidate>
           <div class="form-group">
               <div class="col-md-12">
-                  <label for="usuarios" class="control-label">Destinatarios:</label>
-                  <br />
+                  <label for="usuarios" class="control-label" style="">Destinatarios:</label>
+                  <a href="javascript:" style="float:right">
+                      <i class="fa fa-search fa-fw"></i>
+                      Búsqueda Avanzada
+                  </a>
                   <input id="usuarios" name="usuarios" type="hidden" placeholder="Escriba el destinatario..." style="width:100%" />
                   <span class="help-block"></span>
               </div>

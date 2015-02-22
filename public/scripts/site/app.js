@@ -7,7 +7,7 @@ $(document).ready(function(){
         $("#user-panel").toggleClass('do-collapse');
         if($("#user-panel").hasClass('do-collapse')){
             $("#side").width('40px');
-            $("#content").width(($(window).width()-40)+'px');
+            $("#content").width(($(window).width()-41)+'px');
         } else {
             $("#side").width('');
             $("#content").width('');

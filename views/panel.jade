@@ -7,7 +7,7 @@ block content
         div
           .collapse.navbar-collapse(style="padding:0")
             ul.nav.navbar-nav(style="width: 100%;")
-              li.dropdown(style="width: 100%;")
+              li.dropdown.hidden-xs(style="width: 80%;")
                 a.dropdown-toggle(href='#', data-toggle='dropdown',style="padding-bottom:3px")
                   img.img-circle(src=user.avatar,style="width: 26px;margin: 0 8px 3px 0;")
                   | #{user.name}
@@ -19,6 +19,11 @@ block content
                   li.divider
                   li
                     a(href="/logout") Salir
+              li.dropdown(style="")
+                a.collapser(href="javascript:")
+                  i.fa.fa-chevron-left
+                  i.fa.fa-chevron-right.hide
+                
       include ./partials/site-sidebar
     #content.column.col-sm-10.col-xs-11
       include ./partials/site-menu

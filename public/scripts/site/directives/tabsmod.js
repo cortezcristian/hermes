@@ -30,7 +30,8 @@ angular.module('anyandgoApp')
         }
         
         $scope.checkTarget = function (e) {
-            if(!e.target.outerHTML.match(/.*d-item-title.*/)){
+            if(!e.target.outerHTML.match(/.*d-item-title.*/)
+                && !e.target.outerHTML.match(/.*img.*/)){
                 e.preventDefault();
             }
         }

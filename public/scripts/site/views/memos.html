@@ -1,15 +1,45 @@
 
 <div class="container-fluid" style="background: #F4F4F4;min-height:380px">
-    
+
 <div class="row panel">
-    <div class="col-md-8 col-md-offset-2">
-        <h2>Memos</h2>
+    <div class="col-md-2">
+        <h3>
+            <i class="fa fa-envelope fa-fw"></i>
+            Memos
+        </h3>
+    </div>
+    <div class="col-md-8" style="padding-top: 10px;">
+        <form class="navbar-form">
+            <div class="input-group">
+                <input type="text" class="form-control" ng-model="searchvalue" placeholder="Buscar..." name="q" autocomplete="off" style="border: 2px solid #ccc;
+border-right: 1px solid #ccc;">
+                <a class="input-group-addon" ng-click="searchPeople(searchvalue)"><i class="fa fa-search fa-fw"></i></a>
+            </div>
+            <div class="form-group">
+                <label for="sector" class="col-sm-4 control-label" style="line-height: 28px;">Sector:</label>
+                <div class="col-sm-8">
+                  <select class="form-control" id="sector" ng-init="selectedSector = selectedSector || sectors[0]" ng-model="selectedSector" ng-options="s as s.name for s in sectors track by s._id" ng-change="searchPeople(searchvalue)">
+                  </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="office" class="col-sm-4 control-label" style="line-height: 28px;">Oficina:</label>
+                <div class="col-sm-8">
+                  <select class="form-control" id="office" ng-init="selectedOffice = selectedOffice || offices[0]" ng-model="selectedOffice" ng-options="o as o.name for o in offices track by o._id" ng-change="searchPeople(searchvalue)">
+                  </select>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 
-
+    
 <div class="row">
-  <div class="col-xs-12 col-md-12" ng-show="people.length === 0 && searchvalue === ''" style="padding-top: 80px;">
+  <div class="col-xs-2 col-md-2">
+      Memo 1
+  </div>
+  <div class="col-xs-10 col-md-10">
+      Memo Content
   </div>
 </div>
     

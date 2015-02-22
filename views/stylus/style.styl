@@ -1,5 +1,6 @@
 body
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif
+  overflow-x: hidden;
   a, label
     color: #484848
   .hammerfont
@@ -65,6 +66,17 @@ body
     padding: 0;
 
 #user-panel
+  &.do-collapse
+    #side
+      width: 3%;
+      .fa-chevron-left
+        display: none !important
+      .fa-chevron-right
+        display: block !important
+      .hidden-xs
+        display: none
+    #content
+      width: 97%;
   #side
     border-right: 1px solid #4a4a4a
     position: absolute
@@ -76,6 +88,14 @@ body
     background-color: #4a4a4a;
     overflow: hidden;
     //overflow: auto;
+    a.collapser
+      padding: 16px;
+      color: #777;
+      float: right;
+      .fa-chevron-left
+        display: block
+      .fa-chevron-right
+        display: none
     #site-opts
       position: absolute;
       bottom: 0;

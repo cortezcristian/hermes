@@ -16,10 +16,18 @@ angular.module('anyandgoApp')
       }
       
       $scope.memosinbox = [];
+      $scope.memoread = "";
       
       // Get all offices
       PeopleService.getMemosInbox().then(function(r){
           $scope.memosinbox = r.data;
       });
+      
+      $scope.getMemo = function(id){
+          // Get all offices
+          PeopleService.getMemo(id).then(function(r){
+              $scope.memoread = r.data;
+          });
+      };
 
   });

@@ -537,7 +537,9 @@ app.get('/services/get/memo/:memoid',
     // Should receive
     // req.params.memoid
     // Gets a particular memo
-    res.json(req.params);
+    req.user.getMemoRecordAndRead(req.params.memoid, function(err, mrecord){
+        res.json(mrecord);
+    });
 });
 
 app.get('/services/get/memos/inbox', 
@@ -547,7 +549,7 @@ app.get('/services/get/memos/inbox',
     // req.params.memoid
     // Gets the list of all memos received
     req.user.getMemosInbox(function(err, mrecords){
-        console.log(err, mrecords);
+        //console.log(err, mrecords);
         res.json(mrecords);
     });
 });

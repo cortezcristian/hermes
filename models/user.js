@@ -203,6 +203,20 @@ userSchema.method('getMemosOutbox', function(cb) {
     MemoRecord.find({ idFrom : user._id }, cb);
 });
 
+// ### Method: getMemoRecord
+userSchema.method('getMemoRecordAndRead', function(idMemoRecord, cb) {
+    var user = this;
+    MemoRecord.findOne({ usersTo : user._id, _id: idMemoRecord })
+        .populate('idMemo').exec(function(err, mr){
+            if(mr){
+                mr.readed_status = true;
+                mr.save(cb);
+            } else {
+                cb(new Error('MemoRecord not found'));
+            }
+        });
+});
+
 // ### Static:
 userSchema.statics.customMethod = function (paramid, cb) {
   var User = this;

@@ -98,7 +98,10 @@ describe('Model Test User', function(){
         });
         // Get memos Inbox
         it('get memos inbox', function(done){
-            done();
+            user2.getMemosInbox(function(err, mrecords){
+                assert.ok(mrecords.length > 0, 'It should have at least one memo inbox');
+                done();
+            });
         });
 
     });

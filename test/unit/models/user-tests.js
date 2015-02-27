@@ -103,6 +103,14 @@ describe('Model Test User', function(){
                 done();
             });
         });
+        // Get memos Outbox
+        it('get memos outbox', function(done){
+            user1.getMemosOutbox(function(err, mrecords){
+                assert.ok(mrecords.length > 0, 'It should have at least one memo sent');
+                done();
+            });
+        });
+
 
     });
 });

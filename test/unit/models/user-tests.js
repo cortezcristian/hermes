@@ -92,9 +92,9 @@ describe('Model Test User', function(){
                 done(); 
             });
         });
-        // Get memos Inbox
+        // Send Memo
         it('send memo', function(done){
-            done();
+            user1.sendMemo({ memobody: '<b>message</b>' , usersto: user2._id.toString() }, done);
         });
         // Get memos Inbox
         it('get memos inbox', function(done){

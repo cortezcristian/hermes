@@ -176,7 +176,8 @@ userSchema.method('sendMemo', function(msg, cb) {
     var m = new Memo({
         body: msg.memobody
     });
-    //console.log(">>>>>>>>>>>>>>>>>><", msg);
+    //console.log(">>>>>>>>>>>>>>>>>><", msg, typeof msg.usersto);
+    var usto = (typeof msg.usersto === 'string') ? msg.usersto.split(',') : msg.usersto ;
     m.save(function(err, m1){
         var mr = new MemoRecord({
             idFrom: user._id,
@@ -184,7 +185,7 @@ userSchema.method('sendMemo', function(msg, cb) {
             // TODO Check array contains valid list of object ids
             // https://github.com/LearnBoost/mongoose/issues/1959
             // var checkForHexRegExp = new RegExp("^[0-9a-fA-F]{24}$");
-            usersTo: msg.usersto.split(',')
+            usersTo: usto
         });
         mr.save(cb);
     });

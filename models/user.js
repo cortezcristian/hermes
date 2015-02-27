@@ -10,6 +10,8 @@ var mongoose = require('mongoose'),
 
 var ChatRoom = require('./chatroom.js');
 var ChatRecord = require('./chatrecord.js');
+var Memo = require('./memo.js');
+var MemoRecord = require('./memorecord.js');
 
 
 var userSchema = new Schema({
@@ -168,6 +170,17 @@ userSchema.method('removeChatTab', function(userid, cb) {
 
 });
 
+// ### Method: getMemosInbox
+userSchema.method('getMemosInbox', function(cb) {
+    var user = this;
+    MemoRecord.find({ usersTo : user._id }, cb);
+});
+
+// ### Method: getMemosOutbox
+userSchema.method('getMemosOutbox', function(cb) {
+    var user = this;
+    MemoRecord.find({ idFrom : user._id }, cb);
+});
 
 // ### Static:
 userSchema.statics.customMethod = function (paramid, cb) {

@@ -546,7 +546,10 @@ app.get('/services/get/memos/inbox',
     // Should receive
     // req.params.memoid
     // Gets the list of all memos received
-    res.json(req.params);
+    req.user.getMemosInbox(function(err, mrecords){
+        console.log(err, mrecords);
+        res.json(mrecords);
+    });
 });
 
 app.get('/services/get/memos/outbox', 
@@ -579,11 +582,15 @@ app.post('/services/send/memo',
     var m = new Memo({
         body: req.body.memobody
     });
+    console.log(">>>>>>>>>>>>>>>>>><", req.body);
     m.save(function(err, m1){
         var mr = new MemoRecord({
             idFrom: req.user._id,
             idMemo: m1._id,
-            usersTo: req.body.usersto.split(",")     
+            // TODO Check array contains valid list of object ids
+            // https://github.com/LearnBoost/mongoose/issues/1959
+            // var checkForHexRegExp = new RegExp("^[0-9a-fA-F]{24}$");
+            usersTo: req.body.usersto.split(',')
         });
         mr.save(function(err, mr1){
             res.json(mr1);

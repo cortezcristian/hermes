@@ -14,5 +14,12 @@ angular.module('anyandgoApp')
         //Cancel it
         $interval.cancel(chatInterval);
       }
+      
+      $scope.memosinbox = [];
+      
+      // Get all offices
+      PeopleService.getMemosInbox().then(function(r){
+          $scope.memosinbox = r.data;
+      });
 
   });

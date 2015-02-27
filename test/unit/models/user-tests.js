@@ -83,14 +83,23 @@ describe('Model Test User', function(){
                 done(); 
             });
         });
+        
         // It get chat history
+        // TODO: check if user has access to that history
         it('get chat history', function(done){
             user2.getChatHistory(chatroom1._id, function(err, chatroom){
                 assert.ok(chatroom.history[0].readed_status, 'First Chat Record should be marked as read');
                 done(); 
             });
         });
-        // TODO: check if user has access to that history
+        // Get memos Inbox
+        it('send memo', function(done){
+            done();
+        });
+        // Get memos Inbox
+        it('get memos inbox', function(done){
+            done();
+        });
 
     });
 });

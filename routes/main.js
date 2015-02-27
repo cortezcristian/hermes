@@ -339,7 +339,7 @@ app.get('/services/unread/notifiactions/:type',
         ChatRecord.aggregate([ { $match: {idTo: req.user._id, readed_status: false} }, 
             { $group: { _id: '$idFrom', count : { $sum : 1 } } } ])
             .exec(function(err, cr){
-                console.log(err, cr);
+                //console.log(err, cr);
                 if(cr){
                     User.populate(cr, {path: '_id'}, function(err, list){
                         result.chats = list;    
@@ -579,22 +579,8 @@ app.post('/services/send/memo',
     // Creates a new mememo
     // specify the usersto by giving us
     // their ids separated by commas in a CSV way: usrid1,usrid2,usrid3
-    var m = new Memo({
-        body: req.body.memobody
-    });
-    console.log(">>>>>>>>>>>>>>>>>><", req.body);
-    m.save(function(err, m1){
-        var mr = new MemoRecord({
-            idFrom: req.user._id,
-            idMemo: m1._id,
-            // TODO Check array contains valid list of object ids
-            // https://github.com/LearnBoost/mongoose/issues/1959
-            // var checkForHexRegExp = new RegExp("^[0-9a-fA-F]{24}$");
-            usersTo: req.body.usersto.split(',')
-        });
-        mr.save(function(err, mr1){
-            res.json(mr1);
-        });
+    req.user.sendMemo(req.body, function(err, mr1){
+        res.json(mr1);
     });
 });
 

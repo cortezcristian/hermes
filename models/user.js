@@ -170,6 +170,26 @@ userSchema.method('removeChatTab', function(userid, cb) {
 
 });
 
+// ### Method: sendMemo
+userSchema.method('sendMemo', function(msg, cb) {
+    var user = this;
+    var m = new Memo({
+        body: msg.memobody
+    });
+    //console.log(">>>>>>>>>>>>>>>>>><", msg);
+    m.save(function(err, m1){
+        var mr = new MemoRecord({
+            idFrom: user._id,
+            idMemo: m1._id,
+            // TODO Check array contains valid list of object ids
+            // https://github.com/LearnBoost/mongoose/issues/1959
+            // var checkForHexRegExp = new RegExp("^[0-9a-fA-F]{24}$");
+            usersTo: msg.usersto.split(',')
+        });
+        mr.save(cb);
+    });
+});
+
 // ### Method: getMemosInbox
 userSchema.method('getMemosInbox', function(cb) {
     var user = this;

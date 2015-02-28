@@ -25,7 +25,6 @@
     
 <div class="row" ng-show="activesection === 'inbox'">
   <div class="col-xs-3 col-md-3 btn-group-vertical" role="group">
-      <h4>Memos</h4>
       <ul class="nav" role="menu">
           <li ng-repeat="memo in memosinbox">
               <!-- <pre>{{memo | json}}</pre> -->
@@ -37,7 +36,7 @@
           </li>
       </ul>
   </div>
-  <div class="col-xs-9 col-md-9">
+  <div class="col-xs-9 col-md-9" style="background: #fff;">
       <h4>Memo Content</h4>
       <div>
           <!-- <pre>{{memoread.idMemo.body}}</pre> -->
@@ -49,7 +48,6 @@
     
 <div class="row" ng-show="activesection === 'outbox'">
     <div class="col-xs-3 col-md-3 btn-group-vertical" role="group">
-      <h4>Memos</h4>
       <ul class="nav" role="menu">
           <li ng-repeat="memo in memosoutbox" class="btn btn-default" style="text-align:left;">
               <!-- <pre>{{memo | json}}</pre> -->
@@ -61,7 +59,7 @@
           </li>
       </ul>
   </div>
-  <div class="col-xs-9 col-md-9">
+  <div class="col-xs-9 col-md-9" style="background: #fff;">
       <h4>Memo Content</h4>
       <div>
           <!-- <pre>{{ownmemoread.idMemo.body}}</pre> -->

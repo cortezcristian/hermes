@@ -10,6 +10,8 @@ var mongoose = require('mongoose'),
 
 var ChatRoom = require('./chatroom.js');
 var ChatRecord = require('./chatrecord.js');
+var Memo = require('./memo.js');
+var MemoRecord = require('./memorecord.js');
 
 
 var userSchema = new Schema({
@@ -168,6 +170,52 @@ userSchema.method('removeChatTab', function(userid, cb) {
 
 });
 
+// ### Method: sendMemo
+userSchema.method('sendMemo', function(msg, cb) {
+    var user = this;
+    var m = new Memo({
+        body: msg.memobody
+    });
+    //console.log(">>>>>>>>>>>>>>>>>><", msg, typeof msg.usersto);
+    var usto = (typeof msg.usersto === 'string') ? msg.usersto.split(',') : msg.usersto ;
+    m.save(function(err, m1){
+        var mr = new MemoRecord({
+            idFrom: user._id,
+            idMemo: m1._id,
+            // TODO Check array contains valid list of object ids
+            // https://github.com/LearnBoost/mongoose/issues/1959
+            // var checkForHexRegExp = new RegExp("^[0-9a-fA-F]{24}$");
+            usersTo: usto
+        });
+        mr.save(cb);
+    });
+});
+
+// ### Method: getMemosInbox
+userSchema.method('getMemosInbox', function(cb) {
+    var user = this;
+    MemoRecord.find({ usersTo : user._id }, cb);
+});
+
+// ### Method: getMemosOutbox
+userSchema.method('getMemosOutbox', function(cb) {
+    var user = this;
+    MemoRecord.find({ idFrom : user._id }, cb);
+});
+
+// ### Method: getMemoRecord
+userSchema.method('getMemoRecordAndRead', function(idMemoRecord, cb) {
+    var user = this;
+    MemoRecord.findOne({ usersTo : user._id, _id: idMemoRecord })
+        .populate('idMemo').exec(function(err, mr){
+            if(mr){
+                mr.readed_status = true;
+                mr.save(cb);
+            } else {
+                cb(new Error('MemoRecord not found'));
+            }
+        });
+});
 
 // ### Static:
 userSchema.statics.customMethod = function (paramid, cb) {

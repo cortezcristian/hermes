@@ -62,6 +62,15 @@ angular.module('anyandgoApp')
                  userto: userto
              });
          },
+         getMemosInbox: function(){
+             return req('GET', '/services/get/memos/inbox');
+         },
+         getMemosOutbox: function(){
+             return req('GET', '/services/get/memos/outbox');
+         },
+         getMemo: function(memoid){
+             return req('GET', '/services/get/memo/'+memoid);
+         },
          sendMemo: function(users, memocontent){
              return req('POST', '/services/send/memo', {
                  usersto: users,

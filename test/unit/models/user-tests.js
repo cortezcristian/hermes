@@ -11,7 +11,7 @@ var async = require('async')
 require('../../../utils/dbconnect');
 
 // Global Variables for the test case
-var User, user, user1, user2, chatroom1;
+var User, user, user1, user2, chatroom1, memorec1;
 
 // Unit Tests
 describe('Model Test User', function(){
@@ -83,14 +83,45 @@ describe('Model Test User', function(){
                 done(); 
             });
         });
+        
         // It get chat history
+        // TODO: check if user has access to that history
         it('get chat history', function(done){
             user2.getChatHistory(chatroom1._id, function(err, chatroom){
                 assert.ok(chatroom.history[0].readed_status, 'First Chat Record should be marked as read');
                 done(); 
             });
         });
-        // TODO: check if user has access to that history
+        // Send Memo
+        it('send memo', function(done){
+            user1.sendMemo({ memobody: '<b>message</b>' , usersto: user2._id.toString() }, 
+                function(err, mr){
+                    memorec1 = mr;
+                    done(err);
+            });
+        });
+        // Get memos Inbox
+        it('get memos inbox', function(done){
+            user2.getMemosInbox(function(err, mrecords){
+                assert.ok(mrecords.length > 0, 'It should have at least one memo inbox');
+                done();
+            });
+        });
+        // Get memos Outbox
+        it('get memos outbox', function(done){
+            user1.getMemosOutbox(function(err, mrecords){
+                assert.ok(mrecords.length > 0, 'It should have at least one memo sent');
+                done();
+            });
+        });
+        // Get MemoRecord and mark it as read
+        it('get MemoRecord and mark it as read', function(done){
+            user2.getMemoRecordAndRead(memorec1._id, function(err, mrecord){
+                assert.ok(mrecord.readed_status === true, 'It should mark the memo as read');
+                done();
+            });
+        });
+
 
     });
 });

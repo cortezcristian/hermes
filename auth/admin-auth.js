@@ -6,7 +6,7 @@ var passport = require('passport'),
 
 // Route Authorizer
 adminAuth.autorizer = function(req, res, next){
-    console.log(req.user);
+    //console.log(req.user);
     //authorize role
     if(typeof req.user != "undefined" && typeof req.user.role != "undefined" && req.user.role == "admin"){
         next();

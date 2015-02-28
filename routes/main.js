@@ -560,7 +560,10 @@ app.get('/services/get/memos/outbox',
     // Should receive
     // req.params.memoid
     // Gets the list of all memos sent
-    res.json(req.params);
+    req.user.getMemosOutbox(function(err, mrecords){
+        //console.log(err, mrecords);
+        res.json(mrecords);
+    });
 });
 
 app.get('/services/count/unread/memos', 

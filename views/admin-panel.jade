@@ -3,11 +3,13 @@ extends layout-admin
 block content
   .board-container.container-fluid(ng-app='anyandgoApp')
     .row
-      .sidebar-con.col-xs-2.col-md-2
-        include ./partials/admin-sidebar
-      .main-con.col-xs-10.col-sm-6.col-md-10
-        .panel(ng-view)
-          | Content {{awesomeThings}}
+      #side.column.col-sm-2.col-xs-1
+        .sidebar-con.col-xs-2.col-md-2
+          include ./partials/admin-sidebar
+      #content.column.col-sm-10.col-xs-11
+        .main-con.col-xs-10.col-sm-6.col-md-10
+          .panel(ng-view)
+            | Content {{awesomeThings}}
           
 block scripts
   - if(settings.envflag !== "production") {

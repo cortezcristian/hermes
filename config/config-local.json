@@ -28,7 +28,7 @@
 		}
 	},
     "autologin": {
-        "enabled" : false,
+        "enabled" : true,
         "username" : "admin@anyandgo.com",  
         "password" : "123456"  
     },

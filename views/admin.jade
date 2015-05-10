@@ -1,9 +1,16 @@
 extends layout
 
 block content
-  .jumbotron
-    form#loginForm(name="loginForm",method="post",action="")
-      p !{form}
-      input.btn.btn-primary(type="submit",value="Login")
-    p
-    .well.well-sm Hint: 
+  .row.our-main-content
+    .col-sm-6.col-sm-offset-3(style="margin-top:55px")
+      .panel.panel-default
+        .panel-heading Admin
+        .panel-body
+          h1.hammerfont.logobig
+            i.fa.fa-comments-o.fa-3(style="padding:0 8px;")
+            | #{__("Admin")}
+          form#loginForm(name="loginForm",method="post",action="")
+            p !{form}
+            input.btn.btn-primary(type="submit",value="Login")
+            p
+              .well.well-sm Hint: None 
